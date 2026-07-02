@@ -1,0 +1,185 @@
+% =====================================================================
+\section{The rate-independent framework}\label{sec:framework}
+% =====================================================================
+
+\subsection{The defining triple}\label{sec:ingredients}
+
+Following~\cite{MielkeRoubicek}, a rate-independent system is specified
+by a triple $(\Q, E, \Psi)$.
+
+\begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=3pt]
+  \item \textbf{State space.} The set of \emph{admissible states} is a
+  closed subset of a Banach space; throughout we take
+  \begin{equation}\label{eq:state_space}
+    \Q \subseteq \R^n .
+  \end{equation}
+
+  \item \textbf{Loading.} The interaction of the system with its
+  environment is encoded by a prescribed, time-dependent
+  \emph{loading path}
+  \begin{equation}
+    S \in W^{1,1}(0,T;\R^{+}) .
+  \end{equation}
+
+  \item \textbf{Stored energy.} The \emph{stored-energy functional}
+  $E\colon \Q\times\R^{+}\to\R$ is assumed to admit the additive
+  decomposition
+  \begin{equation}\label{eq:energy}
+    E(\bs q, S) \;=\; W(\bs q)\;-\;\bs q\cdot\bs\ell(S),
+  \end{equation}
+  where $W\colon\Q\to\R$ is the \emph{free energy} and
+  $\bs\ell\colon\R^{+}\to\R^n$ the \emph{interaction (loading)
+  potential}.
+
+  \item \textbf{Dissipation potential.} The \emph{dissipation
+  potential} is a convex, lower semicontinuous map
+  $\Psi\colon\R^n\to\R$ satisfying
+  \begin{itemize}[leftmargin=1.4em,itemsep=1pt]
+    \item \emph{normalisation}: $\Psi(\bs 0)=0$;
+    \item \emph{positiveness}: $\Psi(\bs v)\ge 0$ for all $\bs v\in\R^n$;
+    \item \emph{$1$-homogeneity}:
+    $\Psi(\lambda\bs v)=\lambda\,\Psi(\bs v)$ for all $\lambda>0$.
+  \end{itemize}
+  These are the structural assumptions required
+  in~\cite{Mielke2005,MielkeRoubicek} for the dissipation potential of
+  a rate-independent system; the $1$-homogeneity is the property that
+  distinguishes rate-independent from viscous (rate-dependent)
+  evolution. A map satisfying only the first two conditions is called
+  a dissipation \emph{pseudo-potential}.
+\end{enumerate}
+
+The forthcoming well-posedness results require, in addition, the
+quantitative hypotheses of \cref{ass:standing}, which are collected in
+\cref{sec:math}. The benchmark of \cref{sec:experiments} satisfies all
+of them.
+
+\subsection{Derived canonical quantities}\label{sec:derived}
+
+From the triple $(\Q,E,\Psi)$ the following objects are canonically
+constructed.
+
+\paragraph{(a) Thermodynamic driving force.}
+When $E$ is differentiable in $\bs q$, the negative energy gradient
+defines the \emph{generalised thermodynamic force}
+\begin{equation}\label{eq:force}
+  \bs f(\bs q, S) \;:=\; -\frac{\partial E}{\partial \bs q}(\bs q, S)
+  \;=\; \bs\ell(S) - \bs g(\bs q),
+  \qquad
+  \bs g(\bs q) := \frac{\partial W}{\partial\bs q}(\bs q).
+\end{equation}
+The force $\bs f$ is the variable conjugate to $\bs q$: it quantifies
+the thermodynamic drive toward evolution of the state.
+
+\paragraph{(b) Elastic domain.}
+The subdifferential of $\Psi$ at the origin,
+\begin{equation}\label{eq:elastic_domain}
+  \E := \partial\Psi(\bs 0),
+\end{equation}
+is the closed convex set of forces the system can sustain without
+evolving. It is the \emph{elastic domain} in force space; by convex
+duality~\cite{rockafellar1970,ekeland1999convex} $\Psi$ is its support
+function, $\Psi(\bs v)=\sup_{\bs f\in\E}\bs f\cdot\bs v$.
+
+\paragraph{(c) Dissipation distance.}
+The \emph{dissipation distance} is the minimal cost of a transition
+between two states,
+\begin{equation}\label{eq:diss_dist}
+  \Dr(\bs q_1,\bs q_2)
+  := \inf\Bigl\{\textstyle\int_0^1 \Psi(\dot\gamma(s))\dd s :
+  \gamma\in\mathrm{AC}([0,1];\Q),\ \gamma(0)=\bs q_1,\ \gamma(1)=\bs q_2\Bigr\}.
+\end{equation}
+
+\paragraph{(d) Total dissipation.}
+For a trajectory $\bs q\colon[0,T]\to\Q$ of bounded variation, the
+\emph{total dissipation} is
+\begin{equation}\label{eq:total_diss}
+  \Diss_\Psi(\bs q;[0,t])
+  := \sup\Bigl\{\textstyle\sum_{j=1}^{N}\Dr\bigl(\bs q(t_{j-1}),\bs q(t_j)\bigr):
+  0=t_0<\dots<t_N=t,\ N\in\N\Bigr\}.
+\end{equation}
+
+\paragraph{(e) Power and work of the loading.}
+The rate of energy change due to the loading at frozen state is
+\begin{equation}\label{eq:power}
+  \mathcal P_S(t) := \partial_t E(\bs q, S(t))
+  = \partial_S E(\bs q, S)\,\dot S(t)
+  = -\bs q\cdot\bs\ell'(S(t))\,\dot S(t),
+\end{equation}
+and the associated \emph{work} performed on the system over $[0,t]$ is
+$\mathcal W_S(t):=\int_0^t\partial_S E(\bs q(s),S(s))\,\dot S(s)\dd s$.
+
+\subsection{Governing equations: energetic formulation}
+\label{sec:energetic}
+
+We postulate the evolution through the following variational notion,
+due to Mielke and Theil~\cite{MielkeTheil}.
+
+\begin{definition}[Energetic solution]\label{def:energetic}
+A function $\bs q\colon[0,T]\to\Q$ is an \emph{energetic solution} of
+$(\Q,E,\Psi)$ for the loading $S$ if it satisfies:
+
+\smallskip
+\noindent\textbf{(S) Global stability.} For every $t\in[0,T]$ and every
+$\tilde{\bs q}\in\Q$,
+\begin{equation}\label{eq:stability}
+  E(\bs q(t),S(t)) \;\le\; E(\tilde{\bs q},S(t)) + \Dr(\bs q(t),\tilde{\bs q}).
+\end{equation}
+
+\noindent\textbf{(E) Energy balance.} For every $t\in[0,T]$,
+\begin{equation}\label{eq:energy_balance}
+  E(\bs q(t),S(t)) + \Diss_\Psi(\bs q;[0,t])
+  = E(\bs q(0),S(0)) + \int_0^t \partial_S E(\bs q(s),S(s))\,\dot S(s)\dd s.
+\end{equation}
+\end{definition}
+
+Condition~(S) admits a variational reading: $\bs q(t)$ is a global
+minimiser of the perturbed energy $\bs r\mapsto E(\bs r,S(t))+\Dr(\bs
+q(t),\bs r)$. Condition~(E) states that, along the trajectory, the sum
+of stored energy and cumulative dissipation equals the initial energy
+plus the work supplied by the loading; it is an exact energy
+conservation statement, examined thermodynamically in
+\cref{sec:thermo}.
+
+\subsection{Governing equations: subdifferential formulation}
+\label{sec:subdiff}
+
+Since $\Psi$ is convex but generally non-smooth at $\dot{\bs q}=\bs 0$,
+the pointwise force balance takes the form of a differential inclusion.
+
+\begin{proposition}[Biot inclusion]\label{prop:biot}
+Let $\bs q\in\mathrm{AC}([0,T];\Q)$ satisfy \textnormal{(S)}
+and~\textnormal{(E)}, with $E(\cdot,S)$ differentiable. Then, for a.e.\
+$t\in[0,T]$,
+\begin{equation}\label{eq:biot}
+  \bs 0 \;\in\; \partial\Psi(\dot{\bs q}(t)) + \frac{\partial E}{\partial\bs q}(\bs q(t),S(t)),
+\end{equation}
+equivalently $\bs f(\bs q,S)\in\partial\Psi(\dot{\bs q})$. Conversely,
+if $E(\cdot,S)$ is convex, then~\eqref{eq:biot} together with the
+local stability $\bs f(\bs q(t),S(t))\in\E$ implies
+\textnormal{(S)}--\textnormal{(E)}.
+\end{proposition}
+
+Equation~\eqref{eq:biot} is the (generalised) Biot
+equation~\cite{Biot1956}; for $\Psi=\rho\|\cdot\|$ it coincides with the
+sweeping process of Moreau~\cite{moreau1977} and, in one dimension, with
+the play operator of hysteresis. Its usefulness rests on the following
+identity, which is the algebraic signature of $1$-homogeneity.
+
+\begin{lemma}[Saturation identity]\label{lem:saturation}
+Let $\Psi\colon\R^n\to[0,+\infty)$ be convex, normalised and
+positively $1$-homogeneous. Then for every $\bs v\in\R^n$ and every
+$\bs f\in\partial\Psi(\bs v)$,
+\begin{equation}\label{eq:saturation}
+  \bs f\cdot\bs v = \Psi(\bs v).
+\end{equation}
+Moreover $\partial\Psi(\lambda\bs v)=\partial\Psi(\bs v)$ for all
+$\lambda>0$, and $\bs f\in\partial\Psi(\bs v)$ if and only if
+$\bs f\in\E$ and $\bs f\cdot\bs v=\Psi(\bs v)$.
+\end{lemma}
+
+Combining \cref{prop:biot,lem:saturation} gives, along any solution,
+$\bs f(\bs q,S)\cdot\dot{\bs q}=\Psi(\dot{\bs q})$, i.e.\ the
+dissipation potential is exactly balanced by the energy release rate at
+frozen loading. This identity is the cornerstone of the thermodynamic
+interpretation of \cref{sec:thermo}. The proofs of
+\cref{prop:biot,lem:saturation} are given in \cref{app:framework}.

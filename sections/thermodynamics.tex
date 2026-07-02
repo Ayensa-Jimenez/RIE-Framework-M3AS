@@ -1,0 +1,95 @@
+% =====================================================================
+\section{Thermodynamic interpretation}\label{sec:thermo}
+% =====================================================================
+
+We now read the framework of \cref{sec:framework} in the language of
+the thermodynamics of internal variables, identifying the energy
+balance with the first law and the dissipation inequality with the
+second law~\cite{germain1983,halphen1975generalized}.
+
+\subsection{Free energy and the first law}\label{sec:first_law}
+
+The state of the system is the pair $(\bs q, S)$, and $E$ plays the role
+of a \emph{Helmholtz-type free energy}: the portion of the energy
+stored in the configuration and recoverable through quasi-static
+changes,
+\begin{equation}\label{eq:free_energy}
+  E(\bs q, S) = \underbrace{W(\bs q)}_{\text{configurational}}
+  \;-\;\underbrace{\bs q\cdot\bs\ell(S)}_{\text{coupling to environment}}.
+\end{equation}
+The configurational term $W$ is intrinsic and independent of the
+environment; the coupling term $-\bs q\cdot\bs\ell(S)$ acts as a
+generalised chemical potential that biases the state. The conjugate
+driving force is $\bs f=-\partial_{\bs q}E$, as in~\eqref{eq:force}, and
+the power injected by the loading at frozen state is
+$\mathcal P_S=\partial_S E\,\dot S$, as in~\eqref{eq:power}.
+
+Rearranging the energy balance~\eqref{eq:energy_balance} over $[0,T]$
+yields the \emph{first law}
+\begin{equation}\label{eq:first_law}
+  \underbrace{\Delta E}_{\text{change in free energy}}
+  \;+\;
+  \underbrace{\Diss_\Psi(\bs q;[0,T])}_{\mathcal D_{\mathrm{tot}}\ \ge 0}
+  \;=\;
+  \underbrace{\int_0^T \partial_S E(\bs q,S)\,\dot S\dd t}_{\mathcal W\ \text{(work of the environment)}},
+\end{equation}
+with $\Delta E=E(\bs q(T),S(T))-E(\bs q(0),S(0))$: the work supplied by
+the environment is stored as free energy or irreversibly dissipated.
+
+\subsection{Entropy production and the second law}\label{sec:second_law}
+
+The instantaneous \emph{dissipation rate} is
+\begin{equation}\label{eq:diss_rate}
+  \mathcal D(t) := \bs f(\bs q(t),S(t))\cdot\dot{\bs q}(t).
+\end{equation}
+
+\begin{proposition}[Second law]\label{prop:second_law}
+Along any solution of~\eqref{eq:biot} one has $\mathcal D(t)\ge 0$ for
+a.e.\ $t$. Moreover the \emph{excess dissipation}
+$\Xi(t):=\bs f(t)\cdot\dot{\bs q}(t)-\Psi(\dot{\bs q}(t))$ vanishes
+identically, $\Xi\equiv 0$.
+\end{proposition}
+
+\begin{proof}
+By \cref{prop:biot}, $\bs f\in\partial\Psi(\dot{\bs q})$; the
+saturation identity~\eqref{eq:saturation} gives
+$\bs f\cdot\dot{\bs q}=\Psi(\dot{\bs q})$, whence $\Xi\equiv 0$ and
+$\mathcal D=\Psi(\dot{\bs q})\ge 0$ by positiveness of $\Psi$.
+\end{proof}
+
+The non-negativity $\mathcal D\ge 0$ is the second law: dissipation is
+non-negative regardless of the direction of evolution. The identity
+$\Xi\equiv 0$ expresses a \emph{principle of minimal (economical)
+dissipation}: a rate-independent system saturates the dissipation
+inequality, dissipating exactly the minimum compatible with the energy
+balance, with no viscous excess. In an isothermal setting at absolute
+temperature $\Theta$, the irreversible entropy production rate is
+$\Theta\,\dot s_{\mathrm{irr}}=\mathcal D(t)\ge0$, so that over the
+whole process
+\begin{equation}\label{eq:entropy}
+  \Delta s_{\mathrm{irr}} = \frac{\mathcal D_{\mathrm{tot}}}{\Theta}
+  = \frac{\Diss_\Psi(\bs q;[0,T])}{\Theta}\ \ge\ 0,
+\end{equation}
+the standard form of the second law.
+
+\subsection{Geometric dissipation over closed cycles}\label{sec:hysteresis}
+
+A hallmark of rate-independent thermodynamics is that the energy
+dissipated over a closed loading cycle depends only on the geometry of
+the trajectory, not on its time scale. Consider a cycle with
+$S(0)=S(T)=S_0$ that returns the state to its initial value, so that
+$\Delta E=0$. Integrating~\eqref{eq:first_law} and using
+$\mathcal D\ge0$ (\cref{prop:second_law}) gives
+\begin{equation}\label{eq:cycle}
+  \mathcal W = \oint_0^T \partial_S E(\bs q,S)\,\dot S\dd t
+  = \mathcal D_{\mathrm{tot}} \ \ge\ 0.
+\end{equation}
+Hence the work performed by the environment over a closed cycle cannot
+be recovered and is entirely converted into irreversible entropy
+production. In the $(\bs q,\bs f)$ plane this manifests as a
+non-vanishing \emph{hysteresis loop} whose enclosed area equals exactly
+$\mathcal D_{\mathrm{tot}}$. The rate-independent structure therefore
+guarantees that returning the environment to its baseline leaves a
+permanent thermodynamic imprint---a property that, in the motivating
+biological application, models the non-volatility of the epigenetic
+state.

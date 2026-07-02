@@ -1,0 +1,105 @@
+% =====================================================================
+\section{Introduction}\label{sec:intro}
+% =====================================================================
+
+Many systems in the applied sciences are governed by evolution
+equations that encapsulate the balance between energy storage and
+dissipation. This kind of dissipative dynamics underlies, for
+instance, the theory of plasticity~\cite{lubliner:1990,hanreddy2013},
+viscoelasticity~\cite{tschoegl1989}, damage and
+delamination~\cite{lemaitre2005uh}, diffusion in porous
+media~\cite{bear1972}, frictional contact~\cite{wriggers2006},
+phase transformation in polycrystals~\cite{balljames1987,mielke2002}
+and ferromagnetism~\cite{desimone2002,brokate1996}. In all of these
+settings the governing equations account for the energetic mechanisms
+that take place during the process and ensure that fluxes balance the
+accumulation of energy. Remarkably, thermodynamics provides a common
+abstract structure that simplifies their analysis and reveals the
+essential ingredients of a consistent theory~\cite{germain1983,
+halphen1975generalized}.
+
+A particularly rich subclass consists of \emph{rate-independent}
+phenomena, whose behaviour is invariant under time
+reparametrisation. We refer to the monographs of Mielke and
+Roub{\'i}{\v c}ek~\cite{MielkeRoubicek}, of Visintin~\cite{visintin1994}
+and of Krasnosel'ski{\u\i} and Pokrovski{\u\i}~\cite{Krasnoselskii}, and
+to the foundational work of Mielke and Theil~\cite{MielkeTheil}, for
+comprehensive accounts of the mathematical structure of such problems. As shown there,
+rate-independent systems possess a variational structure that leads to
+powerful analytical results and robust approximation schemes, valid
+even in non-smooth settings. Using rate-independent, dissipative model
+equations as a template, it becomes easier to propose new models,
+irrespective of the field of application, knowing beforehand that the
+resulting governing equations respect the most fundamental balance
+principles.
+
+Rate-independent models have proven extremely successful in mechanics
+and, in particular, in elastoplasticity, fracture and damage
+theories~\cite{francfort1998,dalmaso2006,carstensen2002uh}. However,
+the framework is far more general, and its transfer to other
+disciplines may open fruitful avenues for modelling and analysis.
+The present work is motivated by one such transfer: a companion
+paper develops a rate-independent model of \emph{epigenetic}
+evolution, in which a scalar internal variable encodes the state of
+chromatin between a healthy and a damaged phenotype, and an external
+oxygen signal plays the role of the loading. Epigenetic marks such as
+DNA methylation are heritable, long-lived, and yet actively
+reversible~\cite{Bird2002}, and their dependence on the cellular
+microenvironment---for example, the impairment of oxygen-dependent
+demethylation enzymes under hypoxia~\cite{Thienpont2016}---produces
+memory and hysteresis phenomena that are naturally captured by
+rate-independent evolution. The biological development is deferred to
+the companion paper; here we concentrate on the mathematical framework
+that underpins it, which is of independent interest and applicable well
+beyond the motivating example.
+
+\paragraph{Scope and contributions.}
+Following the abstract set-up of~\cite{MielkeRoubicek}, we specify a
+rate-independent system by a triple $(\Q, E, \Psi)$ consisting of a
+state space $\Q\subseteq\R^n$, a stored-energy functional $E$
+depending on the state and on a prescribed loading path $S(t)$, and a
+convex, $1$-homogeneous dissipation potential $\Psi$. The
+contributions of this paper are the following.
+\begin{enumerate}[leftmargin=2em,itemsep=2pt]
+  \item We show that, once the triple is fixed and an energetic
+  principle is postulated, the governing equations are determined
+  systematically: we derive both the \emph{energetic formulation}
+  (global stability and energy balance,
+  \cref{def:energetic}) and the equivalent \emph{subdifferential} or
+  Biot inclusion (\cref{sec:subdiff}), and we make precise the
+  role of the $1$-homogeneity of $\Psi$ through a saturation identity
+  (\cref{lem:saturation}).
+  \item We give a self-contained thermodynamic reading of the
+  framework (\cref{sec:thermo}): the energy balance is the first law,
+  the non-negativity of the dissipation rate is the second law, and
+  the saturation identity expresses a principle of \emph{minimal}
+  (economical) dissipation. Over closed loading cycles this yields a
+  purely geometric characterisation of the hysteretic dissipation.
+  \item We collect and, where necessary, complete the well-posedness
+  theory (\cref{sec:math}): properties of the induced dissipation
+  distance, existence of energetic solutions, uniqueness under uniform
+  convexity, and existence and (scalar) uniqueness of
+  balanced-viscosity solutions obtained by vanishing viscosity, which
+  resolve the non-uniqueness of the energetic formulation at jumps.
+  \item We analyse a variational time integrator based on incremental
+  minimisation (\cref{sec:numerical}): we prove discrete stability and
+  a discrete energy inequality, convergence to energetic solutions,
+  local consistency of orders one and two under weak and strong
+  regularity, and a global energy-consistency estimate. In the scalar
+  case the incremental problem reduces to a two-sided return map.
+  \item We validate the theory on an abstract scalar double-well
+  benchmark driven by a bounded, saturating loading
+  (\cref{sec:experiments}), reproducing the analytically known
+  quasi-static branches, the reversible and catastrophic hysteresis
+  loops, and the predicted first-order energy consistency.
+\end{enumerate}
+
+\paragraph{Outline.}
+\Cref{sec:framework} introduces the framework and the governing
+equations. \Cref{sec:thermo} develops the thermodynamic
+interpretation. \Cref{sec:math} presents the well-posedness results,
+and \cref{sec:numerical} the variational numerical method and its
+analysis. \Cref{sec:experiments} reports the numerical experiments,
+and \cref{sec:conclusions} draws conclusions and outlines future work.
+To keep the exposition readable, all proofs are collected in the
+appendices.
