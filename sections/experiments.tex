@@ -2,10 +2,16 @@
 \section{Numerical experiments}\label{sec:experiments}
 % =====================================================================
 
-We validate the method on the minimal RIE model of epigenetic memory,
-the scalar \emph{linear play operator}, for which the evolution is
-available in closed form and the integrator can be compared against the
-exact solution.
+We validate the method on two benchmarks, both admitting a closed-form
+solution so that the integrator can be compared directly against exact
+values: the scalar \emph{linear play operator}
+(\cref{sec:benchmark,sec:regimes,sec:conv_exp}), the minimal RIE model
+of epigenetic memory, whose landscape is convex; and a
+\emph{piecewise-quadratic double well} (\cref{sec:benchmark2}), which
+is genuinely bistable and exercises the balanced-viscosity mechanism of
+\cref{sec:bv}. All curves shown are the \emph{numerical} solution
+produced by the return-map integrator; we report separately, in each
+convergence study, how closely it reproduces the closed-form values.
 
 \subsection{The linear play operator}\label{sec:benchmark}
 
@@ -57,14 +63,19 @@ We fix $k=1$, $\ell_\infty=0.5$, $\lambda=1$, $S_{\max}=5$
 ($\ell_{\max}\approx0.497$), $T=1$, and contrast the two regimes:
 a \emph{reversible} one, $\rho=0.1<\ell_{\max}/2$, and an
 \emph{irreversible} one, $\rho=0.3\in(\ell_{\max}/2,\ell_{\max})$.
-\Cref{fig:time} shows the time evolution: in both regimes the state
-stays locked until the drive reaches the yield threshold, then follows
-the loading; on unloading it locks again and either recovers to
+\Cref{fig:time} shows the \emph{numerical} time evolution (return-map
+integrator, $N=2000$): in both regimes the state stays locked until the
+drive reaches the yield threshold, then follows the loading; on
+unloading it locks again and either recovers to
 $q_{\mathrm{res}}=\rho/k=0.1$ (reversible) or remains frozen at
 $q_{\max}\approx0.197$ (irreversible). \Cref{fig:loops} shows the
-corresponding hysteresis loops, whose area equals the dissipation per
-cycle. The closed-form values~\eqref{eq:play_exact}--\eqref{eq:residual}
-are reproduced by the integrator to machine precision (\cref{tab:val}).
+corresponding numerical hysteresis loops, whose area equals the
+dissipation per cycle. As established quantitatively in
+\cref{sec:conv_exp}, these numerical curves are visually
+indistinguishable from the closed-form
+solution~\eqref{eq:play_exact}--\eqref{eq:residual} because, for this
+benchmark, the integrator reproduces it \emph{exactly} at every node
+(\cref{tab:val}).
 
 \begin{figure}[t]
   \centering
@@ -190,4 +201,222 @@ data track the reference slope-one line.
   \cref{thm:global_consistency}. The state error, by contrast, is at
   machine precision because the return map is exact at the nodes.}
   \label{fig:convergence}
+\end{figure}
+
+Because $\Q\ni q\mapsto E(q,S)$ is convex on this benchmark, the
+incremental minimisation~\eqref{eq:Ikstar} has a unique critical point
+and the distinction between a \emph{global} and a \emph{local} solver
+of it is moot: there is nothing here to expose the difference between
+energetic and balanced-viscosity solutions. The next benchmark restores
+that distinction.
+
+% =====================================================================
+\subsection{A bistable double well}\label{sec:benchmark2}
+% =====================================================================
+
+Let $\Q=\R$ and
+\begin{equation}\label{eq:benchmark2}
+  W(q)=
+  \begin{cases}
+    \tfrac12 k(q+a)^2, & q\le0,\\
+    \tfrac12 k(q-a)^2, & q>0,
+  \end{cases}
+  \qquad
+  \ell(S)=\ell_\infty\bigl(1-e^{-\lambda S}\bigr),
+  \qquad
+  \Psi(\dot q)=\rho\,|\dot q|,
+\end{equation}
+with $k,a,\rho>0$. This is a genuinely \emph{bistable} landscape: two
+wells at $q=\mp a$ (where $W=0$), separated by a corner at $q=0$ (where
+$W$ is continuous but not differentiable, $W=\tfrac12ka^2$). The
+corner is a caricature of a smooth barrier --- the direct,
+piecewise-linear analogue of the double well used in the companion
+biological model --- chosen because $g(q)=W'(q)=k(q+a)$ for $q\le0$ and
+$k(q-a)$ for $q>0$ is \emph{piecewise linear}, so every yield condition
+below inverts elementarily; no cubic ever needs to be solved. $W$ is
+continuous and coercive of order $p=2$ (\ref{A:W}), and $E(\cdot,S)$
+has exactly two local minima for every $S$, so \cref{thm:BV} applies:
+a BV solution exists and, in this scalar case, is unique.
+
+\paragraph{The jump is unavoidable.} Under monotonically increasing
+loading, a transition between the two wells of \emph{any} non-convex
+bistable energy is necessarily discontinuous: continuously tracking a
+local equilibrium would require $g$ to increase throughout, but $g$
+is not monotone between the wells (here it jumps down, from $+ka$ to
+$-ka$, at the corner). There is no smooth analogue, for this benchmark,
+of the reversible regime of \cref{sec:benchmark}.
+
+\paragraph{Energetic solution (closed form).} Because
+\eqref{eq:Ikstar} minimises \emph{globally} over $\Q$, it computes the
+energetic solution (\cref{thm:convergence}), whose switching instant is
+set by a Maxwell-type comparison of $E(q,S)+\Dr(q(t),q)$ across both
+wells, not merely by the loss of stability of the current branch. Fixing
+the initial datum $q(0)=-a$ and comparing the two wells' own energies
+under the loading, one finds (\cref{app:experiments}) a remarkably
+simple, closed-form threshold, independent of $k$ and $a$:
+\begin{equation}\label{eq:l_jump_energetic}
+  \boxed{\ell_{\mathrm{jump}} = \rho,}
+  \qquad
+  q^-=-a \ \longmapsto\ q^+=+a,
+\end{equation}
+i.e.\ the state remains locked at the bottom of the initial well until
+$\ell(S(t))$ reaches $\rho$, at which instant it jumps directly to the
+bottom of the other well. Thereafter, on the new branch,
+\begin{equation}\label{eq:play_exact2}
+  q(t)=
+  \begin{cases}
+    -a, & t\le t_{\mathrm{jump}},\\[2pt]
+    \bigl(\ell(t)-\rho\bigr)/k+a, & t_{\mathrm{jump}}<t\le T/2,\\[2pt]
+    \min\bigl\{q_{\max},\,(\ell(t)+\rho)/k+a\bigr\}, & T/2<t\le T,
+  \end{cases}
+\end{equation}
+with $q_{\max}=(\ell_{\max}-\rho)/k+a$ and $t_{\mathrm{jump}}$ obtained
+in closed form by inverting $\ell(S(t))=\rho$ on the ascending branch.
+As in \cref{sec:benchmark}, the residual state
+$q_{\mathrm{res}}=q(T)=\min\{q_{\max},\,\rho/k+a\}$ exhibits the same
+reversible/lock-in dichotomy governed by $\rho$ against $\ell_{\max}$.
+
+\begin{remark}[Contrast with the balanced-viscosity threshold]
+\label{rem:energetic_vs_bv}
+Energetic solutions are known to be able to switch earlier than is
+physically natural, precisely because condition (S) compares the
+current state against \emph{every} other state, not merely against
+nearby ones; this is exactly the motivation for balanced-viscosity
+solutions given in \cref{sec:bv}. The present benchmark makes that
+gap concrete and quantitative: the left branch's own local stability,
+$|f(q,S)|\le\rho$ evaluated \emph{on that branch alone}, persists until
+$\ell = ka+\rho$, strictly later than the energetic
+threshold~\eqref{eq:l_jump_energetic} (they coincide only in the
+degenerate case $a=0$, no barrier). The incremental
+scheme~\eqref{eq:Ikstar}, as formally stated, minimises over all of
+$\Q$ and therefore targets the energetic solution; approximating the
+physically-selected BV solution instead would require restricting the
+minimisation to a neighbourhood of $q_k$ (a local, return-map-style
+solve, as is standard in computational plasticity) together with the
+vanishing-viscosity jump construction of \cref{def:BV}, which we do
+not carry out numerically here.
+\end{remark}
+
+\subsection{Numerical validation of the jump}\label{sec:regimes2}
+
+We fix $k=1$, $a=0.15$, $\rho=0.10$, and reuse the loading protocol of
+\cref{sec:regimes} ($\ell_\infty=0.5$, $\lambda=1$, $S_{\max}=5$,
+$T=1$), so that $\ell_{\mathrm{jump}}=0.10<\ell_{\max}\approx0.497$ and
+the jump occurs at $t_{\mathrm{jump}}\approx0.0678$.
+\Cref{fig:time2} shows the numerical time evolution and the resulting
+hysteresis loop: the state is locked at $-a$, jumps discontinuously to
+$+a$, continues to flow on the new branch up to the peak load, and
+partially recovers on unloading. \Cref{tab:val2} confirms the
+closed-form threshold, jump target, peak and residual are all
+reproduced by the integrator.
+
+\begin{figure}[t]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xmin=0,xmax=1,axis y line*=left,xlabel={$t$},ylabel={$q(t)$},
+        tick label style={font=\small}]
+        \addplot[thick,blue] table[x=t,y=q]{figures/fig_time_bistable.dat};
+      \end{axis}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xmin=0,xmax=1,axis y line*=right,axis x line=none,ylabel={$S(t)$},
+        tick label style={font=\small},legend pos=south east,
+        legend cell align=left]
+        \addlegendimage{thick,blue}\addlegendentry{$q(t)$}
+        \addplot[thick,red!70!black,dashed] table[x=t,y=S]{figures/fig_time_bistable.dat};
+        \addlegendentry{$S(t)$}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Time evolution}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xlabel={$\ell(S)$},ylabel={$q$},grid=both,
+        grid style={gray!20},tick label style={font=\small}]
+        \addplot[thick,blue] table[x=ell,y=q]{figures/fig_loop_bistable.dat};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Hysteresis loop}
+  \end{subfigure}
+  \caption{Bistable benchmark: (a) the state jumps discontinuously from
+  $-a$ to $+a$ once $\ell(S(t))$ reaches $\rho$, then flows smoothly;
+  (b) the corresponding loop in the $(\ell,q)$ plane, with a vertical
+  segment at the jump.}
+  \label{fig:time2}
+\end{figure}
+
+\begin{table}[t]
+  \centering
+  \caption{Closed-form~\eqref{eq:l_jump_energetic}--\eqref{eq:play_exact2}
+  vs.\ computed values ($N=4000$).}
+  \label{tab:val2}
+  \begin{tabular}{lcc}
+    \toprule
+    quantity & exact & numerical \\
+    \midrule
+    $\ell_{\mathrm{jump}}$ & $0.10000$ & $0.10063$ $^{\ast}$ \\
+    $q^+$ (post-jump)      & $0.15000$ & $0.15064$ $^{\ast}$ \\
+    $q_{\max}$ (peak)      & $0.54663$ & $0.54663$ \\
+    $q_{\mathrm{res}}$ (residual) & $0.25000$ & $0.25000$ \\
+    \bottomrule
+  \end{tabular}
+  \vspace{2pt}
+  \begin{minipage}{0.85\textwidth}
+    \small $^\ast$Evaluated at the first grid node past
+    $t_{\mathrm{jump}}$; the $O(h)$ discrepancy is precisely the
+    subject of \cref{sec:conv2}.
+  \end{minipage}
+\end{table}
+
+\subsection{Convergence across a jump}\label{sec:conv2}
+
+At every grid node the return map solves the same threshold comparison
+as the exact solution, using the same previous state $q_k$; consequently
+$q^h(t_i)=q(t_i)$ \emph{exactly}, for every $i$ and every $h$, just as
+in \cref{sec:conv_exp} --- the single jump does not, by itself, spoil
+node-wise exactness. The genuine $O(h)$ discretisation error is an
+\emph{interpolation} effect: between nodes, the natural piecewise-constant
+representation of the discrete solution, $q^h(t)=q^h(t_i)$ for
+$t\in[t_i,t_{i+1})$, differs from the (continuously varying) exact
+solution by the usual zeroth-order-hold error, of size
+$O(h\,\|\dot q\|)$ wherever $q$ is differentiable, and by an
+$O(1)$ pointwise mismatch confined to the single $O(h)$-wide interval
+containing $t_{\mathrm{jump}}$. \Cref{fig:convergence2} reports two
+integrated measures of this interpolation error against a fine,
+$h$-independent sampling of the exact solution: the time-averaged
+($L^1$) error, and the sup-norm error restricted to times at least
+$O(h)$ away from $t_{\mathrm{jump}}$. Both decay as $O(h)$, with no
+qualitative penalty from the presence of the jump: the interpolation
+error near the jump is larger in absolute size but not of a different
+order than the routine zeroth-order-hold error present throughout the
+smooth branches. The global energy defect, computed exactly as in
+\cref{sec:conv_exp}, again decays as $O(h)$.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.65\textwidth,height=0.42\textwidth,
+      xlabel={$h$},ylabel={error},
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_bistable.dat};
+      \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf_away]{figures/fig_convergence_bistable.dat};
+      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_bistable.dat};
+      \addplot[dashed,black,domain=1.5e-4:2e-2]{0.45*x};
+      \legend{$L^1$ state error,$L^\infty$ state error (away from jump),energy defect,slope $1$}
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{Interpolation error of the piecewise-constant discrete
+  solution against the exact solution~\eqref{eq:play_exact2} (fine,
+  $h$-independent sampling) and global energy-balance defect
+  (\cref{sec:conv_exp}), log--log. All three quantities decay as
+  $O(h)$; the state-error norms are consistent with a standard
+  zeroth-order-hold error uniformly present throughout the cycle,
+  including near the jump.}
+  \label{fig:convergence2}
 \end{figure}

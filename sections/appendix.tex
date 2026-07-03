@@ -330,3 +330,88 @@ $\mathcal E_\tau\le\tfrac12 C_{\ell'}\|\dot{\bs q}\|_{L^\infty}\|\dot S\|_{L^\in
 \le\tfrac12 C_{\ell'}\|\dot{\bs q}\|_{L^\infty}\|\dot S\|_{L^\infty}\,T\,h$,
 using $\sum_k h_k^2\le h\sum_k h_k=Th$. Both give $\mathcal E_\tau=O(h)$.
 \end{proof}
+
+% =====================================================================
+\section{Details for the bistable benchmark}
+\label{app:experiments}
+
+We verify the energetic jump threshold~\eqref{eq:l_jump_energetic} of
+\cref{sec:benchmark2} and the local-stability threshold quoted in
+\cref{rem:energetic_vs_bv}.
+
+\begin{proposition}[Energetic jump threshold]\label{prop:jump_energetic}
+For the potential~\eqref{eq:benchmark2} with $q(0)=-a$ and $\ell$
+increasing, the state $q(t)=-a$ satisfies global stability
+\textnormal{(S)} against every competing state exactly while
+$\ell(S(t))\le\rho$, and fails it for $\ell(S(t))>\rho$, with the
+comparison realised by $q=+a$.
+\end{proposition}
+
+\begin{proof}
+Fix $\ell\ge0$ and write $I(q):=E(q,\ell)+\rho|q+a|$, the incremental
+objective~\eqref{eq:Ikstar} with $q_k=-a$; condition (S) at $q=-a$
+holds iff $q=-a$ globally minimises $I$. On the left branch
+($q\le0$), $I(q)=\tfrac12k(q+a)^2-q\ell+\rho(q+a)$ is strictly convex
+with derivative $k(q+a)-\ell+\rho$ at $q=-a$ equal to $\rho-\ell\ge0$
+for $\ell\le\rho$; since $I$ is increasing at $q=-a$ on this branch,
+$q=-a$ is its constrained minimiser there for $\ell\le\rho$.
+
+On the right branch ($q>0$), $I(q)=\tfrac12k(q-a)^2-q\ell+\rho(q+a)$
+is strictly convex with unconstrained minimiser
+$q_R(\ell):=(\ell-\rho)/k+a$ (valid, i.e.\ $q_R(\ell)>0$, once
+$\ell>\rho-ka$). Using $q_R(\ell)-a=(\ell-\rho)/k$,
+\[
+  W(q_R(\ell)) = \frac{(\ell-\rho)^2}{2k},
+  \qquad
+  E(q_R(\ell),\ell) = \frac{(\ell-\rho)^2}{2k} - \frac{\ell(\ell-\rho)}{k} - a\ell
+  = -\frac{\ell^2-\rho^2}{2k} - a\ell,
+\]
+and, since $q_R(\ell)+a=(\ell-\rho)/k+2a$,
+\[
+  I(q_R(\ell)) = E(q_R(\ell),\ell) + \rho\bigl(q_R(\ell)+a\bigr)
+  = -\frac{(\ell-\rho)^2}{2k} - a\ell + 2a\rho.
+\]
+On the left branch, $-a$ lies at $q+a=0$, so
+$I(-a)=E(-a,\ell)=W(-a)+a\ell=a\ell$ (the quadratic term vanishes:
+$-a$ is the left well's own bottom). Subtracting,
+\begin{equation}\label{eq:maxwell}
+  I(-a) - I(q_R(\ell))
+  = a\ell - \Bigl[-\frac{(\ell-\rho)^2}{2k} - a\ell + 2a\rho\Bigr]
+  = 2a(\ell-\rho) + \frac{(\ell-\rho)^2}{2k}
+  = (\ell-\rho)\Bigl[2a + \frac{\ell-\rho}{2k}\Bigr].
+\end{equation}
+This vanishes at $\ell=\rho$ and, for $\ell\in[0,\rho]$, is a product
+of the non-positive factor $(\ell-\rho)$ and a bracket whose minimum
+over this range, attained at $\ell=0$, is $2a-\rho/(2k)$: whenever
+$\rho<4ka$ (satisfied by the benchmark parameters of
+\cref{sec:regimes2}), this bracket stays positive throughout
+$[0,\rho]$, so~\eqref{eq:maxwell} is $\le0$ on $[0,\rho]$, vanishing
+only at $\ell=\rho$, and strictly positive immediately beyond (the
+bracket remains positive near $\ell=\rho$ while $(\ell-\rho)$ turns
+positive). Thus $I(-a)\le I(q_R(\ell))$ throughout $\ell\in[0,\rho]$
+with equality only at $\ell=\rho$; since $q_R(\ell)$ is $I$'s own
+minimiser on the right branch and $-a$ is $I$'s own constrained
+minimiser on the left branch throughout this range, $q=-a$ is the
+global minimiser of $I$ over all of $\Q$ exactly on $\ell\in[0,\rho]$,
+and fails to be one immediately beyond. At $\ell=\rho$, $q_R(\rho)=a$,
+so the comparison is realised by $q=+a$, proving the proposition.
+\end{proof}
+
+\begin{remark}[Local threshold]
+\label{rem:local_threshold}
+The \emph{local} stability of $q=-a$ --- i.e.\ whether $-a$ remains a
+stationary point of the left branch alone, $f(-a,\ell)=\ell-g(-a)=\ell\in[-\rho,\rho]$
+--- persists throughout $\ell\le\rho$ as well: both the global and the
+local criterion give the identical threshold $\ell=\rho$ \emph{for the
+pre-jump state} $q^-=-a$, because $-a$ is simultaneously the bottom of
+the left well and the point being compared in the Maxwell
+construction~\eqref{eq:maxwell}. The two notions diverge instead when
+tracking how far the state could locally continue to flow along the
+\emph{left} branch before running out of room there: the trial force on
+that branch reaches $f=\rho$ (i.e.\ the branch's own admissibility
+limit) only at $\ell=ka+\rho>\rho$, strictly later. This is the
+threshold quoted in \cref{rem:energetic_vs_bv}; determining the
+corresponding BV-selected post-jump state requires the vanishing-viscosity
+construction of \cref{sec:bv} and is not pursued numerically in this
+paper.
+\end{remark}
