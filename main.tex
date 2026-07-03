@@ -73,8 +73,8 @@
 % =====================================================================
 \begin{document}
 
-\title{\bfseries A thermodynamically consistent framework of
-rate-independent evolution:\\ theory and variational approximation}
+\title{\bfseries Rate-Independent Epigenetics: a thermodynamically
+consistent framework for modelling epigenetic changes}
 
 \author{Jacobo Ayensa-Jim\'enez\thanks{Technical University of Madrid
 (UPM), Madrid, Spain. \texttt{jacobo.ayensa@upm.es}.}
@@ -87,46 +87,51 @@ Materials Institute, Madrid, Spain. \texttt{ignacio.romero@upm.es}.}}
 \maketitle
 
 \begin{abstract}
-We develop and analyse an abstract framework for the evolution of
-dissipative systems within the theory of rate-independent processes.
-The framework is specified by a triple consisting of a state space, a
-stored-energy functional depending on the state and on a
-time-dependent loading, and a $1$-homogeneous dissipation potential.
-Assuming that the system evolves according to an energetic principle,
-the governing equations---an energetic (global stability plus energy
-balance) formulation and an equivalent subdifferential inclusion of
-Biot type---are derived systematically, without additional modelling
-hypotheses. We show that solutions satisfy, a priori, energetic
-estimates intimately related to the first and second laws of
-thermodynamics: the energy balance is an exact statement of energy
-conservation, while the $1$-homogeneity of the dissipation potential
-forces a non-negative, minimal (\emph{economical}) dissipation.
-Under natural coercivity and continuity assumptions we establish the
-existence of energetic solutions and, through a vanishing-viscosity
-selection, of balanced-viscosity solutions that resolve the ambiguity
-of the energetic formulation at jumps; uniqueness is obtained under
-uniform convexity and, in the scalar case, under a mild
-finite-multiplicity condition. We then construct a variational time
-integrator based on incremental minimisation, prove discrete
-stability and a discrete energy inequality, and establish convergence
-to energetic solutions together with first- and second-order local
-consistency estimates and a global energy-consistency bound.
-The theory is illustrated on a scalar double-well benchmark driven by
-a bounded, saturating loading, for which the return-map integrator
-reproduces the exact quasi-static branches and exhibits the predicted
-first-order energy consistency. The framework is motivated by, and
-tailored to, a companion application to epigenetic evolution, developed
-elsewhere.
+Epigenetic changes---heritable, long-lived, yet actively reversible
+modifications of the chromatin state---display memory, threshold
+activation and hysteresis, features that are the hallmark of
+\emph{rate-independent} dissipative evolution. We propose a
+mathematical framework, which we call Rate-Independent Epigenetics
+(RIE), that models epigenetic change within the theory of
+rate-independent systems and is, by construction, consistent with the
+laws of thermodynamics. A model is specified by a triple: a state
+space of epigenetic configurations, a stored-energy functional
+depending on the state and on an external (micro-environmental)
+loading, and a $1$-homogeneous dissipation potential encoding the
+resistance of the epigenetic machinery to change. Assuming an
+energetic evolution principle, the governing equations---an energetic
+(global stability plus energy balance) formulation and an equivalent
+subdifferential inclusion of Biot type---follow systematically, with
+no further modelling hypotheses. Solutions satisfy, a priori, energetic
+estimates that coincide with the first and second laws: the energy
+balance is exact energy conservation, and the $1$-homogeneity of the
+dissipation potential forces a non-negative, minimal (\emph{economical})
+dissipation. Under natural coercivity and continuity assumptions we
+establish existence of energetic solutions and, via vanishing
+viscosity, of balanced-viscosity solutions that resolve the ambiguity
+of the energetic formulation at epigenetic switches; uniqueness holds
+under convexity and, in the scalar case, under a mild
+finite-multiplicity condition. We then build a variational time
+integrator, prove its convergence to energetic solutions and a global
+energy-consistency estimate, and reduce it, in the scalar case, to a
+two-sided return map. The framework is illustrated on the scalar linear
+play operator, the minimal RIE model of epigenetic memory, for which
+the state evolution is obtained in closed form and reproduces both
+reversible and irreversible (locked-in) responses; the integrator
+recovers the exact solution at the nodes and exhibits the predicted
+first-order energy consistency. The bistable model of catastrophic
+phenotype switching, and its biological calibration, are developed in a
+companion paper.
 
 \medskip
-\noindent\textbf{Keywords:} rate-independent systems; energetic
-solutions; balanced-viscosity solutions; dissipation potential;
-hysteresis; variational time integration; return mapping;
+\noindent\textbf{Keywords:} rate-independent systems; epigenetics;
+energetic solutions; balanced-viscosity solutions; dissipation
+potential; hysteresis; play operator; variational time integration;
 thermodynamic consistency.
 
 \medskip
 \noindent\textbf{AMS Subject Classification:}
-49J40, 74C05, 34G25, 74N30, 65M12, 80A17.
+49J40, 74C05, 34G25, 74N30, 65M12, 92C40, 80A17.
 \end{abstract}
 
 \tableofcontents

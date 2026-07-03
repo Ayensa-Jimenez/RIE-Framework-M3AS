@@ -162,24 +162,16 @@ local stability $\bs f(\bs q(t),S(t))\in\E$ implies
 Equation~\eqref{eq:biot} is the (generalised) Biot
 equation~\cite{Biot1956}; for $\Psi=\rho\|\cdot\|$ it coincides with the
 sweeping process of Moreau~\cite{moreau1977} and, in one dimension, with
-the play operator of hysteresis. Its usefulness rests on the following
-identity, which is the algebraic signature of $1$-homogeneity.
-
-\begin{lemma}[Saturation identity]\label{lem:saturation}
-Let $\Psi\colon\R^n\to[0,+\infty)$ be convex, normalised and
-positively $1$-homogeneous. Then for every $\bs v\in\R^n$ and every
-$\bs f\in\partial\Psi(\bs v)$,
-\begin{equation}\label{eq:saturation}
-  \bs f\cdot\bs v = \Psi(\bs v).
+the play operator of hysteresis~\cite{Krasnoselskii,visintin1994}. Its
+analysis rests on the \emph{saturation identity}, the algebraic
+signature of $1$-homogeneity: if $\bs f\in\partial\Psi(\bs v)$ then
+$\bs f\cdot\bs v=\Psi(\bs v)$ (\cref{lem:saturation} in
+\cref{app:framework}). Combined with \cref{prop:biot}, it yields, along
+any solution,
+\begin{equation}\label{eq:saturation_solution}
+  \bs f(\bs q,S)\cdot\dot{\bs q}=\Psi(\dot{\bs q}),
 \end{equation}
-Moreover $\partial\Psi(\lambda\bs v)=\partial\Psi(\bs v)$ for all
-$\lambda>0$, and $\bs f\in\partial\Psi(\bs v)$ if and only if
-$\bs f\in\E$ and $\bs f\cdot\bs v=\Psi(\bs v)$.
-\end{lemma}
-
-Combining \cref{prop:biot,lem:saturation} gives, along any solution,
-$\bs f(\bs q,S)\cdot\dot{\bs q}=\Psi(\dot{\bs q})$, i.e.\ the
-dissipation potential is exactly balanced by the energy release rate at
-frozen loading. This identity is the cornerstone of the thermodynamic
-interpretation of \cref{sec:thermo}. The proofs of
-\cref{prop:biot,lem:saturation} are given in \cref{app:framework}.
+i.e.\ the dissipation is exactly balanced by the energy release at
+frozen loading. This is the cornerstone of the thermodynamic
+interpretation of \cref{sec:thermo}. The proof of \cref{prop:biot} is
+given in \cref{app:framework}.

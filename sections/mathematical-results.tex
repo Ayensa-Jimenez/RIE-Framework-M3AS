@@ -1,9 +1,12 @@
 % =====================================================================
-\section{Mathematical results}\label{sec:math}
+\section{Well-posedness}\label{sec:math}
 % =====================================================================
 
-Throughout this section we work under the following standing
-hypotheses.
+We now state the principal existence and uniqueness results for RIE
+models. Throughout we work under the following standing hypotheses; the
+supporting results (properties of the dissipation distance, energy
+estimates and compatibility conditions) and all proofs are collected,
+in detail, in \cref{app:math}.
 
 \begin{assumption}[Standing hypotheses]\label{ass:standing}
 The triple $(\Q,E,\Psi)$ with $E(\bs q,S)=W(\bs q)-\bs q\cdot\bs\ell(S)$
@@ -27,124 +30,61 @@ satisfies:
 \end{enumerate}
 \end{assumption}
 
-Hypothesis~\ref{A:coerc} is used only for the total-variation bound in
-the balanced-viscosity theory (\cref{sec:bv}); it holds with
-$c_\Psi=\rho$ for $\Psi(\bs v)=\rho\|\bs v\|$ and, more generally,
-whenever the elastic domain has the origin in its interior.
+Hypotheses \ref{A:W}--\ref{A:Psi} are the classical ingredients for
+energetic solutions; \ref{A:coerc}, which we add explicitly, is needed
+for the total-variation bound underlying balanced-viscosity solutions
+and holds with $c_\Psi=\rho$ for $\Psi=\rho\|\cdot\|$. In the
+epigenetic reading, \ref{A:W} is the confinement of the chromatin state
+by a coercive landscape, \ref{A:ell} the boundedness of the
+micro-environmental drive, and \ref{A:coerc} the strict positivity of
+the resistance to remodelling.
 
-\subsection{Properties of the dissipation distance}\label{sec:diss_props}
+\subsection{Existence and uniqueness of energetic solutions}
+\label{sec:existence}
 
-\begin{proposition}[Quasi-pseudodistance]\label{prop:quasi_distance}
-Under~\ref{A:Psi}, the dissipation distance~\eqref{eq:diss_dist}
-satisfies, for all $\bs q_1,\bs q_2,\bs q_3\in\Q$,
-\[
-  \Dr(\bs q_1,\bs q_2)\ge0,\quad \Dr(\bs q,\bs q)=0,\qquad
-  \Dr(\bs q_1,\bs q_3)\le\Dr(\bs q_1,\bs q_2)+\Dr(\bs q_2,\bs q_3).
-\]
-If $\Psi$ is symmetric then $\Dr$ is a pseudodistance; if in addition
-$\Psi(\bs v)=0\Rightarrow\bs v=\bs 0$ (e.g.\ under~\ref{A:coerc}), then
-$\Dr$ is a distance.
-\end{proposition}
-
-\begin{proposition}[Linearity and continuity]\label{prop:Dr_linear}
-If $\Q$ is convex and $\Psi$ is continuous, convex and positively
-$1$-homogeneous, then
-\begin{equation}\label{eq:Dr_linear}
-  \Dr(\bs q_1,\bs q_2)=\Psi(\bs q_2-\bs q_1)\qquad\forall\,\bs q_1,\bs q_2\in\Q,
-\end{equation}
-and $\Dr$ is continuous on $\Q\times\Q$. In particular, for
-$\Psi(\dot q)=\rho|\dot q|$ one has $\Dr(q_1,q_2)=\rho|q_2-q_1|$.
-\end{proposition}
-
-The identity~\eqref{eq:Dr_linear} is central to the numerical method:
-it makes the incremental dissipation independent of the step size.
-
-\subsection{Energy estimates}\label{sec:energy_estimates}
-
-\begin{proposition}[Coercivity, absolute continuity and power
-control]\label{prop:power}
-Under~\ref{A:W}--\ref{A:S}, the following hold.
-\begin{enumerate}[label=\textnormal{(E\arabic*)},leftmargin=2.6em,itemsep=2pt]
-  \item\label{E:compact} For every $c\in\R$ and $S\ge0$ the sublevel
-  set $\{\bs q\in\Q:E(\bs q,S)\le c\}$ is compact.
-  \item\label{E:AC} For each $\bs q\in\Q$, $t\mapsto E(\bs q,S(t))$ is
-  absolutely continuous with
-  $\frac{\dd}{\dd t}E(\bs q,S(t))=-\bs q\cdot\bs\ell'(S(t))\dot S(t)$
-  a.e.
-  \item\label{E:gronwall} There exist $c_3,c_4>0$, depending only on
-  the data, with $|\partial_S E(\bs q,S)|\le c_3\bigl(E(\bs q,S)+c_4\bigr)$
-  for all $\bs q\in\Q$, $S\ge0$.
-\end{enumerate}
-\end{proposition}
-
-\subsection{Existence of energetic solutions}\label{sec:existence}
-
-We first recall the set of states that pass the stability test.
+The stability test~\eqref{eq:stability} singles out the following set.
 
 \begin{definition}[Stability set]\label{def:stability_set}
-For $t\in[0,T]$, the \emph{stability set} is
-$\mathcal S(t):=\{\bs q\in\Q: E(\bs q,S(t))\le E(\tilde{\bs q},S(t))+\Dr(\bs q,\tilde{\bs q})\ \ \forall\,\tilde{\bs q}\in\Q\}$.
+For $t\in[0,T]$, $\mathcal S(t):=\{\bs q\in\Q: E(\bs q,S(t))\le
+E(\tilde{\bs q},S(t))+\Dr(\bs q,\tilde{\bs q})\ \ \forall\,\tilde{\bs q}\in\Q\}$.
 \end{definition}
 
-The passage to the limit in the existence proof rests on the following
-compatibility properties, which we state explicitly (the corresponding
-statement is only sketched in the general theory).
-
-\begin{lemma}[Compatibility]\label{lem:compatibility}
-Under~\ref{A:W}--\ref{A:Psi}, let $(t_m,\bs q_m)$ be a stable sequence,
-i.e.\ $\bs q_m\in\mathcal S(t_m)$ with
-$\sup_m E(\bs q_m,S(t_m))<\infty$, and suppose $t_m\to t$ and
-$\bs q_m\to\bs q$ in $\Q$. Then:
-\textnormal{(C1)} the power converges, $\partial_S E(\bs q_m,S(t_m))\to
-\partial_S E(\bs q,S(t))$ for a.e.\ $t$; and \textnormal{(C2)} the
-stability set is closed, $\bs q\in\mathcal S(t)$.
-\end{lemma}
-
-\begin{theorem}[Existence of energetic solutions]\label{thm:existence}
-Under~\ref{A:W}--\ref{A:Psi}, for every initial datum
+\begin{theorem}[Existence]\label{thm:existence}
+Under \ref{A:W}--\ref{A:Psi}, for every initial datum
 $\bs q_0\in\mathcal S(0)$ there exists at least one energetic solution
 $\bs q\colon[0,T]\to\Q$ of bounded variation, in the sense of
 \cref{def:energetic}.
 \end{theorem}
 
-The proof verifies the abstract hypotheses of
-\cite[Thm.~2.1.6]{MielkeRoubicek} using
-\cref{prop:quasi_distance,prop:power,lem:compatibility}; see
-\cref{app:math}. For the benchmark of \cref{sec:experiments}, $\Q=\R$
-is not compact but $W$ is a coercive quartic, so~\ref{A:W} holds and
-\cref{thm:existence} applies.
+Energetic solutions need not be unique: at an epigenetic switch,
+several post-jump states may satisfy~(S)--(E). Uniqueness is recovered
+under convexity of the landscape.
 
-\subsection{Uniqueness under uniform convexity}\label{sec:uniqueness}
-
-Energetic solutions need not be unique: at a jump, several post-jump
-states may satisfy~(S)--(E). Uniqueness is recovered under convexity.
-
-\begin{theorem}[Uniqueness]\label{thm:uniqueness}
-Assume, in addition to~\ref{A:W}--\ref{A:Psi}, that
-$W\in C^3(\Q)$ is uniformly convex ($D^2W\succeq\alpha\Id$, $\alpha>0$)
-and that $\bs\ell\in C^3$, $S\in C^3([0,T])$. Then for every
+\begin{theorem}[Uniqueness under convexity]\label{thm:uniqueness}
+Assume, in addition to \ref{A:W}--\ref{A:Psi}, that $W\in C^3(\Q)$ is
+uniformly convex ($D^2W\succeq\alpha\Id$, $\alpha>0$) and that
+$\bs\ell\in C^3$, $S\in C^3([0,T])$. Then for every
 $\bs q_0\in\mathcal S(0)$ the energetic solution is unique.
 \end{theorem}
 
-Uniform convexity forces a single well and thus excludes the
-multi-well energies of interest; the scalar theory of \cref{sec:bv}
-provides an alternative route.
+Uniform convexity forces a single well and thus excludes the bistable
+landscapes central to epigenetics; the balanced-viscosity theory below
+restores uniqueness without convexity.
 
 \subsection{Balanced-viscosity solutions}\label{sec:bv}
 
-\paragraph{Motivation.}
-At a jump point $t^\ast$, conditions~(S)--(E) require the released
-energy to cover the dissipation cost
-$\Dr(\bs q^-(t^\ast),\bs q^+(t^\ast))$ but do not select the post-jump
-state. Balanced-viscosity (BV) solutions~\cite{mielke2012bv} resolve
-this by selecting the jump path as the vanishing-viscosity limit
-($\varepsilon\to0^+$) of the regularised inclusion
+At a switch $t^\ast$, conditions~(S)--(E) require the released energy to
+cover the dissipation cost $\Dr(\bs q^-(t^\ast),\bs q^+(t^\ast))$ but do
+not select the post-switch state. Balanced-viscosity (BV)
+solutions~\cite{mielke2012bv} resolve this by selecting the transition
+path as the vanishing-viscosity limit ($\varepsilon\to0^+$) of the
+regularised inclusion
 \begin{equation}\label{eq:regularised}
   \bs 0\in\partial\Psi(\dot{\bs q}_\varepsilon)
   +\varepsilon\,\dot{\bs q}_\varepsilon
   +\frac{\partial E}{\partial\bs q}(\bs q_\varepsilon,S),
 \end{equation}
-whose memory is retained in a correction concentrated at jumps.
+whose memory is retained in a correction concentrated at the switches.
 
 \begin{definition}[Balanced-viscosity solution]\label{def:BV}
 A function $\bs q\colon[0,T]\to\Q$ of bounded variation is a
@@ -162,36 +102,20 @@ For every $t$,
   E(\bs q(t),S(t))+\Diss_\Psi(\bs q;[0,t])+\mathcal V(\bs q;[0,t])
   = E(\bs q_0,S(0))+\int_0^t\partial_S E(\bs q,S)\dot S\dd s,
 \end{equation}
-where the \emph{viscous correction} is
-\begin{equation}\label{eq:viscous_correction}
-  \mathcal V(\bs q;[0,t]):=\sum_{s\le t}
-  \bigl[E(\bs q^-(s),S(s))-E(\bs q^+(s),S(s))-\Dr(\bs q^-(s),\bs q^+(s))\bigr]^+,
-\end{equation}
-the sum ranging over the (at most countably many) jump points.
+with $\mathcal V(\bs q;[0,t]):=\sum_{s\le t}
+[E(\bs q^-(s),S(s))-E(\bs q^+(s),S(s))-\Dr(\bs q^-(s),\bs q^+(s))]^+$,
+summed over the (at most countably many) jump points.
 \end{definition}
 
-\begin{remark}[Jump condition]\label{rem:jump}
-$\mathcal V$ is fully determined by the jump structure: at each jump
-$t^\ast$ the summand encodes the \emph{jump condition}
-$E(\bs q^-(t^\ast),S(t^\ast))-E(\bs q^+(t^\ast),S(t^\ast))
-=\Dr(\bs q^-(t^\ast),\bs q^+(t^\ast))+\text{(viscous excess)}$,
-selecting the path of steepest descent through the energy barrier.
-\end{remark}
-
-\begin{theorem}[Existence of BV solutions]\label{thm:BV_existence}
-Under~\ref{A:W}--\ref{A:coerc}, for every $\bs q_0\in\mathcal S(0)$
-there exists at least one BV solution in the sense of \cref{def:BV}.
+\begin{theorem}[Existence and scalar uniqueness of BV
+solutions]\label{thm:BV}
+Under \ref{A:W}--\ref{A:coerc}, for every $\bs q_0\in\mathcal S(0)$
+there exists at least one BV solution in the sense of \cref{def:BV}. If,
+moreover, $n=1$ and $q\mapsto E(q,S)$ has at most finitely many local
+minima for each $S\ge0$, then the BV solution is unique.
 \end{theorem}
 
-\begin{theorem}[Scalar uniqueness]\label{thm:BV_uniqueness}
-Let $n=1$, $\Q\subseteq\R$, and assume, besides
-\ref{A:W}--\ref{A:coerc}, that $q\mapsto E(q,S)$ has at most finitely
-many local minima for each $S\ge0$. Then the BV solution is unique.
-\end{theorem}
-
-\cref{thm:BV_uniqueness} covers the scalar double-well energy of the
-benchmark and of the biological application, for which
-\cref{thm:uniqueness} fails. Since every energetic solution is a BV
-solution, uniqueness of BV solutions implies that the energetic
-solution, when it is BV, is the unique one. The proofs of the results
-of this section are collected in \cref{app:math}.
+\Cref{thm:BV} covers the scalar bistable landscape of the epigenetic
+model, for which \cref{thm:uniqueness} fails. Since every energetic
+solution is a BV solution, uniqueness of BV solutions implies that the
+energetic solution, when it is of bounded variation, is the unique one.
