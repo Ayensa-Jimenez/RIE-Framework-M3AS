@@ -274,6 +274,24 @@ for N in [50, 100, 200, 400, 800, 1600, 3200, 6400]:
 write_table("fig_convergence_bistable.dat",
             "h  err_L1  err_Linf_away  energy_defect", rows2)
 
+# ---- trajectories at a few step sizes (visual convergence) -----------------
+# Node values (t_k, q_k) for a few coarse N, to be drawn as piecewise-constant
+# (const-plot) staircases, together with a fine sampling of the exact
+# solution. As h shrinks the staircase refines and the jump, resolved only to
+# O(h), migrates towards the exact instant T_JUMP.
+N_TRAJ = [(10, "c"), (25, "m"), (100, "f")]
+for N, tag in N_TRAJ:
+    ts_h, Ss_h, qs_h, _ = run2(N)
+    write_table(f"fig_traj_bistable_{tag}.dat", "t  q", list(zip(ts_h, qs_h)))
+ts_ex = [i * (T / 1000) for i in range(1001)]
+write_table("fig_traj_bistable_exact.dat", "t  q", [(t, q_exact2(t)) for t in ts_ex])
+print("trajectory files: jump-node (first node with q>0) per N:")
+for N, tag in N_TRAJ:
+    ts_h, _, qs_h, _ = run2(N)
+    jn = next((ts_h[i] for i in range(len(qs_h)) if qs_h[i] > 0.0), None)
+    print(f"   N={N:4d} (h={T/N:.4f}, tag={tag}): jump appears at t={jn:.4f}  "
+          f"(exact t_jump={T_JUMP:.4f})")
+
 # ==============================================================================
 #  Console summary
 # ==============================================================================

@@ -373,50 +373,113 @@ reproduced by the integrator.
   \end{minipage}
 \end{table}
 
-\subsection{Convergence across a jump}\label{sec:conv2}
+\subsection{Convergence and consistency across a jump}\label{sec:conv2}
 
-At every grid node the return map solves the same threshold comparison
-as the exact solution, using the same previous state $q_k$; consequently
-$q^h(t_i)=q(t_i)$ \emph{exactly}, for every $i$ and every $h$, just as
-in \cref{sec:conv_exp} --- the single jump does not, by itself, spoil
-node-wise exactness. The genuine $O(h)$ discretisation error is an
-\emph{interpolation} effect: between nodes, the natural piecewise-constant
-representation of the discrete solution, $q^h(t)=q^h(t_i)$ for
-$t\in[t_i,t_{i+1})$, differs from the (continuously varying) exact
-solution by the usual zeroth-order-hold error, of size
-$O(h\,\|\dot q\|)$ wherever $q$ is differentiable, and by an
-$O(1)$ pointwise mismatch confined to the single $O(h)$-wide interval
-containing $t_{\mathrm{jump}}$. \Cref{fig:convergence2} reports two
-integrated measures of this interpolation error against a fine,
-$h$-independent sampling of the exact solution: the time-averaged
-($L^1$) error, and the sup-norm error restricted to times at least
-$O(h)$ away from $t_{\mathrm{jump}}$. Both decay as $O(h)$, with no
-qualitative penalty from the presence of the jump: the interpolation
-error near the jump is larger in absolute size but not of a different
-order than the routine zeroth-order-hold error present throughout the
-smooth branches. The global energy defect, computed exactly as in
-\cref{sec:conv_exp}, again decays as $O(h)$.
+The bistable benchmark lets us examine two \emph{logically distinct}
+questions that the smooth benchmark of \cref{sec:conv_exp} could not
+separate: the \emph{convergence} of the discrete state to the exact one,
+and the \emph{consistency} of the discrete energy balance. Only the
+second is covered by a rate theorem; we treat them in turn.
+
+As in \cref{sec:conv_exp}, at every grid node the return map solves the
+same threshold comparison as the exact solution, using the same previous
+state $q_k$, so $q^h(t_i)=q(t_i)$ exactly at the nodes; the single jump
+does not spoil node-wise exactness. The discretisation error is thus
+entirely an \emph{interpolation} effect: the natural piecewise-constant
+representation $q^h(t)=q^h(t_i)$ for $t\in[t_i,t_{i+1})$ differs from the
+continuously varying exact solution by a zeroth-order-hold error, and
+locates the jump only to within one step. \Cref{fig:traj2} makes this
+visible: as $h$ is refined the staircase $q^h$ tightens onto the exact
+curve and the numerically resolved jump migrates towards
+$t_{\mathrm{jump}}\approx0.068$ (at $t=0.10,\,0.08,\,0.07$ for
+$h=0.1,\,0.04,\,0.01$).
 
 \begin{figure}[t]
   \centering
   \begin{tikzpicture}
-    \begin{loglogaxis}[width=0.65\textwidth,height=0.42\textwidth,
-      xlabel={$h$},ylabel={error},
+    \begin{axis}[width=0.72\textwidth,height=0.42\textwidth,
+      xmin=0,xmax=1,xlabel={$t$},ylabel={$q(t)$},
+      legend pos=south east,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[const plot,blue,thick] table[x=t,y=q]{figures/fig_traj_bistable_c.dat};
+      \addplot[const plot,orange!85!black] table[x=t,y=q]{figures/fig_traj_bistable_m.dat};
+      \addplot[const plot,teal!70!black,thin] table[x=t,y=q]{figures/fig_traj_bistable_f.dat};
+      \addplot[black,very thick] table[x=t,y=q]{figures/fig_traj_bistable_exact.dat};
+      \legend{$h=0.1$,$h=0.04$,$h=0.01$,exact}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Visual convergence of the piecewise-constant discrete
+  trajectory $q^h$ (const-plot staircases) to the exact
+  solution~\eqref{eq:play_exact2} as the step size $h$ is refined. The
+  jump is resolved to within one step and migrates towards the exact
+  instant $t_{\mathrm{jump}}$.}
+  \label{fig:traj2}
+\end{figure}
+
+\paragraph{Convergence in norm.} \Cref{thm:convergence} guarantees that
+$q^h\to q$, but provides \emph{no rate}: the state error is not the
+subject of any order estimate in our analysis. \Cref{fig:conv2_state}
+reports two norms of the interpolation error against a fine,
+$h$-independent sampling of the exact solution --- the time-averaged
+($L^1$) error and the sup-norm error restricted to times at least $O(h)$
+away from $t_{\mathrm{jump}}$. Both are \emph{empirically} first order,
+tracking the reference slope-one line, with no qualitative penalty from
+the jump: the interpolation error near the jump is larger in absolute
+size but of the same $O(h)$ order as the routine zeroth-order-hold error
+on the smooth branches. We stress that this first-order behaviour is an
+observation, not a theorem.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.6\textwidth,height=0.4\textwidth,
+      xlabel={$h$},ylabel={state error},
       legend pos=north west,legend cell align=left,
       grid=both,grid style={gray!20},tick label style={font=\small}]
       \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_bistable.dat};
       \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf_away]{figures/fig_convergence_bistable.dat};
-      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_bistable.dat};
-      \addplot[dashed,black,domain=1.5e-4:2e-2]{0.45*x};
-      \legend{$L^1$ state error,$L^\infty$ state error (away from jump),energy defect,slope $1$}
+      \addplot[dashed,black,domain=1.5e-4:2e-2]{0.5*x};
+      \legend{$L^1$ error,$L^\infty$ error (away from jump),reference slope $1$}
     \end{loglogaxis}
   \end{tikzpicture}
-  \caption{Interpolation error of the piecewise-constant discrete
-  solution against the exact solution~\eqref{eq:play_exact2} (fine,
-  $h$-independent sampling) and global energy-balance defect
-  (\cref{sec:conv_exp}), log--log. All three quantities decay as
-  $O(h)$; the state-error norms are consistent with a standard
-  zeroth-order-hold error uniformly present throughout the cycle,
-  including near the jump.}
-  \label{fig:convergence2}
+  \caption{Convergence of the discrete state in norm (log--log). Both
+  the $L^1$ error and the sup-norm error away from the jump decay
+  \emph{empirically} at first order; \cref{thm:convergence} guarantees
+  convergence but not this rate.}
+  \label{fig:conv2_state}
+\end{figure}
+
+\paragraph{First-order energy consistency.} The energy balance, by
+contrast, \emph{does} obey a rate theorem. On the smooth branches
+$q$ is Lipschitz, so \cref{thm:global_consistency} applies and bounds
+the accumulated truncation error by $O(h)$. The single jump, at which
+$q$ is only of bounded variation and the theorem's regularity hypothesis
+fails, contributes no additional order: the energetic transition is
+\emph{dissipation-neutral} --- at the Maxwell threshold $\ell=\rho$ one
+has $I(-a)=I(+a)=a\rho$ (\cref{app:experiments}), equivalently
+$E(q^-,S)-E(q^+,S)=\Dr(q^-,q^+)$, so the exact jump releases exactly the
+energy it dissipates and carries zero viscous correction. The discrete
+over-dissipation at the jump step is therefore controlled by the
+$O(h)$ offset between $\ell$ at the jump node and $\rho$. Consequently
+the global energy-balance defect $\sum_k e_k=(E_0+\mathcal W_h)-(E_N+\Diss_h)$
+decays as $O(h)$ (\cref{fig:conv2_energy}), tracking the slope-one line
+predicted by \cref{thm:global_consistency}.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.6\textwidth,height=0.4\textwidth,
+      xlabel={$h$},ylabel={$\sum_k e_k$ (energy defect)},
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_bistable.dat};
+      \addplot[dashed,black,domain=1.5e-4:2e-2]{1.0*x};
+      \legend{energy defect,slope $1$}
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{First-order energy consistency across the jump (log--log):
+  the global energy-balance defect decays as $O(h)$, as guaranteed by
+  \cref{thm:global_consistency} on the smooth arcs and preserved across
+  the dissipation-neutral energetic jump.}
+  \label{fig:conv2_energy}
 \end{figure}
