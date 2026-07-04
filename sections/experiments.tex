@@ -134,7 +134,7 @@ benchmark, the integrator reproduces it \emph{exactly} at every node
       tick label style={font=\small}]
       \addplot[thick,blue] table[x=ell,y=q]{figures/fig_loop_rev.dat};
       \addplot[thick,red!70!black] table[x=ell,y=q]{figures/fig_loop_irr.dat};
-      \legend{reversible ($\rho=0.1$),irreversible ($\rho=0.3$)}
+      \legend{rev. ($\rho=0.1$),irrev. ($\rho=0.3$)}
     \end{axis}
   \end{tikzpicture}
   \caption{Hysteresis loops in the $(\ell,q)$ plane. The enclosed area
@@ -229,11 +229,9 @@ Let $\Q=\R$ and
 with $k,a,\rho>0$. This is a genuinely \emph{bistable} landscape: two
 wells at $q=\mp a$ (where $W=0$), separated by a corner at $q=0$ (where
 $W$ is continuous but not differentiable, $W=\tfrac12ka^2$). The
-corner is a caricature of a smooth barrier --- the direct,
-piecewise-linear analogue of the double well used in the companion
-biological model --- chosen because $g(q)=W'(q)=k(q+a)$ for $q\le0$ and
+corner is a caricature of a smooth barrier chosen because $g(q)=W'(q)=k(q+a)$ for $q\le0$ and
 $k(q-a)$ for $q>0$ is \emph{piecewise linear}, so every yield condition
-below inverts elementarily; no cubic ever needs to be solved. $W$ is
+below inverts elementarily. $W$ is
 continuous and coercive of order $p=2$ (\ref{A:W}), and $E(\cdot,S)$
 has exactly two local minima for every $S$, so \cref{thm:BV} applies:
 a BV solution exists and, in this scalar case, is unique.
@@ -255,7 +253,7 @@ the initial datum $q(0)=-a$ and comparing the two wells' own energies
 under the loading, one finds (\cref{app:experiments}) a remarkably
 simple, closed-form threshold, independent of $k$ and $a$:
 \begin{equation}\label{eq:l_jump_energetic}
-  \boxed{\ell_{\mathrm{jump}} = \rho,}
+  \ell_{\mathrm{jump}} = \rho,
   \qquad
   q^-=-a \ \longmapsto\ q^+=+a,
 \end{equation}
@@ -427,7 +425,7 @@ tracking the reference slope-one line, with no qualitative penalty from
 the jump: the interpolation error near the jump is larger in absolute
 size but of the same $O(h)$ order as the routine zeroth-order-hold error
 on the smooth branches. We stress that this first-order behaviour is an
-observation, not a theorem.
+observation, not a proven result.
 
 \begin{figure}[t]
   \centering
@@ -439,7 +437,7 @@ observation, not a theorem.
       \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_bistable.dat};
       \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf_away]{figures/fig_convergence_bistable.dat};
       \addplot[dashed,black,domain=1.5e-4:2e-2]{0.5*x};
-      \legend{$L^1$ error,$L^\infty$ error (away from jump),reference slope $1$}
+      \legend{$L^1$ error,$L^\infty$ error,reference slope $1$}
     \end{loglogaxis}
   \end{tikzpicture}
   \caption{Convergence of the discrete state in norm (log--log). Both
