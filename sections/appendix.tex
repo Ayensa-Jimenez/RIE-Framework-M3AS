@@ -27,7 +27,7 @@ $u:[0,T]\to\R^n$ is differentiable almost everywhere; and, more
 generally, an absolutely continuous $u$ is differentiable a.e., its
 derivative $\dot u$ is Lebesgue integrable, and the fundamental theorem
 of calculus for the Lebesgue integral holds,
-$u(t)-u(s)=\int_s^t\dot u$. This justifies writing $\dot u$ for the
+$u(t)-u(s)=\int_s^t\dot u(\eta) \, \dd \eta$. This justifies writing $\dot u$ for the
 a.e.\ derivative of every absolutely continuous or Lipschitz function
 below.
 
@@ -181,16 +181,16 @@ fundamental theorem of calculus give
 \[
   \sum_{i=1}^{N}\Dr(\bs q(t_{i-1}),\bs q(t_i))
   =\sum_{i=1}^{N}\Psi\bigl(\bs q(t_i)-\bs q(t_{i-1})\bigr)
-  =\sum_{i=1}^{N}\Psi\!\Bigl(\int_{t_{i-1}}^{t_i}\dot{\bs q}\Bigr).
+  =\sum_{i=1}^{N}\Psi\!\Bigl(\int_{t_{i-1}}^{t_i}\dot{\bs q}(s)  \dd s \Bigr).
 \]
 Taking the supremum over all partitions, the left side is
 $\Diss_\Psi(\bs q;[0,t])$ by definition, while the supremum of the right
-side is $\int_0^t\Psi(\dot{\bs q})$: the inequality "$\le$" follows from
+side is $\int_0^t\Psi(\dot{\bs q}(s))\dd s$: the inequality "$\le$" follows from
 the subadditivity of $\Psi$ (as in \cref{prop:quasi_distance}) together
 with Jensen's inequality on each subinterval, and "$\ge$" from
 refining the partition, this being precisely the definition of the
 $\Psi$-variation of an absolutely continuous curve. This
-proves~\eqref{eq:diss_ac}; absolute continuity of $t\mapsto\int_0^t\Psi(\dot{\bs q})$
+proves~\eqref{eq:diss_ac}; absolute continuity of $t\mapsto\int_0^t\Psi(\dot{\bs q}(s))\dd s$
 and the stated derivative are then standard, since
 $s\mapsto\Psi(\dot{\bs q}(s))\in L^1(0,T)$ (as $\Psi$ is Lipschitz on
 bounded sets and $\dot{\bs q}\in L^1$).
@@ -452,8 +452,8 @@ dissipation \cite{Brezis1973} yields, for each $\varepsilon>0$, a unique
 solution $\bs q_\varepsilon\in W^{1,2}(0,T;\Q)$ with
 $\bs q_\varepsilon(0)=\bs q_0$, satisfying the (strict) energy identity
 \begin{equation}\label{eq:reg_energy}
-  E(\bs q_\varepsilon(t),S(t))+\int_0^t\Bigl[\Psi(\dot{\bs q}_\varepsilon)+\varepsilon\|\dot{\bs q}_\varepsilon\|^2\Bigr]\dd s
-  =E(\bs q_0,S(0))+\int_0^t\partial_S E(\bs q_\varepsilon,S)\dot S\dd s .
+  E(\bs q_\varepsilon(t),S(t))+\int_0^t\Bigl[\Psi(\dot{\bs q}_\varepsilon(s))+\varepsilon\|\dot{\bs q}_\varepsilon(s)\|^2\Bigr]\dd s
+  =E(\bs q_0,S(0))+\int_0^t\partial_S E(\bs q_\varepsilon,S(s))\dot S(s)\dd s .
 \end{equation}
 
 \emph{Step 2: uniform energy and total-variation bounds.} Dropping the
@@ -462,7 +462,7 @@ in~\eqref{eq:reg_energy}, and abbreviating
 $\phi_\varepsilon(t):=E(\bs q_\varepsilon(t),S(t))+c_4$ (with $c_4$ from
 \cref{prop:power}\ref{E:gronwall}, so $\phi_\varepsilon\ge1$),
 \[
-  \phi_\varepsilon(t)\le\phi_\varepsilon(0)+\int_0^t|\partial_S E(\bs q_\varepsilon,S)|\,|\dot S|\dd s
+  \phi_\varepsilon(t)\le\phi_\varepsilon(0)+\int_0^t|\partial_S E(\bs q_\varepsilon,S(s))|\,|\dot S(s)|\dd s
   \le\phi_\varepsilon(0)+\int_0^t c_3\,\phi_\varepsilon(s)\,|\dot S(s)|\dd s,
 \]
 using \cref{prop:power}\ref{E:gronwall}. Since $|\dot S|\in L^1$,
@@ -475,11 +475,11 @@ also independent of $\varepsilon$. Now, using \ref{A:coerc}
 identity,
 \begin{align}
   c_\Psi\,\Var(\bs q_\varepsilon;[0,T])
-  &=c_\Psi\int_0^T\|\dot{\bs q}_\varepsilon\|\dd s
-  \le\int_0^T\Psi(\dot{\bs q}_\varepsilon)\dd s
+  &=c_\Psi\int_0^T\|\dot{\bs q}_\varepsilon(s)\|\dd s
+  \le\int_0^T\Psi(\dot{\bs q}_\varepsilon(s))\dd s
   =\Diss_\Psi(\bs q_\varepsilon;[0,T]) \notag\\
   &\le E(\bs q_0,S(0))-E(\bs q_\varepsilon(T),S(T))
-  +\int_0^T|\partial_S E(\bs q_\varepsilon,S)|\,|\dot S|\dd s \notag\\
+  +\int_0^T|\partial_S E(\bs q_\varepsilon,S(s))|\,|\dot S(s)|\dd s \notag\\
   &\le E(\bs q_0,S(0))+C_{\min}+C_{\ell'}M'\|\dot S\|_{L^1}
   =:c_\Psi\,C, \label{eq:var_bound_bv}
 \end{align}
@@ -502,7 +502,7 @@ are dominated, uniformly in $j$, by the integrable function
 $s\mapsto C_{\ell'}M'|\dot S(s)|\in L^1(0,T)$; Lebesgue's dominated
 convergence theorem gives the convergence of the work integral. The
 identification of the viscous correction $\mathcal V$ as the limit of
-$\int\varepsilon\|\dot{\bs q}_\varepsilon\|^2$ concentrated at the jumps
+$\int\varepsilon\|\dot{\bs q}_\varepsilon(s)\|^2 \dd s$ concentrated at the jumps
 of $\bs q$ follows from the reparametrised (arc-length) passage to the
 limit of \cite[Thm.~3.3.2]{MielkeRoubicek}. Hence $\bs q$ is a BV
 solution in the sense of \cref{def:BV}.
@@ -710,7 +710,7 @@ $\int_0^{t_{K_j}}\partial_S E(\bs q^{h_j},S)\dot S\to\int_0^t\partial_S E(\bs q,
 Therefore
 \begin{equation}\label{eq:E_upper}
   E(\bs q(t),S(t))+\Diss_\Psi(\bs q;[0,t])
-  \le E(\bs q_0,S(0))+\int_0^t\partial_S E(\bs q,S)\dot S\dd s .
+  \le E(\bs q_0,S(0))+\int_0^t\partial_S E(\bs q,S(s))\dot S(s)\dd s .
 \end{equation}
 \textit{Lower bound.} Since $\bs q$ satisfies (S) (Step~3), the standard
 lower energy estimate for stable BV curves holds: testing (S) along any
