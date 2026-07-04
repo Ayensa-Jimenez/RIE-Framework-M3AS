@@ -1,5 +1,5 @@
 % =====================================================================
-\section{Conclusions and future work}\label{sec:conclusions}
+\section{Conclusions}\label{sec:conclusions}
 % =====================================================================
 
 We have proposed Rate-Independent Epigenetics (RIE), a framework that
@@ -11,47 +11,42 @@ remodelling. Once the triple is fixed and an energetic principle is
 postulated, the governing equations---the energetic formulation and the
 equivalent Biot inclusion---follow systematically, and their solutions
 satisfy, a priori, estimates that coincide with the first and second
-laws of thermodynamics. The $1$-homogeneity of the dissipation
-potential is the structural source of rate independence: it yields the
-saturation identity, the non-negativity and minimality of the
-dissipation, and the purely geometric characterisation of the
-hysteretic dissipation over closed cycles. Threshold activation,
-memory, and residual state upon unloading---the defining phenomenology
-of epigenetic marks---are thus not modelled by ad-hoc equations but
-emerge from a thermodynamically consistent variational structure.
+laws of thermodynamics. Threshold activation, memory and residual state
+upon unloading---the defining phenomenology of epigenetic marks---thus
+emerge from a thermodynamically consistent variational structure rather
+than from ad-hoc evolution laws. We established the well-posedness of
+RIE models (existence, uniqueness under convexity, and existence and
+scalar uniqueness of balanced-viscosity solutions) and a convergent
+variational integrator that is first-order consistent in the energy
+balance and reduces, in the scalar case, to a two-sided return map,
+validated against two closed-form benchmarks.
 
-On the analytical side we established the well-posedness of RIE models,
-making explicit the compatibility argument behind existence and adding
-the definiteness hypothesis needed for the balanced-viscosity
-construction. Energetic solutions exist under coercivity and
-continuity; they are unique under convexity and, for the scalar
-bistable landscapes of epigenetic interest, the balanced-viscosity
-selection restores uniqueness without convexity. On the numerical side
-we analysed an incremental variational integrator: it is
-unconditionally stable in the energetic sense, converges to energetic
-solutions, and is first-order globally consistent in the energy
-balance, reducing in the scalar case to a two-sided return map. The
-linear play operator---the minimal RIE model of epigenetic
-memory---admits a closed-form evolution exhibiting both reversible and
-irreversible responses, and the integrator reproduced it exactly at the
-nodes, confining the discretisation error to the energy balance.
+To the best of our knowledge, this is the first transfer of the theory
+of \emph{energetic} and \emph{balanced-viscosity} solutions to
+epigenetics: the memory, thresholds and hysteresis of epigenetic marks
+are recast as the rate-independent evolution of an internal variable,
+with thermodynamic consistency built into the variational structure
+rather than imposed a posteriori. Beyond this conceptual transfer, the
+paper contributes several self-contained results that are, we believe,
+of independent interest: an explicit compatibility lemma underpinning
+existence (\cref{lem:compatibility}); the definiteness
+hypothesis~\ref{A:coerc} required by the total-variation bound of the
+balanced-viscosity construction; the node-exactness of the
+return-map integrator on rate-independent branches
+(\cref{sec:conv_exp}); and, for the piecewise-quadratic bistable well, a
+fully closed-form comparison between the \emph{energetic} jump threshold
+$\ell=\rho$ and the \emph{local} (balanced-viscosity) threshold
+$\ell=ka+\rho$ (\cref{app:experiments}), a transparent instance of the
+non-uniqueness that the balanced-viscosity selection resolves.
 
-Several directions remain open. The balanced-viscosity theory is
-developed here for scalar states; its extension to vectorial
-epigenetic variables, where the transition path at a switch is
-genuinely path-dependent, is an important next step, as is a rigorous
-convergence rate for the state in the presence of switches. The
-local truncation estimate invites adaptive time-stepping, and
-non-symmetric dissipation potentials would model the
-direction-dependent resistance of methylation versus demethylation.
-
-Most importantly, the present framework is the abstract foundation for
-a quantitative epigenetic model. In a companion paper we specialise RIE
-to a scalar \emph{bistable} landscape---a double-well free energy with a
-saturating micro-environmental coupling---in which the healthy and
-damaged phenotypes are the two wells. There the convexity of the
-present benchmark is lost, catastrophic phenotype switches (of
-epithelial--mesenchymal type) appear as energetic jumps selected by the
-balanced-viscosity criterion, and the analytical thresholds, residual
-``epigenetic scars'' and bifurcation structure can be calibrated
-against experimental data on hypoxia-driven epigenetic remodelling.
+The scope and limitations of the rate-independent hypothesis, its
+relation to the quasi-potential and kinetic paradigms, and the viscous
+and vectorial extensions that lie beyond it are discussed in
+\cref{sec:discussion}. The present framework is, above all, the
+abstract foundation for a quantitative model: in a companion paper we
+specialise RIE to a scalar \emph{bistable} landscape in which the
+healthy and damaged phenotypes are the two wells, catastrophic
+phenotype switches of epithelial--mesenchymal type appear as
+balanced-viscosity-selected energetic jumps, and the analytical
+thresholds and residual ``epigenetic scars'' are calibrated against
+experimental data on hypoxia-driven epigenetic remodelling.

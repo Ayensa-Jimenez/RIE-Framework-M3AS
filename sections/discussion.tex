@@ -1,0 +1,122 @@
+% =====================================================================
+\section{Discussion and outlook}\label{sec:discussion}
+% =====================================================================
+
+\subsection{The rate-independent limit and its regime of validity}
+\label{sec:ri_validity}
+
+Rate independence is a modelling idealisation, and we adopt it
+deliberately rather than as an established fact. It is the
+\emph{quasi-static limit} of epigenetic evolution---the regime in which
+the chromatin state either equilibrates quickly relative to the
+variation of its micro-environment, or remains effectively frozen except
+when a threshold is crossed---and it plays here the role that perfect
+plasticity or the play operator play in mechanics: questionable in
+general, yet capturing the essential phenomenology (threshold
+activation, memory, and hysteresis) while yielding a robust,
+thermodynamically consistent and predictive skeleton. The price of the
+idealisation is explicit. The pure rate-independent model has \emph{no}
+intrinsic time scale, so it cannot represent rate-dependent relaxation,
+and it predicts the \emph{absence of ratcheting}: repeating an identical
+loading cycle leaves the same residual state each time, and the maximal
+damage and residual scar depend only on the extreme values of the
+loading, not on its rhythm. This is a sharp, falsifiable prediction: an
+experimentally observed dependence of the epigenetic scar on the
+\emph{frequency} of an intermittent stimulus at fixed amplitude would
+signal a genuine viscous (rate-dependent) contribution, quantified by
+the parameter~$\varepsilon$ of the viscous extension discussed in
+\cref{sec:beyond_ri}.
+
+\subsection{Relation to the quasi-potential landscape paradigm}
+\label{sec:quasipotential}
+
+The dominant mathematical realisation of Waddington's epigenetic
+landscape~\cite{Waddington1957,Huang2012} constructs it as a
+\emph{quasi-potential} from the stationary distribution of a stochastic
+gene-regulatory dynamics~\cite{Wang2008,Ferrell2012}. A central lesson
+of that programme is that gene-network dynamics is generically a
+\emph{non-equilibrium, non-gradient} system: the deterministic drift
+does not derive from a single potential, and a non-vanishing rotational
+probability flux, sustained by energy input and responsible for
+thermodynamic dissipation, is an essential ingredient. This is in
+apparent tension with the present framework, which postulates a stored
+energy~$E$ and a gradient-type (energetic) evolution. We do not claim
+that the full gene-regulatory dynamics is a gradient flow. Rather, RIE
+describes the slow, hysteretic \emph{epigenetic-mark} subsystem in the
+quasi-static limit, where an effective energetic description is natural
+and where the memory of the loading history, not the fast rotational
+flux, dominates the response. In this sense RIE is complementary to the
+quasi-potential picture: it trades the kinetic and flux content of the
+stochastic landscape for an exact thermodynamic bookkeeping (the first
+and second laws hold by construction), analytical thresholds, and the
+robustness of the variational structure. Clarifying, for a given
+biological system, when the quasi-static energetic reduction is
+legitimate---and how the effective energy relates to the underlying
+quasi-potential---is an important open question.
+
+\subsection{Relation to kinetic bistable-switch models}
+\label{sec:kinetic_models}
+
+A large body of work models epigenetic and cell-fate decisions with
+kinetic bistable switches: systems of ordinary differential equations
+with cooperative feedback whose bifurcation structure produces
+bistability and hysteresis~\cite{Huang2007,Ferrell2012}. In the specific
+case that motivates our companion paper, coupled reversible and
+irreversible switches have been used to explain the
+epithelial--mesenchymal transition and its hysteresis~\cite{Tian2013,
+CeliaTerrassa2018}. The hysteresis produced by such models is
+\emph{kinetic}---the loop depends on the rate at which the control
+parameter is swept---whereas the hysteresis of RIE is
+\emph{rate-independent}: the loop is a geometric object whose enclosed
+area equals the dissipation per cycle, independent of the rhythm of the
+stimulus (\cref{sec:hysteresis}). The two viewpoints are complementary.
+Kinetic models resolve the molecular circuitry and its time scales at
+the cost of many rate constants and of evolution laws that are, in
+practice, prescribed by hand; RIE fixes instead the \emph{structure} of
+the evolution from three thermodynamic ingredients, obtaining
+closed-form thresholds and unconditional consistency, at the cost of
+suppressing the kinetics.
+
+\subsection{Beyond rate independence}\label{sec:beyond_ri}
+
+The framework is the rate-independent member of a broader family, and
+the route out of it is already present in the paper. Relaxing the
+$1$-homogeneity of the dissipation potential---for instance by adding a
+quadratic term $\tfrac{\varepsilon}{2}\|\dot{\bs q}\|^2$---turns the
+Biot inclusion into a rate-dependent (viscous), doubly-nonlinear
+gradient flow. This is exactly the viscous regularisation used to
+\emph{construct} the balanced-viscosity solutions of \cref{sec:bv}: the
+rate-independent model is the $\varepsilon\to0$ skeleton of a
+one-parameter family, and a finite $\varepsilon$ reintroduces relaxation,
+frequency dependence and ratcheting~\cite{mielke2012bv,MielkeRoubicek}.
+A systematic study of the finite-$\varepsilon$ regime, and the
+identification of $\varepsilon$ from frequency-resolved experiments, is a
+natural next step. Two further extensions are of direct biological
+relevance: \emph{vectorial} state variables ($n\ge2$), needed to
+represent several coupled epigenetic marks, for which the transition
+path at a switch becomes genuinely path-dependent and the
+balanced-viscosity selection is essential; and \emph{non-symmetric}
+dissipation potentials, $\Psi(-\dot q)\ne\Psi(\dot q)$, which model the
+direction-dependent resistance of methylation versus demethylation and
+the associated asymmetry of the forward and reverse thresholds.
+
+\subsection{Interpretation, identifiability and the thermodynamic
+statements}\label{sec:interpretation}
+
+Two caveats delimit the reading of the framework. First, the
+ingredients $W$, $\bs\ell$ and $\rho$ are \emph{effective},
+phenomenological objects, not directly measured energies; their value is
+that they are, in principle, identifiable from macroscopic observables,
+since the closed-form thresholds and residual scar
+(\cref{sec:experiments}, and, for the bistable model, the companion
+paper) express them in terms of quantities accessible to a suitably
+designed loading--unloading experiment. Second, the first- and
+second-law statements of \cref{sec:thermo} are exact \emph{within} the
+thermodynamics of internal variables of the model; they should be read
+as an effective, structural thermodynamics---with $E$ a Helmholtz-type
+effective free energy and $\mathcal D$ an effective entropy
+production---rather than as a literal accounting of molecular energetics.
+Their role is to guarantee that any RIE model, whatever the choice of
+landscape and dissipation, is internally consistent with the balance
+principles, which is precisely the robustness that motivates the
+framework.
