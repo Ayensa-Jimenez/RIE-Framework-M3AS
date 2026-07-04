@@ -4,9 +4,10 @@
 
 We now state the principal existence and uniqueness results for RIE
 models. Throughout we work under the following standing hypotheses; the
-supporting results (properties of the dissipation distance, energy
-estimates and compatibility conditions) and all proofs are collected,
-in detail, in \cref{app:math}.
+supporting results (properties of the dissipation distance and energy
+estimates in \cref{app:framework}, compatibility conditions in
+\cref{app:math}) and all proofs are collected, in detail and in logical
+order, in the appendices.
 
 \begin{assumption}[Standing hypotheses]\label{ass:standing}
 The triple $(\Q,E,\Psi)$ with $E(\bs q,S)=W(\bs q)-\bs q\cdot\bs\ell(S)$
@@ -107,15 +108,19 @@ with $\mathcal V(\bs q;[0,t]):=\sum_{s\le t}
 summed over the (at most countably many) jump points.
 \end{definition}
 
-\begin{theorem}[Existence and scalar uniqueness of BV
-solutions]\label{thm:BV}
+\begin{theorem}[Existence of BV solutions]\label{thm:BV_existence}
 Under \ref{A:W}--\ref{A:coerc}, for every $\bs q_0\in\mathcal S(0)$
-there exists at least one BV solution in the sense of \cref{def:BV}. If,
-moreover, $n=1$ and $q\mapsto E(q,S)$ has at most finitely many local
-minima for each $S\ge0$, then the BV solution is unique.
+there exists at least one BV solution in the sense of \cref{def:BV}.
 \end{theorem}
 
-\Cref{thm:BV} covers the scalar bistable landscape of the epigenetic
-model, for which \cref{thm:uniqueness} fails. Since every energetic
-solution is a BV solution, uniqueness of BV solutions implies that the
-energetic solution, when it is of bounded variation, is the unique one.
+\begin{theorem}[Scalar uniqueness of BV solutions]\label{thm:BV_uniqueness}
+Assume, in addition to \ref{A:W}--\ref{A:coerc}, that $n=1$ and that
+$q\mapsto E(q,S)$ has at most finitely many local minima for each
+$S\ge0$. Then the BV solution is unique.
+\end{theorem}
+
+\Cref{thm:BV_uniqueness} covers the scalar bistable landscape of the
+epigenetic model, for which \cref{thm:uniqueness} fails. Since every
+energetic solution is a BV solution, uniqueness of BV solutions implies
+that the energetic solution, when it is of bounded variation, is the
+unique one.

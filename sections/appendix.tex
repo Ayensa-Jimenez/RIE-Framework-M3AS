@@ -2,14 +2,36 @@
 %  Appendices — supporting results and detailed proofs
 % =====================================================================
 %
-%  The proofs below are written so that every step can be verified in
-%  isolation; constants are named as they are introduced and tracked to
-%  the end. Cross-references of the form (A\arabic*)/(E\arabic*) point to
-%  the standing hypotheses of Assumption 4.1 and to the conclusions of
-%  Proposition B.3, respectively.
+%  The appendices are organised so that each result depends only on
+%  results stated before it: the instrumental lemmas come first and no
+%  proof appeals to a later statement. Results already stated in the
+%  body (the Biot inclusion and the main existence, uniqueness,
+%  convergence and consistency theorems) are recalled in italics at the
+%  head of their proofs, so the reader need not turn back for the
+%  hypotheses.
+%
+%  Two classical facts are used repeatedly and without further comment.
+%  By \emph{Rademacher's theorem}, a Lipschitz function is
+%  differentiable almost everywhere; more generally, an absolutely
+%  continuous $u:[0,T]\to\R^n$ is differentiable a.e., its derivative
+%  $\dot u$ is Lebesgue integrable, and the fundamental theorem of
+%  calculus holds, $u(t)-u(s)=\int_s^t\dot u$. We write $\dot u$ for this
+%  a.e.\ derivative throughout.
 
-\section{Proofs for the rate-independent framework}
+\section{Preliminaries and the governing equation}
 \label{app:framework}
+
+Throughout this appendix we use, without further comment, two classical
+facts. By \emph{Rademacher's theorem} a Lipschitz function
+$u:[0,T]\to\R^n$ is differentiable almost everywhere; and, more
+generally, an absolutely continuous $u$ is differentiable a.e., its
+derivative $\dot u$ is Lebesgue integrable, and the fundamental theorem
+of calculus for the Lebesgue integral holds,
+$u(t)-u(s)=\int_s^t\dot u$. This justifies writing $\dot u$ for the
+a.e.\ derivative of every absolutely continuous or Lipschitz function
+below.
+
+\subsection{Convex-analytic and metric preliminaries}
 
 \begin{lemma}[Saturation identity and scale invariance]\label{lem:saturation}
 Let $\Psi\colon\R^n\to[0,+\infty)$ be convex, normalised
@@ -75,138 +97,8 @@ $\bs f\in\partial\Psi(\lambda\bs v)$. The two conditions are symmetric
 in $\bs v$ and $\lambda\bs v$, so the subdifferentials coincide.
 \end{proof}
 
-\begin{remark}[Cumulated dissipation of an absolutely continuous path]
-\label{rem:diss_ac}
-If $\bs q\in\mathrm{AC}([0,T];\Q)$, then, by \cref{prop:Dr_linear}
-and the additivity of the total variation,
-$\Diss_\Psi(\bs q;[0,t])=\int_0^t\Psi(\dot{\bs q}(s))\dd s$ for every
-$t$; in particular $t\mapsto\Diss_\Psi(\bs q;[0,t])$ is absolutely
-continuous with $\tfrac{\dd}{\dd t}\Diss_\Psi(\bs q;[0,t])=\Psi(\dot{\bs q}(t))$
-for a.e.\ $t$. Indeed, for a partition $0=t_0<\dots<t_N=t$,
-$\sum_i\Dr(\bs q(t_{i-1}),\bs q(t_i))=\sum_i\Psi(\bs q(t_i)-\bs q(t_{i-1}))
-=\sum_i\Psi\bigl(\int_{t_{i-1}}^{t_i}\dot{\bs q}\bigr)$; the supremum
-over partitions of the last expression is $\int_0^t\Psi(\dot{\bs q})$ by
-the definition of the $\Psi$-variation of an absolutely continuous
-curve.
-\end{remark}
-
-\begin{proof}[Proof of \cref{prop:biot}]
-Let $t\in[0,T]$ be a point at which $\dot{\bs q}(t)$ exists (a.e.\ $t$,
-since $\bs q\in\mathrm{AC}$) and at which the energy balance~(E) is
-differentiable.
-
-\emph{Step 1: local stability.} By the global stability~(S), the state
-$\bs q(t)$ minimises $\bs r\mapsto E(\bs r,S(t))+\Dr(\bs q(t),\bs r)$
-over $\Q$; in particular it is a local minimiser, and, since
-$E(\cdot,S(t))$ is differentiable and $\bs r\mapsto\Dr(\bs q(t),\bs r)$
-is convex with $\partial_{\bs r}\Dr(\bs q(t),\bs r)\big|_{\bs r=\bs q(t)}=\partial\Psi(\bs 0)=\E$
-(\cref{prop:Dr_linear} gives $\Dr(\bs q(t),\bs r)=\Psi(\bs r-\bs q(t))$,
-whose subdifferential at $\bs r=\bs q(t)$ is $\partial\Psi(\bs 0)$),
-the first-order optimality condition reads
-$\bs 0\in\partial_{\bs q}E(\bs q(t),S(t))+\E$, that is,
-\begin{equation}\label{eq:local_stab}
-  \bs f(\bs q(t),S(t))=-\partial_{\bs q}E(\bs q(t),S(t))\in\E .
-\end{equation}
-
-\emph{Step 2: energy identity along the trajectory.} By
-\cref{prop:power}\ref{E:AC} the map $t\mapsto E(\bs q(t),S(t))$ is
-absolutely continuous, and by \cref{rem:diss_ac} so is
-$t\mapsto\Diss_\Psi(\bs q;[0,t])$, with derivative $\Psi(\dot{\bs q})$.
-Differentiating the balance~(E),
-$E(\bs q(t),S(t))+\Diss_\Psi(\bs q;[0,t])=E(\bs q(0),S(0))+\int_0^t\partial_S E\,\dot S$,
-at a.e.\ $t$ gives
-\[
-  \partial_{\bs q}E(\bs q,S)\cdot\dot{\bs q}+\partial_S E(\bs q,S)\,\dot S
-  +\Psi(\dot{\bs q})=\partial_S E(\bs q,S)\,\dot S,
-\]
-and the terms $\partial_S E\,\dot S$ cancel, leaving
-\begin{equation}\label{eq:power_identity}
-  \bs f(\bs q,S)\cdot\dot{\bs q}
-  =-\partial_{\bs q}E(\bs q,S)\cdot\dot{\bs q}
-  =\Psi(\dot{\bs q}).
-\end{equation}
-
-\emph{Step 3: conclusion.} By~\eqref{eq:local_stab},
-$\bs f\in\E$; by~\eqref{eq:power_identity},
-$\bs f\cdot\dot{\bs q}=\Psi(\dot{\bs q})$. \Cref{lem:saturation}\ref{sat:ii}
-(with $\bs v=\dot{\bs q}$) then gives
-$\bs f\in\partial\Psi(\dot{\bs q})$, i.e.\ the Biot
-inclusion~\eqref{eq:biot}.
-
-\emph{Converse.} Assume $E(\cdot,S)$ convex and that both~\eqref{eq:biot}
-and $\bs f(\bs q,S)\in\E$ hold a.e. Convexity makes local and global
-stability equivalent, so $\bs f\in\E$ is~(S). For~(E): by
-\cref{lem:saturation}\ref{sat:i}, \eqref{eq:biot} gives
-$\bs f\cdot\dot{\bs q}=\Psi(\dot{\bs q})$ a.e.; integrating and using
-\cref{rem:diss_ac} together with \cref{prop:power}\ref{E:AC} reverses
-Step~2 and recovers the balance~(E).
-\end{proof}
-
-% =====================================================================
-\section{Well-posedness: supporting results and proofs}
-\label{app:math}
-
-\subsection{Properties of the dissipation distance}
-
-\begin{proposition}[Quasi-pseudodistance]\label{prop:quasi_distance}
-Under \ref{A:Psi}, the dissipation distance~\eqref{eq:diss_dist}
-satisfies, for all $\bs q_1,\bs q_2,\bs q_3\in\Q$:
-\textnormal{(D1)} $\Dr(\bs q_1,\bs q_2)\ge0$ and $\Dr(\bs q,\bs q)=0$;
-\textnormal{(D2)} $\Dr(\bs q_1,\bs q_3)\le\Dr(\bs q_1,\bs q_2)+\Dr(\bs q_2,\bs q_3)$.
-If $\Psi$ is symmetric then $\Dr$ is a pseudodistance; if in addition
-$\Psi(\bs v)=0\Rightarrow\bs v=\bs 0$ (in particular under
-\ref{A:coerc}), then $\Dr$ is a distance.
-\end{proposition}
-
-\begin{proof}
-\emph{(D1).} Since $\Psi\ge0$, every admissible path
-$\gamma\in\mathrm{AC}([0,1];\Q)$ has cost
-$\int_0^1\Psi(\dot\gamma)\dd s\ge0$; taking the infimum,
-$\Dr(\bs q_1,\bs q_2)\ge0$. The constant path $\gamma\equiv\bs q$ joins
-$\bs q$ to $\bs q$ with $\dot\gamma\equiv\bs 0$ and cost
-$\int_0^1\Psi(\bs 0)\dd s=0$ (normalisation); hence
-$0\le\Dr(\bs q,\bs q)\le0$.
-
-\emph{(D2).} Fix $\varepsilon>0$. By definition of the infimum there are
-admissible paths $\gamma_{12}$ from $\bs q_1$ to $\bs q_2$ and
-$\gamma_{23}$ from $\bs q_2$ to $\bs q_3$ with
-\begin{equation}\label{eq:eps_paths}
-  \int_0^1\Psi(\dot\gamma_{12})\dd s\le\Dr(\bs q_1,\bs q_2)+\tfrac{\varepsilon}{2},
-  \qquad
-  \int_0^1\Psi(\dot\gamma_{23})\dd s\le\Dr(\bs q_2,\bs q_3)+\tfrac{\varepsilon}{2}.
-\end{equation}
-Define the concatenation $\gamma_{13}\in\mathrm{AC}([0,1];\Q)$ by
-$\gamma_{13}(s)=\gamma_{12}(2s)$ for $s\in[0,\tfrac12]$ and
-$\gamma_{13}(s)=\gamma_{23}(2s-1)$ for $s\in[\tfrac12,1]$; then
-$\gamma_{13}(0)=\bs q_1$, $\gamma_{13}(1)=\bs q_3$, so it is admissible
-for $\Dr(\bs q_1,\bs q_3)$. Using $\dot\gamma_{13}(s)=2\dot\gamma_{12}(2s)$
-on $[0,\tfrac12]$, the substitution $u=2s$ and $1$-homogeneity
-($\Psi(2\bs w)=2\Psi(\bs w)$) give
-\[
-  \int_0^{1/2}\Psi\bigl(2\dot\gamma_{12}(2s)\bigr)\dd s
-  =\int_0^{1/2}2\,\Psi\bigl(\dot\gamma_{12}(2s)\bigr)\dd s
-  =\int_0^1\Psi(\dot\gamma_{12}(u))\dd u,
-\]
-and likewise for the second half. Hence
-$\int_0^1\Psi(\dot\gamma_{13})\dd s=\int_0^1\Psi(\dot\gamma_{12})\dd s+\int_0^1\Psi(\dot\gamma_{23})\dd s
-\le\Dr(\bs q_1,\bs q_2)+\Dr(\bs q_2,\bs q_3)+\varepsilon$
-by~\eqref{eq:eps_paths}. Since $\Dr(\bs q_1,\bs q_3)$ is the infimum
-over admissible paths, $\Dr(\bs q_1,\bs q_3)\le\Dr(\bs q_1,\bs q_2)+\Dr(\bs q_2,\bs q_3)+\varepsilon$;
-letting $\varepsilon\downarrow0$ proves (D2).
-
-\emph{Symmetry and definiteness.} If $\Psi(-\bs v)=\Psi(\bs v)$, then
-for an admissible $\gamma$ from $\bs q_1$ to $\bs q_2$ the reversed path
-$\tilde\gamma(s)=\gamma(1-s)$ joins $\bs q_2$ to $\bs q_1$ with
-$\dot{\tilde\gamma}(s)=-\dot\gamma(1-s)$ and the same cost, so
-$\Dr(\bs q_2,\bs q_1)\le\Dr(\bs q_1,\bs q_2)$; exchanging roles gives
-equality, i.e.\ $\Dr$ is symmetric and hence a pseudodistance. If
-moreover $\Psi(\bs v)=0\Rightarrow\bs v=\bs 0$, then by
-\cref{prop:Dr_linear} below $\Dr(\bs q_1,\bs q_2)=\Psi(\bs q_2-\bs q_1)=0$
-forces $\bs q_2-\bs q_1=\bs 0$, so $\Dr$ separates points and is a
-distance.
-\end{proof}
-
-\begin{proposition}[Linearity and continuity]\label{prop:Dr_linear}
+\begin{proposition}[Linearity and continuity of the dissipation
+distance]\label{prop:Dr_linear}
 If $\Q$ is convex and $\Psi$ is continuous, convex and positively
 $1$-homogeneous, then
 \begin{equation}\label{eq:Dr_linear}
@@ -238,6 +130,72 @@ follows. Continuity of $\Dr$ is then immediate from the continuity of
 $\Psi$ and of $(\bs q_1,\bs q_2)\mapsto\bs q_2-\bs q_1$.
 \end{proof}
 
+\begin{proposition}[Metric properties of the dissipation
+distance]\label{prop:quasi_distance}
+Under \ref{A:Psi} and $\Q$ convex, the dissipation distance satisfies,
+for all $\bs q_1,\bs q_2,\bs q_3\in\Q$:
+\textnormal{(D1)} $\Dr(\bs q_1,\bs q_2)\ge0$ and $\Dr(\bs q,\bs q)=0$;
+\textnormal{(D2)} $\Dr(\bs q_1,\bs q_3)\le\Dr(\bs q_1,\bs q_2)+\Dr(\bs q_2,\bs q_3)$.
+Since $\Psi$ is symmetric, $\Dr$ is a pseudodistance; if in addition
+$\Psi(\bs v)=0\Rightarrow\bs v=\bs 0$ (in particular under
+\ref{A:coerc}), $\Dr$ is a distance.
+\end{proposition}
+
+\begin{proof}
+By \cref{prop:Dr_linear}, $\Dr(\bs q_1,\bs q_2)=\Psi(\bs q_2-\bs q_1)$;
+the four properties are then inherited from those of $\Psi$.
+\emph{(D1).} $\Dr(\bs q_1,\bs q_2)=\Psi(\bs q_2-\bs q_1)\ge0$ by
+positiveness, and $\Dr(\bs q,\bs q)=\Psi(\bs 0)=0$ by normalisation.
+\emph{(D2).} A convex, positively $1$-homogeneous $\Psi$ is subadditive:
+$\Psi(\bs a+\bs b)=2\,\Psi\bigl(\tfrac12\bs a+\tfrac12\bs b\bigr)
+\le2\bigl(\tfrac12\Psi(\bs a)+\tfrac12\Psi(\bs b)\bigr)=\Psi(\bs a)+\Psi(\bs b)$.
+Applying this to $\bs a=\bs q_2-\bs q_1$ and $\bs b=\bs q_3-\bs q_2$,
+\[
+  \Dr(\bs q_1,\bs q_3)=\Psi(\bs q_3-\bs q_1)
+  =\Psi\bigl((\bs q_2-\bs q_1)+(\bs q_3-\bs q_2)\bigr)
+  \le\Psi(\bs q_2-\bs q_1)+\Psi(\bs q_3-\bs q_2)
+  =\Dr(\bs q_1,\bs q_2)+\Dr(\bs q_2,\bs q_3).
+\]
+\emph{Symmetry and definiteness.} If $\Psi(-\bs v)=\Psi(\bs v)$ then
+$\Dr(\bs q_2,\bs q_1)=\Psi(\bs q_1-\bs q_2)=\Psi(\bs q_2-\bs q_1)=\Dr(\bs q_1,\bs q_2)$,
+a pseudodistance; and if $\Psi(\bs v)=0\Rightarrow\bs v=\bs 0$ then
+$\Dr(\bs q_1,\bs q_2)=0$ forces $\bs q_2=\bs q_1$, so $\Dr$ separates
+points.
+\end{proof}
+
+\begin{lemma}[Cumulated dissipation of an absolutely continuous
+path]\label{lem:diss_ac}
+Let $\bs q\in\mathrm{AC}([0,T];\Q)$ with $\Q$ convex. Then
+\begin{equation}\label{eq:diss_ac}
+  \Diss_\Psi(\bs q;[0,t])=\int_0^t\Psi(\dot{\bs q}(s))\dd s
+  \qquad\text{for every }t\in[0,T],
+\end{equation}
+so $t\mapsto\Diss_\Psi(\bs q;[0,t])$ is absolutely continuous with
+$\tfrac{\dd}{\dd t}\Diss_\Psi(\bs q;[0,t])=\Psi(\dot{\bs q}(t))$ for a.e.\
+$t$.
+\end{lemma}
+
+\begin{proof}
+For a partition $0=t_0<\dots<t_N=t$, \cref{prop:Dr_linear} and the
+fundamental theorem of calculus give
+\[
+  \sum_{i=1}^{N}\Dr(\bs q(t_{i-1}),\bs q(t_i))
+  =\sum_{i=1}^{N}\Psi\bigl(\bs q(t_i)-\bs q(t_{i-1})\bigr)
+  =\sum_{i=1}^{N}\Psi\!\Bigl(\int_{t_{i-1}}^{t_i}\dot{\bs q}\Bigr).
+\]
+Taking the supremum over all partitions, the left side is
+$\Diss_\Psi(\bs q;[0,t])$ by definition, while the supremum of the right
+side is $\int_0^t\Psi(\dot{\bs q})$: the inequality "$\le$" follows from
+the subadditivity of $\Psi$ (as in \cref{prop:quasi_distance}) together
+with Jensen's inequality on each subinterval, and "$\ge$" from
+refining the partition, this being precisely the definition of the
+$\Psi$-variation of an absolutely continuous curve. This
+proves~\eqref{eq:diss_ac}; absolute continuity of $t\mapsto\int_0^t\Psi(\dot{\bs q})$
+and the stated derivative are then standard, since
+$s\mapsto\Psi(\dot{\bs q}(s))\in L^1(0,T)$ (as $\Psi$ is Lipschitz on
+bounded sets and $\dot{\bs q}\in L^1$).
+\end{proof}
+
 \subsection{Energy estimates}
 
 \begin{proposition}[Coercivity, absolute continuity and power
@@ -253,7 +211,7 @@ Under \ref{A:W}--\ref{A:S}, the following hold.
   \item\label{E:gronwall} There exist constants $c_3,c_4>0$, depending
   only on $c_1,c_2,p,C_\ell,C_{\ell'}$, such that
   $|\partial_S E(\bs q,S)|\le c_3\bigl(E(\bs q,S)+c_4\bigr)$ for all
-  $\bs q\in\Q$, $S\ge0$.
+  $\bs q\in\Q$, $S\ge0$; moreover $E(\bs q,S)+c_4\ge1>0$.
 \end{enumerate}
 \end{proposition}
 
@@ -272,11 +230,11 @@ continuity of $W$ (\ref{A:W}) and of $\bs\ell$ (\ref{A:ell}, Lipschitz)
 give $E(\bs q,S)=\lim_n E(\bs q_n,S)\le c$, so $\bs q\in\mathcal L_c(S)$.
 A closed, bounded subset of $\R^n$ is compact by Heine--Borel.
 
-\emph{\ref{E:AC}.} By \ref{A:ell}, $\bs\ell$ is Lipschitz, hence (Rademacher)
-differentiable a.e.\ with $\|\bs\ell'\|\le C_{\ell'}$; by \ref{A:S},
-$S\in W^{1,1}(0,T)\subset\mathrm{AC}([0,T])$. The composition
-$t\mapsto\bs\ell(S(t))$ is therefore absolutely continuous, with
-$\frac{\dd}{\dd t}\bs\ell(S(t))=\bs\ell'(S(t))\dot S(t)$ a.e.\ by the
+\emph{\ref{E:AC}.} By \ref{A:ell}, $\bs\ell$ is Lipschitz, hence, by
+Rademacher's theorem, differentiable a.e.\ with $\|\bs\ell'\|\le C_{\ell'}$;
+by \ref{A:S}, $S\in W^{1,1}(0,T)\subset\mathrm{AC}([0,T])$. The
+composition $t\mapsto\bs\ell(S(t))$ is therefore absolutely continuous,
+with $\frac{\dd}{\dd t}\bs\ell(S(t))=\bs\ell'(S(t))\dot S(t)$ a.e.\ by the
 chain rule for Sobolev functions. As $W(\bs q)$ does not depend on $t$,
 $t\mapsto E(\bs q,S(t))=W(\bs q)-\bs q\cdot\bs\ell(S(t))$ is absolutely
 continuous with the stated derivative; its integrability follows from
@@ -299,8 +257,9 @@ $ab=C_\ell\|\bs q\|$:
 \end{equation}
 Substituting~\eqref{eq:young} into~\eqref{eq:coercive_rearranged} and
 absorbing,
-$\tfrac{c_1}{2}\|\bs q\|^p\le E(\bs q,S)+c_2+K=:E(\bs q,S)+\tilde c_2$,
-hence
+$\tfrac{c_1}{2}\|\bs q\|^p\le E(\bs q,S)+c_2+K=:E(\bs q,S)+\tilde c_2$;
+in particular $E(\bs q,S)+\tilde c_2\ge\tfrac{c_1}{2}\|\bs q\|^p\ge0$,
+and
 $\|\bs q\|\le(2/c_1)^{1/p}\bigl(E(\bs q,S)+\tilde c_2\bigr)^{1/p}$.
 Since $1/p<1$, $r^{1/p}\le r+1$ for all $r\ge0$; applying this to
 $r=E(\bs q,S)+\tilde c_2$ gives
@@ -309,8 +268,74 @@ $r=E(\bs q,S)+\tilde c_2$ gives
   \le C_{\ell'}\Bigl(\tfrac{2}{c_1}\Bigr)^{1/p}\bigl(E(\bs q,S)+\tilde c_2+1\bigr)
   = c_3\bigl(E(\bs q,S)+c_4\bigr),
 \]
-with $c_3=C_{\ell'}(2/c_1)^{1/p}$ and $c_4=\tilde c_2+1$.
+with $c_3=C_{\ell'}(2/c_1)^{1/p}$ and $c_4=\tilde c_2+1$; and
+$E(\bs q,S)+c_4=(E(\bs q,S)+\tilde c_2)+1\ge1$.
 \end{proof}
+
+\subsection{The Biot inclusion}
+
+\begin{proof}[Proof of \cref{prop:biot}]
+\emph{Statement.} \emph{Let $\bs q\in\mathrm{AC}([0,T];\Q)$ satisfy
+\textnormal{(S)} and~\textnormal{(E)} with $E(\cdot,S)$ differentiable.
+Then $\bs f(\bs q,S)\in\partial\Psi(\dot{\bs q})$ for a.e.\ $t$
+$($equivalently~\eqref{eq:biot}$)$; conversely, if $E(\cdot,S)$ is
+convex, \eqref{eq:biot} together with $\bs f(\bs q,S)\in\E$ implies
+\textnormal{(S)}--\textnormal{(E)}.}
+
+\smallskip
+Let $t$ be a point at which $\dot{\bs q}(t)$ exists (a.e.\ $t$, since
+$\bs q\in\mathrm{AC}$) and at which the energy balance~(E) is
+differentiable.
+
+\emph{Step 1: local stability.} By the global stability~(S), the state
+$\bs q(t)$ minimises $\bs r\mapsto E(\bs r,S(t))+\Dr(\bs q(t),\bs r)$
+over $\Q$; in particular it is a local minimiser. Since
+$E(\cdot,S(t))$ is differentiable and, by \cref{prop:Dr_linear},
+$\Dr(\bs q(t),\bs r)=\Psi(\bs r-\bs q(t))$ has subdifferential
+$\partial\Psi(\bs r-\bs q(t))$, which at $\bs r=\bs q(t)$ equals
+$\partial\Psi(\bs 0)=\E$, the first-order optimality condition reads
+$\bs 0\in\partial_{\bs q}E(\bs q(t),S(t))+\E$, that is,
+\begin{equation}\label{eq:local_stab}
+  \bs f(\bs q(t),S(t))=-\partial_{\bs q}E(\bs q(t),S(t))\in\E .
+\end{equation}
+
+\emph{Step 2: energy identity along the trajectory.} By
+\cref{prop:power}\ref{E:AC} the map $t\mapsto E(\bs q(t),S(t))$ is
+absolutely continuous, and by \cref{lem:diss_ac} so is
+$t\mapsto\Diss_\Psi(\bs q;[0,t])$, with derivative $\Psi(\dot{\bs q})$.
+Differentiating the balance~(E),
+$E(\bs q(t),S(t))+\Diss_\Psi(\bs q;[0,t])=E(\bs q(0),S(0))+\int_0^t\partial_S E\,\dot S$,
+at a.e.\ $t$ gives
+\[
+  \partial_{\bs q}E(\bs q,S)\cdot\dot{\bs q}+\partial_S E(\bs q,S)\,\dot S
+  +\Psi(\dot{\bs q})=\partial_S E(\bs q,S)\,\dot S,
+\]
+and the terms $\partial_S E\,\dot S$ cancel, leaving
+\begin{equation}\label{eq:power_identity}
+  \bs f(\bs q,S)\cdot\dot{\bs q}
+  =-\partial_{\bs q}E(\bs q,S)\cdot\dot{\bs q}
+  =\Psi(\dot{\bs q}).
+\end{equation}
+
+\emph{Step 3: conclusion.} By~\eqref{eq:local_stab},
+$\bs f\in\E$; by~\eqref{eq:power_identity},
+$\bs f\cdot\dot{\bs q}=\Psi(\dot{\bs q})$. \Cref{lem:saturation}\ref{sat:ii}
+(with $\bs v=\dot{\bs q}$) then gives
+$\bs f\in\partial\Psi(\dot{\bs q})$, i.e.\ the Biot
+inclusion~\eqref{eq:biot}.
+
+\emph{Converse.} Assume $E(\cdot,S)$ convex and that both~\eqref{eq:biot}
+and $\bs f(\bs q,S)\in\E$ hold a.e. Convexity makes local and global
+stability equivalent, so $\bs f\in\E$ is~(S). For~(E): by
+\cref{lem:saturation}\ref{sat:i}, \eqref{eq:biot} gives
+$\bs f\cdot\dot{\bs q}=\Psi(\dot{\bs q})$ a.e.; integrating and using
+\cref{lem:diss_ac} together with \cref{prop:power}\ref{E:AC} reverses
+Step~2 and recovers the balance~(E).
+\end{proof}
+
+% =====================================================================
+\section{Well-posedness}
+\label{app:math}
 
 \subsection{Compatibility}
 
@@ -353,6 +378,11 @@ every $\tilde{\bs q}$, i.e.\ $\bs q\in\mathcal S(t)$.
 \subsection{Existence and uniqueness of energetic solutions}
 
 \begin{proof}[Proof of \cref{thm:existence}]
+\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:Psi}, for every
+$\bs q_0\in\mathcal S(0)$ there exists at least one energetic solution
+$\bs q:[0,T]\to\Q$ of bounded variation.}
+
+\smallskip
 We verify the hypotheses of the abstract existence theorem
 \cite[Thm.~2.1.6]{MielkeRoubicek} for the rate-independent system
 $(\Q,E,\Dr)$.
@@ -384,24 +414,34 @@ $\bs q:[0,T]\to\Q$ of bounded variation in the sense of
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:uniqueness}]
-Under uniform convexity of $W$ ($D^2W\succeq\alpha\Id$, $\alpha>0$) and
-the linearity of $\bs q\mapsto-\bs q\cdot\bs\ell(S)$, the reduced energy
-$E(\cdot,S)$ is strictly (indeed uniformly) convex, with
+\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:Psi}, if $W\in C^3(\Q)$
+is uniformly convex $(D^2W\succeq\alpha\Id,\ \alpha>0)$ and
+$\bs\ell\in C^3$, $S\in C^3([0,T])$, then for every
+$\bs q_0\in\mathcal S(0)$ the energetic solution is unique.}
+
+\smallskip
+Under uniform convexity of $W$ and the linearity of
+$\bs q\mapsto-\bs q\cdot\bs\ell(S)$, the reduced energy $E(\cdot,S)$ is
+strictly (indeed uniformly) convex, with
 $D^2_{\bs q}E(\bs q,S)=D^2W(\bs q)\succeq\alpha\Id$ for every $S\ge0$.
 Strict convexity makes the global stability $\bs q_0\in\mathcal S(0)$
 equivalent to the pointwise first-order inclusion
 $-\partial_{\bs q}E(\bs q_0,S(0))\in\partial\Psi(\bs 0)$, i.e.\ the
-initial state is a stationary point of the incremental potential. By
-\ref{A:S}-strengthened smoothness $\bs\ell\in C^3$, $S\in C^3([0,T])$,
-the map $E$ is jointly $C^3$ on $[0,T]\times\Q$. These are exactly the
-hypotheses of \cite[Thm.~3.4.7]{MielkeRoubicek}, whose
-Section~3.4.4 establishes that the energetic solution emanating from
-$\bs q_0$ is unique.
+initial state is a stationary point of the incremental potential. By the
+strengthened smoothness $\bs\ell\in C^3$, $S\in C^3([0,T])$, the map $E$
+is jointly $C^3$ on $[0,T]\times\Q$. These are exactly the hypotheses of
+\cite[Thm.~3.4.7]{MielkeRoubicek}, whose Section~3.4.4 establishes that
+the energetic solution emanating from $\bs q_0$ is unique.
 \end{proof}
 
 \subsection{Balanced-viscosity solutions}
 
-\begin{proof}[Proof of \cref{thm:BV}: existence]
+\begin{proof}[Proof of \cref{thm:BV_existence}]
+\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:coerc}, for every
+$\bs q_0\in\mathcal S(0)$ there exists at least one BV solution in the
+sense of \cref{def:BV}.}
+
+\smallskip
 \emph{Step 1: the regularised problem.} For $\varepsilon>0$ write
 $\Phi_\varepsilon(\bs v):=\Psi(\bs v)+\tfrac{\varepsilon}{2}\|\bs v\|^2$;
 then \eqref{eq:regularised} is $\bs 0\in\partial\Phi_\varepsilon(\dot{\bs q}_\varepsilon)+\partial_{\bs q}E(\bs q_\varepsilon,S)$.
@@ -410,23 +450,29 @@ $\partial_{\bs q}E(\cdot,S)$ is a $C^1$ perturbation, the theory of
 doubly-nonlinear evolution inclusions governed by a maximal monotone
 dissipation \cite{Brezis1973} yields, for each $\varepsilon>0$, a unique
 solution $\bs q_\varepsilon\in W^{1,2}(0,T;\Q)$ with
-$\bs q_\varepsilon(0)=\bs q_0$, which satisfies the (strict) energy
-identity
+$\bs q_\varepsilon(0)=\bs q_0$, satisfying the (strict) energy identity
 \begin{equation}\label{eq:reg_energy}
   E(\bs q_\varepsilon(t),S(t))+\int_0^t\Bigl[\Psi(\dot{\bs q}_\varepsilon)+\varepsilon\|\dot{\bs q}_\varepsilon\|^2\Bigr]\dd s
   =E(\bs q_0,S(0))+\int_0^t\partial_S E(\bs q_\varepsilon,S)\dot S\dd s .
 \end{equation}
 
-\emph{Step 2: uniform total-variation bound.} Dropping the
-non-negative viscous term $\varepsilon\|\dot{\bs q}_\varepsilon\|^2$
-in~\eqref{eq:reg_energy} and applying the Gronwall control
-\cref{prop:power}\ref{E:gronwall} to the work integral exactly as in
-Step~1 of the proof of \cref{thm:convergence} below (the estimate is
-uniform in $\varepsilon$ because \ref{A:W}--\ref{A:S} do not involve
-$\varepsilon$) yields a constant $M$, independent of $\varepsilon$, with
-$\sup_{t}E(\bs q_\varepsilon(t),S(t))\le M$ and hence
-$\sup_t\|\bs q_\varepsilon(t)\|\le M'$. Using \ref{A:coerc},
-$\Psi(\bs v)\ge c_\Psi\|\bs v\|$, and \cref{rem:diss_ac},
+\emph{Step 2: uniform energy and total-variation bounds.} Dropping the
+non-negative viscous term and the non-negative dissipation
+in~\eqref{eq:reg_energy}, and abbreviating
+$\phi_\varepsilon(t):=E(\bs q_\varepsilon(t),S(t))+c_4$ (with $c_4$ from
+\cref{prop:power}\ref{E:gronwall}, so $\phi_\varepsilon\ge1$),
+\[
+  \phi_\varepsilon(t)\le\phi_\varepsilon(0)+\int_0^t|\partial_S E(\bs q_\varepsilon,S)|\,|\dot S|\dd s
+  \le\phi_\varepsilon(0)+\int_0^t c_3\,\phi_\varepsilon(s)\,|\dot S(s)|\dd s,
+\]
+using \cref{prop:power}\ref{E:gronwall}. Since $|\dot S|\in L^1$,
+Gronwall's inequality gives
+$\phi_\varepsilon(t)\le\phi_\varepsilon(0)\exp\!\bigl(c_3\|\dot S\|_{L^1}\bigr)$,
+whence $\sup_t E(\bs q_\varepsilon(t),S(t))\le M$ with $M$ independent of
+$\varepsilon$; by coercivity \ref{A:W}, $\sup_t\|\bs q_\varepsilon(t)\|\le M'$,
+also independent of $\varepsilon$. Now, using \ref{A:coerc}
+($\Psi(\bs v)\ge c_\Psi\|\bs v\|$), \cref{lem:diss_ac} and the energy
+identity,
 \begin{align}
   c_\Psi\,\Var(\bs q_\varepsilon;[0,T])
   &=c_\Psi\int_0^T\|\dot{\bs q}_\varepsilon\|\dd s
@@ -437,9 +483,9 @@ $\Psi(\bs v)\ge c_\Psi\|\bs v\|$, and \cref{rem:diss_ac},
   &\le E(\bs q_0,S(0))+C_{\min}+C_{\ell'}M'\|\dot S\|_{L^1}
   =:c_\Psi\,C, \label{eq:var_bound_bv}
 \end{align}
-where $E(\bs q_\varepsilon(T),S(T))\ge-C_{\min}$ by coercivity (as in
-\eqref{eq:reg_energy}) and $|\partial_S E|\le C_{\ell'}\|\bs q_\varepsilon\|\le C_{\ell'}M'$.
-Thus $\Var(\bs q_\varepsilon;[0,T])\le C$ uniformly in $\varepsilon$.
+where $E(\bs q_\varepsilon(T),S(T))\ge-C_{\min}$ by coercivity and
+$|\partial_S E|\le C_{\ell'}\|\bs q_\varepsilon\|\le C_{\ell'}M'$. Thus
+$\Var(\bs q_\varepsilon;[0,T])\le C$, uniformly in $\varepsilon$.
 
 \emph{Step 3: vanishing-viscosity limit.} By Helly's selection theorem
 \cite[Thm.~3.3]{AmbrosioFuscoPallara}, the uniform bounds
@@ -448,22 +494,26 @@ give a subsequence $\varepsilon_j\to0^+$ and a limit
 $\bs q\in\mathrm{BV}([0,T];\Q)$ with $\bs q_{\varepsilon_j}(t)\to\bs q(t)$
 for every $t\in[0,T]$. Local stability (BV-S) passes to the limit by
 lower semicontinuity of $E(\cdot,S)$ (continuity of $W$ and $\bs\ell$)
-and continuity of $\Dr$ (\cref{prop:Dr_linear}); the energy
-balance~(BV-E), including the identification of the viscous correction
-$\mathcal V$ as the limit of $\int\varepsilon\|\dot{\bs q}_\varepsilon\|^2$
-concentrated at the jumps of $\bs q$, is obtained by the
-reparametrised (arc-length) passage to the limit of
-\cite[Thm.~3.3.2]{MielkeRoubicek}, using
-\cref{prop:power}\ref{E:AC} and the dominated convergence theorem for
-the work integral. Hence $\bs q$ is a BV solution in the sense of
-\cref{def:BV}.
+and continuity of $\Dr$ (\cref{prop:Dr_linear}). For the work term in
+(BV-E), the integrands
+$\partial_S E(\bs q_{\varepsilon_j}(s),S(s))\dot S(s)=-\bs q_{\varepsilon_j}(s)\cdot\bs\ell'(S(s))\dot S(s)$
+converge pointwise a.e.\ to $\partial_S E(\bs q(s),S(s))\dot S(s)$ and
+are dominated, uniformly in $j$, by the integrable function
+$s\mapsto C_{\ell'}M'|\dot S(s)|\in L^1(0,T)$; Lebesgue's dominated
+convergence theorem gives the convergence of the work integral. The
+identification of the viscous correction $\mathcal V$ as the limit of
+$\int\varepsilon\|\dot{\bs q}_\varepsilon\|^2$ concentrated at the jumps
+of $\bs q$ follows from the reparametrised (arc-length) passage to the
+limit of \cite[Thm.~3.3.2]{MielkeRoubicek}. Hence $\bs q$ is a BV
+solution in the sense of \cref{def:BV}.
 \end{proof}
 
-\begin{proof}[Proof of \cref{thm:BV}: scalar uniqueness]
-Let $n=1$ and assume $q\mapsto E(q,S)$ has finitely many local minima
-for each $S$. We show the BV solution from a given $q_0\in\mathcal S(0)$
-is unique.
+\begin{proof}[Proof of \cref{thm:BV_uniqueness}]
+\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:coerc}, if $n=1$ and
+$q\mapsto E(q,S)$ has finitely many local minima for each $S$, the BV
+solution is unique.}
 
+\smallskip
 \emph{Uniqueness of the post-jump state.} At a jump time $t^\ast$, the
 pre-jump state $q^-(t^\ast)$ is determined by left-continuity of the
 preceding arc. In dimension one, any monotone path from $q^-$ to a
@@ -490,7 +540,7 @@ trajectory is unique.
 \end{proof}
 
 % =====================================================================
-\section{Proofs for the variational numerical method}
+\section{Variational numerical method}
 \label{app:numerical}
 
 \begin{proposition}[Return map]\label{prop:return_map}
@@ -556,6 +606,14 @@ $\Dr(\bs q_k,\bs q_k)=0$ (D1) gives~\eqref{eq:disc_energy}.
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:convergence}]
+\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:Psi}, with
+$\bs q_0\in\mathcal S(0)$ and $\bs q^h$ the piecewise-constant
+interpolant of the incremental sequence on a partition of maximal step
+$h$, a subsequence $\bs q^{h_j}(t)\to\bs q(t)$ for every $t$, with
+$\bs q$ an energetic solution; under uniqueness the whole family
+converges.}
+
+\smallskip
 Write $\alpha_k:=\int_{t_k}^{t_{k+1}}|\dot S(s)|\dd s$, so that
 $\sum_k\alpha_k=\|\dot S\|_{L^1(0,T)}$.
 
@@ -586,7 +644,9 @@ and setting $e_k:=E(\bs q_k,S_k)+\tilde c_2+1$,
   e_K\le e_0+C_{\ell'}C_p\sum_{k=0}^{K-1}e_k\,\alpha_k .
 \end{equation}
 The discrete Gronwall lemma\footnote{If $e_K\le e_0+C\sum_{k<K}e_k\alpha_k$
-with $e_k,\alpha_k\ge0$, then $e_K\le e_0\exp\!\bigl(C\sum_{k<K}\alpha_k\bigr)$.}
+with $e_k,\alpha_k\ge0$, then $e_K\le e_0\exp\!\bigl(C\sum_{k<K}\alpha_k\bigr)$;
+proved by induction, comparing with the solution of the corresponding
+equality.}
 applied to~\eqref{eq:disc_gronwall} yields
 $e_K\le e_0\exp\!\bigl(C_{\ell'}C_p\|\dot S\|_{L^1}\bigr)=:\widetilde M$,
 so $\sup_{k,h}E(\bs q_k,S_k)\le\widetilde M-\tilde c_2-1=:M$, a bound
@@ -629,15 +689,23 @@ in~\eqref{eq:work_incr} but with equality, gives
   E(\bs q_{K_j},S_{K_j})+\Diss_\Psi(\bs q^{h_j};[0,t_{K_j}])
   \le E(\bs q_0,S_0)+\int_0^{t_{K_j}}\!\partial_S E(\bs q^{h_j}(s),S(s))\dot S(s)\dd s,
 \end{equation}
-where we used $\bs q^{h_j}(s)=\bs q_k$ on $[t_k,t_{k+1})$. On the left,
-$E(\bs q_{K_j},S_{K_j})\to E(\bs q(t),S(t))$ by continuity, while lower
-semicontinuity of the $\Psi$-variation under pointwise convergence
-gives $\Diss_\Psi(\bs q;[0,t])\le\liminf_j\Diss_\Psi(\bs q^{h_j};[0,t])$
-(for any fixed partition, $\sum_i\Dr(\bs q^{h_j}(s_i),\bs q^{h_j}(s_{i+1}))\to\sum_i\Dr(\bs q(s_i),\bs q(s_{i+1}))$
-by continuity of $\Dr$, and each partial sum is $\le\Diss_\Psi(\bs q^{h_j};[0,t])$).
-On the right, $|\partial_S E(\bs q^{h_j}(s),S(s))|\le C_{\ell'}M'$
-uniformly, $\bs q^{h_j}(s)\to\bs q(s)$ pointwise and $\dot S\in L^1$, so
-the dominated convergence theorem gives
+where we used $\bs q^{h_j}(s)=\bs q_k$ on $[t_k,t_{k+1})$. We pass to the
+limit in each term. On the left, $E(\bs q_{K_j},S_{K_j})\to E(\bs q(t),S(t))$
+by continuity, while lower semicontinuity of the $\Psi$-variation under
+pointwise convergence gives
+$\Diss_\Psi(\bs q;[0,t])\le\liminf_j\Diss_\Psi(\bs q^{h_j};[0,t])$: for
+any fixed partition $0=s_0<\dots<s_M=t$,
+$\sum_i\Dr(\bs q^{h_j}(s_i),\bs q^{h_j}(s_{i+1}))\to\sum_i\Dr(\bs q(s_i),\bs q(s_{i+1}))$
+by continuity of $\Dr$, and each partial sum is bounded by
+$\Diss_\Psi(\bs q^{h_j};[0,t])$; taking $\liminf_j$ and then the
+supremum over partitions gives the claim. On the right, the integrands
+$\partial_S E(\bs q^{h_j}(s),S(s))\dot S(s)=-\bs q^{h_j}(s)\cdot\bs\ell'(S(s))\dot S(s)$
+converge pointwise a.e.\ to $\partial_S E(\bs q(s),S(s))\dot S(s)$ (as
+$\bs q^{h_j}(s)\to\bs q(s)$ and $\bs\ell',\dot S$ are fixed) and are
+dominated, uniformly in $j$, by the integrable function
+$s\mapsto C_{\ell'}M'|\dot S(s)|\in L^1(0,T)$ (using
+$\|\bs q^{h_j}(s)\|\le M'$ and $\|\bs\ell'\|\le C_{\ell'}$); Lebesgue's
+dominated convergence theorem therefore gives
 $\int_0^{t_{K_j}}\partial_S E(\bs q^{h_j},S)\dot S\to\int_0^t\partial_S E(\bs q,S)\dot S$.
 Therefore
 \begin{equation}\label{eq:E_upper}
@@ -652,9 +720,9 @@ and passing to the finest partition recovers the reverse inequality
 of~\eqref{eq:E_upper} (see \cite[Sec.~2.1]{MielkeRoubicek}).
 Combining the two inequalities yields the energy balance~(E). Hence
 $\bs q$ is an energetic solution. If the solution is unique
-(\cref{thm:uniqueness} or the scalar case of \cref{thm:BV}), every
-subsequence has the same limit $\bs q$, so the whole family $\bs q^h$
-converges.
+(\cref{thm:uniqueness} or the scalar case of \cref{thm:BV_uniqueness}),
+every subsequence has the same limit $\bs q$, so the whole family
+$\bs q^h$ converges.
 \end{proof}
 
 \begin{proposition}[Local consistency]\label{prop:consistency}
@@ -666,7 +734,8 @@ error~\eqref{eq:truncation}.
   \begin{equation}\label{eq:cons_weak}
     |\tau_k|\le C_{\ell'}\|\dot S\|_{L^\infty}\Bigl(\int_{t_k}^{t_{k+1}}\|\dot{\bs q}(\tau)\|\dd\tau\Bigr)h_k=O(h_k).
   \end{equation}
-  \item\label{cons:strong} If $\bs q\in W^{1,\infty}(0,T;\Q)$, then
+  \item\label{cons:strong} If $\bs q\in W^{1,\infty}(0,T;\Q)$
+  \textnormal{(}equivalently, $\bs q$ Lipschitz\textnormal{)}, then
   \begin{equation}\label{eq:cons_strong}
     |\tau_k|\le\tfrac12 C_{\ell'}\|\dot{\bs q}\|_{L^\infty}\|\dot S\|_{L^\infty}\,h_k^2=O(h_k^2).
   \end{equation}
@@ -693,8 +762,8 @@ $|\dot S|\le\|\dot S\|_{L^\infty}$,
 $s\in[t_k,t_{k+1}]$, $\|\bs q(s)-\bs q(t_k)\|\le\int_{t_k}^{s}\|\dot{\bs q}\|\dd\tau\le\int_{t_k}^{t_{k+1}}\|\dot{\bs q}\|\dd\tau$;
 inserting into~\eqref{eq:tau_bound_common} and integrating the constant
 bound over $s\in[t_k,t_{k+1}]$ (length $h_k$) gives~\eqref{eq:cons_weak}.
-\emph{\ref{cons:strong}.} If $\bs q\in W^{1,\infty}$, then
-$\|\bs q(s)-\bs q(t_k)\|\le\|\dot{\bs q}\|_{L^\infty}(s-t_k)$, so
+\emph{\ref{cons:strong}.} If $\bs q\in W^{1,\infty}$, i.e.\ Lipschitz,
+then $\|\bs q(s)-\bs q(t_k)\|\le\|\dot{\bs q}\|_{L^\infty}(s-t_k)$, so
 \eqref{eq:tau_bound_common} gives
 $|\tau_k|\le C_{\ell'}\|\dot S\|_{L^\infty}\|\dot{\bs q}\|_{L^\infty}\int_{t_k}^{t_{k+1}}(s-t_k)\dd s
 =\tfrac12 C_{\ell'}\|\dot S\|_{L^\infty}\|\dot{\bs q}\|_{L^\infty}h_k^2$,
@@ -702,9 +771,14 @@ which is~\eqref{eq:cons_strong}.
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:global_consistency}]
-Summing the local bounds of \cref{prop:consistency} over
-$k=0,\dots,N-1$ and bounding each step by $h=\max_k h_k$. In the weak
-case, by~\eqref{eq:cons_weak},
+\emph{Statement.} \emph{Under \ref{A:ell}, $S\in W^{1,\infty}$ and
+either $\bs q\in\mathrm{AC}$ or $\bs q\in W^{1,\infty}$, the accumulated
+truncation error satisfies $\mathcal E_\tau=\sum_k|\tau_k|\le Ch$.}
+
+\smallskip
+Sum the local bounds of \cref{prop:consistency} over $k=0,\dots,N-1$ and
+bound each step by $h=\max_k h_k$. In the weak case,
+by~\eqref{eq:cons_weak},
 \[
   \mathcal E_\tau=\sum_{k}|\tau_k|
   \le C_{\ell'}\|\dot S\|_{L^\infty}\sum_k h_k\int_{t_k}^{t_{k+1}}\|\dot{\bs q}\|\dd\tau
@@ -747,7 +821,12 @@ $\ell_{\mathrm{jump}}=\rho$, from $q^-=-a$ to $q^+=+a$.
 
 \begin{proof}
 We minimise $I$ in~\eqref{eq:I_bistable} separately on the two branches
-$q\le0$ and $q>0$, each of which is strictly convex, then compare.
+$q\le0$ and $q>0$, each of which is strictly convex, then compare their
+minima; the switch occurs where the two are equal, a \emph{Maxwell}
+(equal-area) construction in the sense of phase-transition
+theory~\cite{mielke2002}: the globally stable branch is the one of lower
+incremental energy, and the transition occurs where the two branches
+are energetically balanced.
 
 \emph{Left branch ($q\le0$).} Here $W(q)=\tfrac12k(q+a)^2$ and
 $|q+a|=q+a$ (as $q\ge-a$ near the well), so

@@ -40,16 +40,33 @@
 % =====================================================================
 %  Theorem environments
 % =====================================================================
+%  The theorem-like environments share a single running counter but,
+%  via aliascnt, each keeps its own counter name so that cleveref
+%  refers to them as "Proposition", "Lemma", etc.\ (and not "Theorem").
+\usepackage{aliascnt}
+
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}{Proposition}
+\aliascntresetthe{proposition}
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}{Lemma}
+\aliascntresetthe{lemma}
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}{Corollary}
+\aliascntresetthe{corollary}
 
 \theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{assumption}[theorem]{Assumption}
-\newtheorem{remark}[theorem]{Remark}
+\newaliascnt{definition}{theorem}
+\newtheorem{definition}{Definition}
+\aliascntresetthe{definition}
+\newaliascnt{assumption}{theorem}
+\newtheorem{assumption}{Assumption}
+\aliascntresetthe{assumption}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}{Remark}
+\aliascntresetthe{remark}
 
 % =====================================================================
 %  Macros
@@ -68,6 +85,18 @@
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator{\dist}{dist}
 
+\crefname{theorem}{Theorem}{Theorems}
+\Crefname{theorem}{Theorem}{Theorems}
+\crefname{proposition}{Proposition}{Propositions}
+\Crefname{proposition}{Proposition}{Propositions}
+\crefname{lemma}{Lemma}{Lemmas}
+\Crefname{lemma}{Lemma}{Lemmas}
+\crefname{corollary}{Corollary}{Corollaries}
+\Crefname{corollary}{Corollary}{Corollaries}
+\crefname{definition}{Definition}{Definitions}
+\Crefname{definition}{Definition}{Definitions}
+\crefname{remark}{Remark}{Remarks}
+\Crefname{remark}{Remark}{Remarks}
 \crefname{assumption}{Assumption}{Assumptions}
 \Crefname{assumption}{Assumption}{Assumptions}
 
