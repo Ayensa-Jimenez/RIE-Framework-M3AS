@@ -795,6 +795,64 @@ In both cases $\mathcal E_\tau\le C\,h=O(h)$, with $C$ as stated in
 \cref{thm:global_consistency}.
 \end{proof}
 
+\begin{proposition}[State error under nodal exactness]\label{prop:interp}
+Let $\bs q\colon[0,T]\to\Q$ have finitely many jump points
+$0<t^\ast_1<\dots<t^\ast_m<T$, be Lipschitz with constant $L$ on each
+open subinterval between consecutive jumps, and set
+$\Delta_j:=\|\bs q(t^{\ast+}_j)-\bs q(t^{\ast-}_j)\|$ and
+$J:=\sum_{j=1}^m\Delta_j$. On a partition of maximal step $h$, let
+$\bs q^h$ be the right-continuous piecewise-constant interpolant,
+$\bs q^h(t)=\bs q^h(t_i)$ for $t\in[t_i,t_{i+1})$, and assume the scheme
+is \emph{node-exact}: $\bs q^h(t_i)=\bs q(t_i)$ at every node $t_i$. Then
+\begin{enumerate}[label=\textnormal{(\roman*)},leftmargin=2.4em,itemsep=2pt]
+  \item\label{interp:sup} for every interval $I\subset[0,T]$ at distance
+  greater than $h$ from $\{t^\ast_1,\dots,t^\ast_m\}$,
+  $\|\bs q^h-\bs q\|_{L^\infty(I)}\le L\,h$;
+  \item\label{interp:L1} $\|\bs q^h-\bs q\|_{L^1(0,T;\Q)}\le(\tfrac12 LT+J)\,h+mL\,h^2$.
+\end{enumerate}
+In particular $\|\bs q^h-\bs q\|_{L^1}=O(h)$, and the sup-norm error away
+from the jumps is $O(h)$.
+\end{proposition}
+
+\begin{proof}
+Fix a step $[t_i,t_{i+1})$, $h_i:=t_{i+1}-t_i\le h$. Node-exactness gives
+$\bs q^h\equiv\bs q(t_i)$ on the step, so
+$\|\bs q^h(t)-\bs q(t)\|=\|\bs q(t_i)-\bs q(t)\|$ there.
+
+\emph{Jump-free steps.} If the step contains no jump, $\bs q$ is
+$L$-Lipschitz on it, so $\|\bs q(t_i)-\bs q(t)\|\le L(t-t_i)\le L h_i\le Lh$.
+This proves~\ref{interp:sup}, because an interval at distance $>h$ from
+the jumps meets only jump-free steps (each step has length $\le h$).
+Moreover $\int_{t_i}^{t_{i+1}}\|\bs q^h-\bs q\|\dd t\le\int_{t_i}^{t_{i+1}}L(t-t_i)\dd t=\tfrac12 L h_i^2$.
+
+\emph{Steps containing a jump $t^\ast_j$.} The total variation of
+$\bs q$ from $t_i$ to $t$ is its Lipschitz part plus the single crossed
+jump, so $\|\bs q(t_i)-\bs q(t)\|\le L(t-t_i)+\Delta_j\le L h_i+\Delta_j$,
+whence $\int_{t_i}^{t_{i+1}}\|\bs q^h-\bs q\|\dd t\le(L h_i+\Delta_j)h_i\le L h_i^2+\Delta_j\,h$.
+
+\emph{Summation.} Adding over all steps, using $\sum_i h_i=T$,
+$h_i\le h$, and that at most $m$ steps contain a jump,
+\[
+  \|\bs q^h-\bs q\|_{L^1}
+  \le\tfrac12 L\sum_i h_i^2+\sum_{j=1}^m\bigl(L h_{i(j)}^2+\Delta_j\,h\bigr)
+  \le\tfrac12 L T h+mL\,h^2+J\,h,
+\]
+which is~\ref{interp:L1}; both bounds are $O(h)$.
+\end{proof}
+
+\begin{remark}\label{rem:interp_scope}
+\Cref{prop:interp} presumes the node-exactness $\bs q^h(t_i)=\bs q(t_i)$,
+which is \emph{not} a generic property of the scheme; it holds in the
+scalar benchmarks of \cref{sec:experiments} because, on any interval of
+monotone loading, the return map solves the same algebraic yield
+condition that the exact solution satisfies at the node, and reproduces
+the lock values exactly. It fails, for example, at a loading extremum
+strictly interior to a step, or, in the vectorial case, where the
+transition path at a jump is genuinely path-dependent and the discrete
+and continuous post-jump states may differ; a general error rate without
+node-exactness is not addressed here.
+\end{remark}
+
 % =====================================================================
 \section{Details for the bistable benchmark}
 \label{app:experiments}

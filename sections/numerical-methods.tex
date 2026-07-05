@@ -95,3 +95,27 @@ experiment of \cref{sec:conv2}, for the structural reason (a
 dissipation-neutral energetic jump) explained there. All proofs of this
 section, and the supporting discrete stability and local-consistency
 results, are given in \cref{app:numerical}.
+
+\begin{remark}[Nodal exactness and the observed state convergence]
+\label{rem:nodal}
+\Cref{thm:convergence} gives convergence of the state without a rate,
+and \cref{thm:global_consistency} concerns the energy balance, not the
+state; yet the scalar benchmarks of \cref{sec:experiments} display a
+clean first-order convergence of the state in norm. This is not a
+further a priori estimate but a consequence of a property those examples
+satisfy exactly: the integrator reproduces the solution \emph{at the
+nodes}, $q^h(t_i)=q(t_i)$. Indeed, on any interval of monotone loading
+the return map solves the same algebraic yield condition
+$g(q_{k+1})=\ell(S_{k+1})\mp\rho$ that the exact solution obeys at
+$t_{k+1}$, and reproduces the constant lock values exactly, so the state
+carries no accumulated truncation error---which is precisely why the
+genuine discretisation error lives in the energy balance
+(\cref{thm:global_consistency}). Under this nodal exactness, and for a
+piecewise-Lipschitz solution with finitely many jumps, the norm error of
+the piecewise-constant interpolant is a pure zeroth-order-hold
+interpolation error, hence $O(h)$: this is made precise and proved in
+\cref{prop:interp}. We stress that nodal exactness is specific to these
+scalar, locally monotone settings and is \emph{not} a general property
+of the scheme, so the observed first-order rate must not be read as a
+general a priori estimate.
+\end{remark}

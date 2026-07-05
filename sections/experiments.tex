@@ -176,17 +176,22 @@ map~\eqref{eq:scalar_return_map} solves the algebraic yield condition
 $k\,q_{k+1}=\ell(S_{k+1})\mp\rho$ \emph{exactly} at the node
 $t_{k+1}$, independently of $h$, and during lock $q$ is exactly
 constant; since the loading is monotone between nodes, the discrete
-play operator coincides with the continuous one at the nodes. The
-integrator therefore reproduces the exact evolution, and the
-discretisation error is carried entirely by the energy balance rather
-than by the state.
+play operator coincides with the continuous one at the nodes. This
+\emph{nodal exactness} is what underlies the first-order convergence of
+the state in norm reported for the next two benchmarks; as explained in
+\cref{rem:nodal} and proved in \cref{prop:interp}, it is a property
+genuine of these scalar, monotonically loaded examples---not a general
+convergence rate of the scheme. Here it makes the integrator reproduce
+the exact evolution outright, so the discretisation error is carried
+entirely by the energy balance rather than by the state.
 
 Second, the global energy-balance defect $\sum_k e_k=(E_0+\mathcal
 W_h)-(E_N+\Diss_h)\ge0$---the accumulated gap in the discrete energy
-inequality---decays as $O(h)$ (\cref{fig:convergence}), exactly the
-first-order global energy consistency of
-\cref{thm:global_consistency}: halving $h$ halves the defect, and the
-data track the reference slope-one line.
+inequality---decays as $O(h)$ (\cref{fig:convergence}). This slope-one
+behaviour is the global energy consistency of
+\cref{thm:global_consistency}, whose hypotheses are met here ($q$ is
+Lipschitz and $S\in W^{1,\infty}$): halving $h$ halves the defect, and
+the data track the reference slope-one line.
 
 \begin{figure}[t]
   \centering
@@ -422,17 +427,19 @@ $h=0.1,\,0.04,\,0.01$).
 \end{figure}
 
 \paragraph{Convergence in norm.} \Cref{thm:convergence} guarantees that
-$q^h\to q$, but provides \emph{no rate}: the state error is not the
-subject of any order estimate in our analysis. \Cref{fig:conv2_state}
-reports two norms of the interpolation error against a fine,
-$h$-independent sampling of the exact solution --- the time-averaged
-($L^1$) error and the sup-norm error restricted to times at least $O(h)$
-away from $t_{\mathrm{jump}}$. Both are \emph{empirically} first order,
-tracking the reference slope-one line, with no qualitative penalty from
-the jump: the interpolation error near the jump is larger in absolute
-size but of the same $O(h)$ order as the routine zeroth-order-hold error
-on the smooth branches. We stress that this first-order behaviour is an
-observation, not a proven result.
+$q^h\to q$, but provides \emph{no general rate}. \Cref{fig:conv2_state}
+reports two norms of the state error against a fine, $h$-independent
+sampling of the exact solution --- the time-averaged ($L^1$) error and
+the sup-norm error restricted to times at least $O(h)$ away from
+$t_{\mathrm{jump}}$. Both are first order, tracking the reference
+slope-one line, with no qualitative penalty from the jump. As in the
+previous example this rests on nodal exactness: the return map
+reproduces the exact solution at the nodes even across the jump, so the
+norm error is a pure zeroth-order-hold interpolation error, which is
+$O(h)$ for a piecewise-Lipschitz solution with an isolated jump by
+\cref{prop:interp} (with $J$ the size of the single jump). We stress
+again (\cref{rem:nodal}) that this is genuine of the present scalar
+setting, not a general a priori rate.
 
 \begin{figure}[t]
   \centering
@@ -615,8 +622,10 @@ refined. We separate, as before, the two logically distinct questions.
 \Cref{fig:conv3_state} reports the convergence of the state in norm:
 against a fine, $h$-independent sampling of the exact solution, both the
 time-averaged ($L^1$) error and the sup-norm error decay cleanly at first
-order (as in \cref{sec:conv2}, this rate is empirical---\cref{thm:convergence}
-guarantees convergence but no order). \Cref{fig:conv3_energy} reports the
+order. As in the previous examples this is the interpolation error under
+nodal exactness (\cref{rem:nodal}, \cref{prop:interp})---here with no
+jump, so $J=0$ and the sup-norm error is $O(h)$ throughout---and not a
+general a priori rate. \Cref{fig:conv3_energy} reports the
 first-order energy consistency: the global energy-balance defect decays
 as $O(h)$, tracking the slope-one line predicted by
 \cref{thm:global_consistency}, which here applies throughout since $q$ is
