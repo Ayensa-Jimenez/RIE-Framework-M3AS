@@ -2,18 +2,19 @@
 \section{Numerical experiments}\label{sec:experiments}
 % =====================================================================
 
-We validate the method on two benchmarks, both admitting a closed-form
+We validate the method on three benchmarks, all admitting a closed-form
 solution so that the integrator can be compared directly against exact
 values: the scalar \emph{linear play operator}
 (\cref{sec:benchmark,sec:regimes,sec:conv_exp}), the minimal RIE model
-of epigenetic memory, whose landscape is convex; and a
+of epigenetic memory, whose landscape is convex; a
 \emph{piecewise-quadratic double well} (\cref{sec:benchmark2}), which
 is genuinely bistable and exercises the balanced-viscosity mechanism of
-\cref{sec:bv}. All curves shown are the \emph{numerical} solution
+\cref{sec:bv}; and a problem that requires nonlinear iterative solvers at every time-step. All curves shown are the \emph{numerical} solution
 produced by the return-map integrator; we report separately, in each
 convergence study, how closely it reproduces the closed-form values.
 
-\subsection{The linear play operator}\label{sec:benchmark}
+\subsection{First minimal example}\label{sec:benchmark1}
+\subsubsection{The linear play operator}\label{sec:benchmark}
 
 Let $\Q=\R$ and
 \begin{equation}\label{eq:benchmark}
@@ -57,7 +58,7 @@ dichotomy: a weak resistance ($\rho<\ell_{\max}/2$) allows partial
 erasure of the mark upon removal of the stimulus, whereas a strong
 resistance ($\rho>\ell_{\max}/2$) locks the mark in permanently.
 
-\subsection{Reversible and irreversible responses}\label{sec:regimes}
+\subsubsection{Reversible and irreversible responses}\label{sec:regimes}
 
 We fix $k=1$, $\ell_\infty=0.5$, $\lambda=1$, $S_{\max}=5$
 ($\ell_{\max}\approx0.497$), $T=1$, and contrast the two regimes:
@@ -158,7 +159,7 @@ benchmark, the integrator reproduces it \emph{exactly} at every node
   \end{tabular}
 \end{table}
 
-\subsection{Convergence and consistency}\label{sec:conv_exp}
+\subsubsection{Convergence and consistency}\label{sec:conv_exp}
 
 We verify the consistency theory of \cref{sec:consistency} on the
 reversible cycle, comparing against the exact
@@ -213,6 +214,8 @@ that distinction.
 % =====================================================================
 \subsection{A bistable double well}\label{sec:benchmark2}
 % =====================================================================
+
+\subsubsection{Problem set-up} \label{sec:setup}
 
 Let $\Q=\R$ and
 \begin{equation}\label{eq:benchmark2}
@@ -296,7 +299,7 @@ vanishing-viscosity jump construction of \cref{def:BV}, which we do
 not carry out numerically here.
 \end{remark}
 
-\subsection{Numerical validation of the jump}\label{sec:regimes2}
+\subsubsection{Numerical validation of the jump}\label{sec:regimes2}
 
 We fix $k=1$, $a=0.15$, $\rho=0.10$, and reuse the loading protocol of
 \cref{sec:regimes} ($\ell_\infty=0.5$, $\lambda=1$, $S_{\max}=5$,
@@ -372,7 +375,7 @@ reproduced by the integrator.
   \end{minipage}
 \end{table}
 
-\subsection{Convergence and consistency across a jump}\label{sec:conv2}
+\subsubsection{Convergence and consistency across a jump}\label{sec:conv2}
 
 The bistable benchmark lets us examine two \emph{logically distinct}
 questions that the smooth benchmark of \cref{sec:conv_exp} could not
