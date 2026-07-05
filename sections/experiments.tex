@@ -451,7 +451,7 @@ setting, not a general a priori rate.
       \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_bistable.dat};
       \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf_away]{figures/fig_convergence_bistable.dat};
       \addplot[dashed,black,domain=1.5e-4:2e-2]{0.5*x};
-      \legend{$L^1$ error,$L^\infty$ error,reference slope $1$}
+      \legend{$L^1$ error,$L^\infty$ error,slope $1$}
     \end{loglogaxis}
   \end{tikzpicture}
   \caption{Convergence of the discrete state in norm (log--log). Both
@@ -664,7 +664,7 @@ convergence order.
       \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_nonlinear.dat};
       \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf_away]{figures/fig_convergence_nonlinear.dat};
       \addplot[dashed,black,domain=1.5e-4:2e-2]{1.0*x};
-      \legend{$L^1$ error,$L^\infty$ error,reference slope $1$}
+      \legend{$L^1$ error,$L^\infty$ error,slope $1$}
     \end{loglogaxis}
   \end{tikzpicture}
   \caption{Convergence of the discrete state in norm (log--log) for the
