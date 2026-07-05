@@ -9,9 +9,12 @@ values: the scalar \emph{linear play operator}
 of epigenetic memory, whose landscape is convex; a
 \emph{piecewise-quadratic double well} (\cref{sec:benchmark2}), which
 is genuinely bistable and exercises the balanced-viscosity mechanism of
-\cref{sec:bv}; and a problem that requires nonlinear iterative solvers at every time-step. All curves shown are the \emph{numerical} solution
-produced by the return-map integrator; we report separately, in each
-convergence study, how closely it reproduces the closed-form values.
+\cref{sec:bv}; and a \emph{nonlinear convex} problem
+(\cref{sec:benchmark3}) whose transcendental force makes the return map
+require a genuine iterative solve at every dissipative step. All curves
+shown are the \emph{numerical} solution produced by the return-map
+integrator; we report separately, in each convergence study, how closely
+it reproduces the closed-form values.
 
 \subsection{First minimal example}\label{sec:benchmark1}
 \subsubsection{The linear play operator}\label{sec:benchmark}
@@ -484,4 +487,199 @@ predicted by \cref{thm:global_consistency}.
   \cref{thm:global_consistency} on the smooth arcs and preserved across
   the dissipation-neutral energetic jump.}
   \label{fig:conv2_energy}
+\end{figure}
+
+% =====================================================================
+\subsection{A nonlinear convex example}\label{sec:benchmark3}
+% =====================================================================
+
+\subsubsection{Problem set-up}\label{sec:setup3}
+
+The first two benchmarks share a feature that flatters the return map:
+the force $g=W'$ is linear (\cref{sec:benchmark}) or piecewise linear
+(\cref{sec:benchmark2}), so the yield condition $g(q)=\ell\mp\rho$
+inverts in closed form and the corrector is a single explicit formula.
+To probe the method in its general form we now take a genuinely
+\emph{nonlinear} landscape, whose force has no elementary inverse, so
+that the return map must solve the yield condition by an
+\emph{iterative} (Newton) scheme at every dissipative step. Let
+$\Q=\R$ and
+\begin{equation}\label{eq:benchmark3}
+  W(q)=\tfrac12 q^2+\cosh q-1,\qquad
+  g(q)=W'(q)=q+\sinh q,\qquad
+  \Psi(\dot q)=\rho\,|\dot q|,
+\end{equation}
+with $\rho>0$. The energy is smooth and \emph{uniformly convex},
+$W''(q)=1+\cosh q\ge2$, so \ref{A:W}--\ref{A:coerc} hold and, by
+\cref{thm:uniqueness}, the energetic solution is unique; the
+transcendental force $g(q)=q+\sinh q$ admits no closed-form inverse.
+
+We validate the integrator by the \emph{method of manufactured
+solutions}. Rather than prescribe the loading and solve for the state
+(which would require $g^{-1}$), we prescribe a smooth, piecewise-monotone
+state $q(t)$---a lock--flow--lock--flow--lock cycle rising from $q=0$ to
+$q=1$ and back, with $C^1$ (smoothstep) ramps---and take as loading the
+$\ell(t)$ that makes it the exact play-operator response, obtained by
+\emph{forward evaluation} of $g$ alone:
+\begin{equation}\label{eq:manufactured}
+  \ell(t)=g(q(t))+\rho \ \ (\text{forward flow}),
+  \qquad
+  \ell(t)=g(q(t))-\rho \ \ (\text{backward flow}),
+\end{equation}
+with $\ell$ sweeping inside the elastic band $[g(q)-\rho,g(q)+\rho]$
+during lock (the loading is here specified directly in time, equivalently
+$S(t)=t$). By construction $q(t)$ is the exact solution for this $\ell$;
+the integrator, given only $\ell$ at the nodes, must recover it by solving
+$g(q_{k+1})=\ell(t_{k+1})\mp\rho$ with a safeguarded Newton iteration.
+
+\subsubsection{Numerical validation}\label{sec:regimes3}
+
+We fix $\rho=0.3$, $T=1$, with the state locked on $[0,0.15]$, flowing up
+on $[0.15,0.45]$, locked at the peak on $[0.45,0.55]$, flowing down on
+$[0.55,0.85]$ and locked on $[0.85,1]$. \Cref{fig:time3} shows the
+numerical time evolution and the resulting hysteresis loop.
+\Cref{tab:val3} reports the validation: the return map reproduces the
+manufactured solution at the nodes to machine precision, and does so
+through a genuine iterative solve---an average of three Newton iterations
+per dissipative step, converging to a residual
+$|g(q)-\ell\pm\rho|\sim10^{-14}$---confirming that the method does not
+rely on any closed-form invertibility of $g$.
+
+\begin{figure}[t]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xmin=0,xmax=1,axis y line*=left,xlabel={$t$},ylabel={$q(t)$},
+        ymin=-0.05,ymax=1.1,tick label style={font=\small}]
+        \addplot[thick,blue] table[x=t,y=q]{figures/fig_time_nonlinear.dat};
+      \end{axis}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xmin=0,xmax=1,axis y line*=right,axis x line=none,ylabel={$\ell(t)$},
+        tick label style={font=\small},legend pos=north west,
+        legend cell align=left]
+        \addlegendimage{thick,blue}\addlegendentry{$q(t)$}
+        \addplot[thick,red!70!black,dashed] table[x=t,y=ell]{figures/fig_time_nonlinear.dat};
+        \addlegendentry{$\ell(t)$}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Time evolution}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xlabel={$\ell$},ylabel={$q$},grid=both,
+        grid style={gray!20},tick label style={font=\small}]
+        \addplot[thick,blue] table[x=ell,y=q]{figures/fig_loop_nonlinear.dat};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Hysteresis loop}
+  \end{subfigure}
+  \caption{Nonlinear convex benchmark ($g=q+\sinh q$): (a) manufactured
+  time evolution of the state $q(t)$ and the loading $\ell(t)$ that
+  induces it; (b) the corresponding hysteresis loop in the $(\ell,q)$
+  plane. All curves are the numerical solution.}
+  \label{fig:time3}
+\end{figure}
+
+\begin{table}[t]
+  \centering
+  \caption{Validation of the nonlinear benchmark ($N=4000$): node-wise
+  accuracy of the manufactured solution and behaviour of the Newton
+  solver in the return map.}
+  \label{tab:val3}
+  \begin{tabular}{lc}
+    \toprule
+    quantity & value \\
+    \midrule
+    nodal state error $\max_i|q^h(t_i)-q(t_i)|$ & $4.8\times10^{-14}$ \\
+    average Newton iterations / dissipative step & $3.0$ \\
+    maximum Newton residual $|g(q)-\ell\pm\rho|$ & $9.7\times10^{-14}$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\subsubsection{Convergence and consistency}\label{sec:conv3}
+
+As in \cref{sec:conv2}, the return map is exact at the nodes---the yield
+condition $g(q_{k+1})=\ell(t_{k+1})\mp\rho$ is solved (now
+\emph{iteratively}) at each node independently of $h$---so the
+discretisation error is again an interpolation effect and, on this smooth
+benchmark, entirely of zeroth-order-hold type. \Cref{fig:traj3} shows the
+piecewise-constant staircases tightening onto the exact curve as $h$ is
+refined. We separate, as before, the two logically distinct questions.
+
+\Cref{fig:conv3_state} reports the convergence of the state in norm:
+against a fine, $h$-independent sampling of the exact solution, both the
+time-averaged ($L^1$) error and the sup-norm error decay cleanly at first
+order (as in \cref{sec:conv2}, this rate is empirical---\cref{thm:convergence}
+guarantees convergence but no order). \Cref{fig:conv3_energy} reports the
+first-order energy consistency: the global energy-balance defect decays
+as $O(h)$, tracking the slope-one line predicted by
+\cref{thm:global_consistency}, which here applies throughout since $q$ is
+Lipschitz and there is no jump. Crucially, the Newton iteration count
+stays bounded---about three per step---under refinement, so the nonlinear
+solve adds only a constant factor to the cost and does not degrade the
+convergence order.
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis}[width=0.72\textwidth,height=0.42\textwidth,
+      xmin=0,xmax=1,xlabel={$t$},ylabel={$q(t)$},
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[const plot,blue,thick] table[x=t,y=q]{figures/fig_traj_nl_c.dat};
+      \addplot[const plot,orange!85!black] table[x=t,y=q]{figures/fig_traj_nl_m.dat};
+      \addplot[const plot,teal!70!black,thin] table[x=t,y=q]{figures/fig_traj_nl_f.dat};
+      \addplot[black,very thick] table[x=t,y=q]{figures/fig_traj_nl_exact.dat};
+      \legend{$h=1/12$,$h=1/30$,$h=1/120$,exact}
+    \end{axis}
+  \end{tikzpicture}
+  \caption{Visual convergence of the piecewise-constant discrete
+  trajectory $q^h$ (const-plot staircases) to the exact manufactured
+  solution as the step size $h$ is refined.}
+  \label{fig:traj3}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.6\textwidth,height=0.4\textwidth,
+      xlabel={$h$},ylabel={state error},
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_nonlinear.dat};
+      \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf_away]{figures/fig_convergence_nonlinear.dat};
+      \addplot[dashed,black,domain=1.5e-4:2e-2]{1.0*x};
+      \legend{$L^1$ error,$L^\infty$ error,reference slope $1$}
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{Convergence of the discrete state in norm (log--log) for the
+  nonlinear benchmark. Both the $L^1$ error and the sup-norm error decay
+  \emph{empirically} at first order; the transcendental force, solved by
+  Newton, does not degrade the rate.}
+  \label{fig:conv3_state}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.6\textwidth,height=0.4\textwidth,
+      xlabel={$h$},ylabel={$\sum_k e_k$ (energy defect)},
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_nonlinear.dat};
+      \addplot[dashed,black,domain=1.5e-4:2e-2]{8.6*x};
+      \legend{energy defect,slope $1$}
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{First-order energy consistency for the nonlinear benchmark
+  (log--log): the global energy-balance defect decays as $O(h)$, as
+  guaranteed by \cref{thm:global_consistency} (applicable throughout,
+  since $q$ is Lipschitz with no jump).}
+  \label{fig:conv3_energy}
 \end{figure}
