@@ -846,11 +846,16 @@ which is \emph{not} a generic property of the scheme; it holds in the
 scalar benchmarks of \cref{sec:experiments} because, on any interval of
 monotone loading, the return map solves the same algebraic yield
 condition that the exact solution satisfies at the node, and reproduces
-the lock values exactly. It fails, for example, at a loading extremum
-strictly interior to a step, or, in the vectorial case, where the
-transition path at a jump is genuinely path-dependent and the discrete
-and continuous post-jump states may differ; a general error rate without
-node-exactness is not addressed here.
+the lock values exactly. It fails whenever the loading carries structure
+on a time scale comparable to, or finer than, the step $h$---so that the
+exact state changes regime more than once within a step---the simplest
+instance being a loading extremum strictly interior to a step, and a more
+striking one a sub-step oscillation, for which the state error remains
+$O(1)$ until $h$ resolves that scale (\cref{sec:conv_osc}). It fails
+likewise, in the vectorial case, where the transition path at a jump is
+genuinely path-dependent and the discrete and continuous post-jump states
+may differ. A general error rate without node-exactness is not addressed
+here.
 \end{remark}
 
 % =====================================================================

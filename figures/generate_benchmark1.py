@@ -116,6 +116,89 @@ for N in [50, 100, 200, 400, 800, 1600, 3200, 6400]:
     rows1.append((T / N, err, abs(defect)))
 write_table("fig_convergence.dat", "h  err_state  energy_defect", rows1)
 
+# ============================================================================
+#  Benchmark 1b -- SAME model, but a loading with sub-step structure.
+# ============================================================================
+#  Loading with a fast oscillation of period TAU superimposed on a slow ramp:
+#      ell(t) = ell0 + ALPHA t + BETA sin(2 pi t / TAU),      S(t)=t.
+#  With BETA>rho the wiggle repeatedly crosses the yield surface, so the exact
+#  play-operator response "chatters" (enters/leaves flow) on the scale TAU.
+#  A time step h >> TAU cannot see this: nodal exactness FAILS and the state
+#  error is O(1) until h resolves TAU. The energy defect, by contrast, stays
+#  below the proven bound C*h at every h (its constant C ~ ||qdot|| ~ BETA/TAU
+#  is large, but the theorem never fails).
+
+ELL0, ALPHA, BETA, TAU = 0.0, 0.30, 0.15, 0.05
+RHO_OSC = RHO_REV                      # 0.10 ; BETA>RHO_OSC -> crosses yield
+
+def ell_osc(t):  return ELL0 + ALPHA * t + BETA * math.sin(2.0 * math.pi * t / TAU)
+def ellp_osc(t): return ALPHA + BETA * (2.0 * math.pi / TAU) * math.cos(2.0 * math.pi * t / TAU)
+def E_osc(q, t): return W1(q) - q * ell_osc(t)
+
+def return_map_osc(q_k, ell_next):
+    f_tr = ell_next - k1 * q_k
+    if abs(f_tr) <= RHO_OSC:
+        return q_k
+    return (ell_next - math.copysign(RHO_OSC, f_tr)) / k1
+
+def run_osc(N):
+    h = T / N
+    ts = [i * h for i in range(N + 1)]
+    qs = [0.0]
+    diss = work = 0.0
+    for i in range(N):
+        q_next = return_map_osc(qs[i], ell_osc(ts[i + 1]))
+        qs.append(q_next)
+        diss += RHO_OSC * abs(q_next - qs[i])
+        work += E_osc(qs[i], ts[i + 1]) - E_osc(qs[i], ts[i])
+    defect = (E_osc(qs[0], ts[0]) + work) - (E_osc(qs[N], ts[N]) + diss)
+    return ts, qs, abs(defect)
+
+# fine reference (resolves TAU: h_fine/TAU ~ 5e-5) used as the "exact" solution
+N_FINE = 400_000
+ts_fine, qs_fine, _ = run_osc(N_FINE)
+def q_fine_osc(t):
+    return qs_fine[min(int(t / (T / N_FINE)), N_FINE)]
+
+# time evolution + hysteresis loop at a resolution that captures the chatter
+N_SHOW = 4000                          # h/TAU = 0.005
+ts_s, qs_s, _ = run_osc(N_SHOW)
+rows_t = [(t, q, ell_osc(t)) for t, q in zip(ts_s, qs_s)]
+rows_l = [(ell_osc(t), q) for t, q in zip(ts_s, qs_s)]
+write_table("fig_time_osc.dat", "t  q  ell", subsample(rows_t, target=1600))
+write_table("fig_loop_osc.dat", "ell  q", subsample(rows_l, target=1600))
+
+# convergence: piecewise-constant interpolant vs the fine reference on a fixed
+# fine grid, plus the energy defect and the theorem's a-priori constant C.
+C_ellp = max(abs(ellp_osc(i * T / 200_000)) for i in range(200_001))
+C_theorem = 0.5 * C_ellp * (C_ellp / k1) * 1.0 * T    # 1/2 C_l' ||qdot|| ||Sdot|| T
+T_GRID = [i * (T / 200_000) for i in range(200_001)]
+Q_REF = [q_fine_osc(t) for t in T_GRID]
+
+def pw_const(ts_h, qs_h, t):
+    N = len(ts_h) - 1
+    return qs_h[min(int(t / (T / N)), N)]
+
+rows_osc = []
+for N in [5, 10, 20, 40, 80, 160, 320, 640, 1280, 2560, 5120, 10240]:
+    ts_h, qs_h, defect = run_osc(N)
+    h = T / N
+    errs = [abs(pw_const(ts_h, qs_h, t) - qr) for t, qr in zip(T_GRID, Q_REF)]
+    err_l1 = sum(errs) * (T / 200_000) / T
+    err_linf = max(errs)
+    rows_osc.append((h, err_l1, err_linf, abs(defect), C_theorem * h))
+write_table("fig_convergence_osc.dat",
+            "h  err_L1  err_Linf  energy_defect  bound_Ch", rows_osc)
+
+print(f"\n[Benchmark 1b: sub-step oscillatory loading]  "
+      f"TAU={TAU}, ALPHA={ALPHA}, BETA={BETA}, rho={RHO_OSC}")
+print(f"  theorem constant C = {C_theorem:.3f}  (defect <= C*h must always hold)")
+print(f"  {'h':>9} {'h/TAU':>7} {'L1':>10} {'Linf':>10} {'E_defect':>10} "
+      f"{'C*h':>9} {'def/(C*h)':>10}")
+for h, l1, linf, d, ch in rows_osc:
+    print(f"  {h:9.5f} {h/TAU:7.3f} {l1:10.3e} {linf:10.3e} {d:10.3e} "
+          f"{ch:9.3f} {d/ch:10.4f}")
+
 # ----------------------------------------------------------------------------
 #  Console summary
 # ----------------------------------------------------------------------------

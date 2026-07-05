@@ -212,6 +212,121 @@ the data track the reference slope-one line.
   \label{fig:convergence}
 \end{figure}
 
+\subsubsection{A loading with sub-step structure}\label{sec:conv_osc}
+
+The clean first-order convergence just reported hinges on nodal exactness
+(\cref{rem:nodal}), which requires that the exact state not change regime
+more than once within a step. We close this benchmark by deliberately
+breaking that condition: keeping the same convex model, we drive it with
+a loading that carries genuine structure on a short time scale $\tau$,
+\begin{equation}\label{eq:osc_loading}
+  \ell(t)=\ell_0+\alpha\,t+\beta\sin(2\pi t/\tau)
+  \qquad(\text{equivalently }S(t)=t),
+\end{equation}
+with $\ell_0=0$, $\alpha=0.3$, $\beta=0.15>\rho=0.1$ and $\tau=0.05$.
+Because $\beta>\rho$, the oscillation repeatedly crosses the yield
+surface, so the exact play-operator response \emph{chatters}---entering
+and leaving flow---on the scale $\tau$ (\cref{fig:time_osc}). A step
+$h\gg\tau$ cannot see this: the return map, reading only the endpoints of
+each step, misses the sub-step excursions, nodal exactness fails, and the
+discrete trajectory follows a genuinely different path.
+
+\Cref{fig:conv_osc} shows the consequence, and the sharply different fate
+of the two error measures. The \emph{state} error in norm has a
+\emph{plateau}: for $h\gtrsim\tau$ it is $O(1)$, essentially independent
+of $h$ (the scheme selects the wrong branch), and only once $h$ falls
+below $\approx\tau/4$ does nodal exactness set in and the error collapse
+onto the $O(h)$ interpolation regime of \cref{prop:interp}. Above that
+threshold no a priori bound protects the state; its first-order rate is
+genuine of the resolved regime, exactly as \cref{prop:interp} and
+\cref{rem:interp_scope} anticipate.
+
+The energy defect behaves altogether differently. \Cref{thm:global_consistency}
+bounds it by $C\,h$ with $C=\tfrac12 C_{\ell'}\|\dot q\|_\infty\|\dot S\|_\infty T$;
+since $q$ stays Lipschitz---with a large constant
+$\|\dot q\|_\infty\sim\beta/\tau$---this bound holds at \emph{every} step
+size, and numerically the defect never exceeds $0.14\,C\,h$ across the
+whole sweep. Strikingly, at the coarse steps where the state error is
+\emph{largest} the energy defect is \emph{smallest} (the under-resolved
+scheme dissipates little): the two do not fail together. As $h$ crosses
+$\tau/4$ the defect settles onto its $O(h)$ asymptote, the stiffness
+$1/\tau$ having been absorbed into the constant $C$.
+
+This is the sharpest illustration of the distinction running through the
+paper. The energy consistency is a \emph{proven, unconditional}
+statement---the bound $C\,h$ never fails, the resolution scale entering
+only through its constant---whereas the first-order convergence of the
+\emph{state} is not proven in general and, as here, genuinely can fail
+until the discretisation resolves the physics. This is precisely why the
+energy estimate is the robust result and the state rate is treated as
+conditional.
+
+\begin{figure}[t]
+  \centering
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xmin=0,xmax=1,axis y line*=left,xlabel={$t$},ylabel={$q(t)$},
+        tick label style={font=\small}]
+        \addplot[thick,blue] table[x=t,y=q]{figures/fig_time_osc.dat};
+      \end{axis}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xmin=0,xmax=1,axis y line*=right,axis x line=none,ylabel={$\ell(t)$},
+        tick label style={font=\small},legend pos=north west,
+        legend cell align=left]
+        \addlegendimage{thick,blue}\addlegendentry{$q(t)$}
+        \addplot[thick,red!70!black,dashed] table[x=t,y=ell]{figures/fig_time_osc.dat};
+        \addlegendentry{$\ell(t)$}
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Time evolution (chatter)}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \begin{tikzpicture}
+      \begin{axis}[width=\textwidth,height=0.72\textwidth,
+        xlabel={$\ell$},ylabel={$q$},grid=both,
+        grid style={gray!20},tick label style={font=\small}]
+        \addplot[thick,blue] table[x=ell,y=q]{figures/fig_loop_osc.dat};
+      \end{axis}
+    \end{tikzpicture}
+    \caption{Hysteresis loop}
+  \end{subfigure}
+  \caption{Sub-step loading~\eqref{eq:osc_loading} (well-resolved
+  numerical solution, $h/\tau=0.005$): the state chatters as the
+  oscillation crosses the yield surface, producing a serrated loop.}
+  \label{fig:time_osc}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.66\textwidth,height=0.44\textwidth,
+      xlabel={$h$},ylabel={error},ymin=1e-4,ymax=3e-1,
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_osc.dat};
+      \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf]{figures/fig_convergence_osc.dat};
+      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_osc.dat};
+      \addplot[dashed,black,domain=1e-4:2e-2]{2.0*x};
+      \draw[densely dotted,gray!60!black,thick]
+        (axis cs:0.05,1e-4) -- (axis cs:0.05,3e-1)
+        node[pos=0.92,anchor=west,font=\scriptsize] {$h=\tau$};
+      \legend{$L^1$ state,$L^\infty$ state,energy defect,slope $1$}
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{Convergence under the sub-step loading~\eqref{eq:osc_loading}
+  (log--log). The \emph{state} error (circles, triangles) plateaus at
+  $O(1)$ for $h\gtrsim\tau$ and only becomes first order once $h$
+  resolves $\tau$. The \emph{energy defect} (squares) stays below the
+  proven bound $C\,h$ at every $h$---it is \emph{smallest} exactly where
+  the state error is largest---and is asymptotically first order. The
+  proven energy consistency is robust; the state rate is conditional.}
+  \label{fig:conv_osc}
+\end{figure}
+
 Because $\Q\ni q\mapsto E(q,S)$ is convex on this benchmark, the
 incremental minimisation~\eqref{eq:Ikstar} has a unique critical point
 and the distinction between a \emph{global} and a \emph{local} solver
