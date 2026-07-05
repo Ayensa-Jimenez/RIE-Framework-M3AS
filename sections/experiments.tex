@@ -231,9 +231,8 @@ $h\gg\tau$ cannot see this: the return map, reading only the endpoints of
 each step, misses the sub-step excursions, nodal exactness fails, and the
 discrete trajectory follows a genuinely different path.
 
-\Cref{fig:conv_osc} shows the consequence, and the sharply different fate
-of the two error measures. The \emph{state} error in norm has a
-\emph{plateau}: for $h\gtrsim\tau$ it is $O(1)$, essentially independent
+\Cref{fig:conv_osc_state} shows the consequence for the state error. It
+has a \emph{plateau}: for $h\gtrsim\tau$ it is $O(1)$, essentially independent
 of $h$ (the scheme selects the wrong branch), and only once $h$ falls
 below $\approx\tau/4$ does nodal exactness set in and the error collapse
 onto the $O(h)$ interpolation regime of \cref{prop:interp}. Above that
@@ -241,8 +240,9 @@ threshold no a priori bound protects the state; its first-order rate is
 genuine of the resolved regime, exactly as \cref{prop:interp} and
 \cref{rem:interp_scope} anticipate.
 
-The energy defect behaves altogether differently. \Cref{thm:global_consistency}
-bounds it by $C\,h$ with $C=\tfrac12 C_{\ell'}\|\dot q\|_\infty\|\dot S\|_\infty T$;
+\Cref{fig:conv_osc_energy} shows the sharply different fate of the energy
+defect. \Cref{thm:global_consistency} bounds it by $C\,h$ with
+$C=\tfrac12 C_{\ell'}\|\dot q\|_\infty\|\dot S\|_\infty T$;
 since $q$ stays Lipschitz---with a large constant
 $\|\dot q\|_\infty\sim\beta/\tau$---this bound holds at \emph{every} step
 size, and numerically the defect never exceeds $0.14\,C\,h$ across the
@@ -303,28 +303,48 @@ conditional.
 \begin{figure}[t]
   \centering
   \begin{tikzpicture}
-    \begin{loglogaxis}[width=0.66\textwidth,height=0.44\textwidth,
-      xlabel={$h$},ylabel={error},ymin=1e-4,ymax=3e-1,
+    \begin{loglogaxis}[width=0.6\textwidth,height=0.4\textwidth,
+      xlabel={$h$},ylabel={state error},ymin=1e-4,ymax=3e-1,
       legend pos=north west,legend cell align=left,
       grid=both,grid style={gray!20},tick label style={font=\small}]
       \addplot[only marks,mark=*,blue] table[x=h,y=err_L1]{figures/fig_convergence_osc.dat};
       \addplot[only marks,mark=triangle*,red!70!black] table[x=h,y=err_Linf]{figures/fig_convergence_osc.dat};
-      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_osc.dat};
       \addplot[dashed,black,domain=1e-4:2e-2]{2.0*x};
       \draw[densely dotted,gray!60!black,thick]
         (axis cs:0.05,1e-4) -- (axis cs:0.05,3e-1)
         node[pos=0.92,anchor=west,font=\scriptsize] {$h=\tau$};
-      \legend{$L^1$ state,$L^\infty$ state,energy defect,slope $1$}
+      \legend{$L^1$ error,$L^\infty$ error,slope $1$}
     \end{loglogaxis}
   \end{tikzpicture}
-  \caption{Convergence under the sub-step loading~\eqref{eq:osc_loading}
-  (log--log). The \emph{state} error (circles, triangles) plateaus at
-  $O(1)$ for $h\gtrsim\tau$ and only becomes first order once $h$
-  resolves $\tau$. The \emph{energy defect} (squares) stays below the
-  proven bound $C\,h$ at every $h$---it is \emph{smallest} exactly where
-  the state error is largest---and is asymptotically first order. The
-  proven energy consistency is robust; the state rate is conditional.}
-  \label{fig:conv_osc}
+  \caption{Convergence of the discrete state in norm under the sub-step
+  loading~\eqref{eq:osc_loading} (log--log): a plateau at $O(1)$ persists
+  for $h\gtrsim\tau$, collapsing onto the first-order interpolation regime
+  of \cref{prop:interp} only once $h$ resolves $\tau$.}
+  \label{fig:conv_osc_state}
+\end{figure}
+
+\begin{figure}[t]
+  \centering
+  \begin{tikzpicture}
+    \begin{loglogaxis}[width=0.6\textwidth,height=0.4\textwidth,
+      xlabel={$h$},ylabel={$\sum_k e_k$ (energy defect)},ymin=1e-4,ymax=3e-1,
+      legend pos=north west,legend cell align=left,
+      grid=both,grid style={gray!20},tick label style={font=\small}]
+      \addplot[only marks,mark=square*,teal!70!black] table[x=h,y=energy_defect]{figures/fig_convergence_osc.dat};
+      \addplot[dashed,black,domain=1e-4:2e-2]{26.0*x};
+      \draw[densely dotted,gray!60!black,thick]
+        (axis cs:0.05,1e-4) -- (axis cs:0.05,3e-1)
+        node[pos=0.92,anchor=west,font=\scriptsize] {$h=\tau$};
+      \legend{energy defect,slope $1$}
+    \end{loglogaxis}
+  \end{tikzpicture}
+  \caption{First-order energy consistency under the sub-step
+  loading~\eqref{eq:osc_loading} (log--log): the global energy-balance
+  defect stays below the proven bound $C\,h$ of
+  \cref{thm:global_consistency} at every $h$---smallest exactly where the
+  state error (\cref{fig:conv_osc_state}) is largest---and settles onto
+  its first-order asymptote once $h$ resolves $\tau$.}
+  \label{fig:conv_osc_energy}
 \end{figure}
 
 Because $\Q\ni q\mapsto E(q,S)$ is convex on this benchmark, the
