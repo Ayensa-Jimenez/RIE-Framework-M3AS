@@ -8,7 +8,7 @@ Following~\cite{MielkeRoubicek}, a rate-independent system is specified
 by a triple $(\Q, E, \Psi)$.
 
 \begin{enumerate}[label=(\roman*),leftmargin=2.2em,itemsep=3pt]
-  \item \textbf{State space.} The set of \emph{admissible states} is a
+  \item \textbf{State space.} The set $\Q$ of \emph{admissible states} is a
   closed and convex subset of a Banach space; throughout we take
   \begin{equation}\label{eq:state_space}
     \Q \subseteq \R^n .
@@ -18,18 +18,20 @@ by a triple $(\Q, E, \Psi)$.
   environment is encoded by a prescribed, time-dependent
   \emph{loading path}
   \begin{equation}
-    S \in W^{1,1}(0,T;\R^{+}) .
+    S \in W^{1,1}(0,T;\R^{+}),
   \end{equation}
-
+  with $W^{1,1}$ denoting the Sobolev space of integrable functions
+  with integrable first derivative.
+  
   \item \textbf{Stored energy.} The \emph{stored-energy functional}
   $E\colon \Q\times\R^{+}\to\R$ is assumed to admit the additive
   decomposition
   \begin{equation}\label{eq:energy}
-    E(\bs q, S) \;=\; W(\bs q)\;-\;\bs q\cdot\bs\ell(S),
+    E(\bs q, S) \;=\; F(\bs q)\;-\;\bs q\cdot\bs\ell(S),
   \end{equation}
-  where $W\colon\Q\to\R$ is the \emph{configurational free energy} and
+  where $F\colon\Q\to\R$ is the \emph{configurational free energy} and
   $\bs\ell\colon\R^{+}\to\R^n$ the \emph{interaction (loading)
-  potential}. Of $W$ we require only the minimal conditions that
+  potential}. Of $F$ we require only the minimal conditions that
   thermodynamics places on a free energy: that it be \emph{lower
   semicontinuous} and \emph{bounded below}, so that $E(\cdot,S)$ is a
   well-defined energy admitting a ground state, and continuously
@@ -73,7 +75,7 @@ defines the \emph{generalised thermodynamic force}
   \bs f(\bs q, S) \;:=\; -\frac{\partial E}{\partial \bs q}(\bs q, S)
   \;=\; \bs\ell(S) - \bs g(\bs q),
   \qquad
-  \bs g(\bs q) := \frac{\partial W}{\partial\bs q}(\bs q).
+  \bs g(\bs q) := \frac{\partial F}{\partial\bs q}(\bs q).
 \end{equation}
 The force $\bs f$ is the variable conjugate to $\bs q$: it quantifies
 the thermodynamic drive toward evolution of the state.
@@ -85,8 +87,8 @@ The subdifferential of $\Psi$ at the origin,
 \end{equation}
 is the closed convex set of forces the system can sustain without
 evolving. It is the \emph{elastic domain} in force space; by convex
-duality~\cite{rockafellar1970,ekeland1999convex} $\Psi$ is its support
-function, $\Psi(\bs v)=\sup_{\bs f\in\E}\bs f\cdot\bs v$.
+duality~\cite{rockafellar1970,ekeland1999convex} $\Psi$ is the support
+function of the elastic domain, $\Psi(\bs v)=\sup_{\bs f\in\E}\bs f\cdot\bs v$.
 
 \paragraph{(c) Dissipation distance.}
 The \emph{dissipation distance} is the minimal cost of a transition
@@ -109,12 +111,11 @@ For a trajectory $\bs q\colon[0,T]\to\Q$ of bounded variation, the
 \paragraph{(e) Power and work of the loading.}
 The rate of energy change due to the loading at frozen state is
 \begin{equation}\label{eq:power}
-  \mathcal P_S(t) := \partial_t E(\bs q, S(t))
+  \mathcal P_S(t) := \frac{\dd}{\dd t} E(\bs q, S(t))
   = \partial_S E(\bs q, S)\,\dot S(t)
   = -\bs q\cdot\bs\ell'(S(t))\,\dot S(t),
 \end{equation}
-and the associated \emph{work} performed on the system over $[0,t]$ is
-$\mathcal W_S(t):=\int_0^t\partial_S E(\bs q(s),S(s))\,\dot S(s)\dd s$.
+and the associated \emph{work} performed on the system over $[0,t]$ is the path integral $\mathcal W_S(t):=\int_0^t\partial_S E(\bs q(s),S(s))\,\dot S(s)\dd s$.
 
 \subsection{Governing equations: energetic formulation}
 \label{sec:energetic}
@@ -123,8 +124,7 @@ We postulate the evolution through the following variational notion,
 due to Mielke and Theil~\cite{MielkeTheil}.
 
 \begin{definition}[Energetic solution]\label{def:energetic}
-A function $\bs q\colon[0,T]\to\Q$ is an \emph{energetic solution} of
-$(\Q,E,\Psi)$ for the loading $S$ if it satisfies:
+A function $\bs q\colon[0,T]\to\Q$ is an \emph{energetic solution} of the rate-independent system $(\Q,E,\Psi)$ for the loading $S$ if it satisfies:
 
 \smallskip
 \noindent\textbf{(S) Global stability.} For every $t\in[0,T]$ and every
@@ -145,7 +145,7 @@ minimiser of the perturbed energy $\bs r\mapsto E(\bs r,S(t))+\Dr(\bs
 q(t),\bs r)$. Condition~(E) states that, along the trajectory, the sum
 of stored energy and cumulative dissipation equals the initial energy
 plus the work supplied by the loading; it is an exact energy
-conservation statement, examined thermodynamically in
+conservation statement, examined in
 \cref{sec:thermo}.
 
 \subsection{Governing equations: subdifferential formulation}

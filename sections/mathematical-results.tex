@@ -10,12 +10,12 @@ estimates in \cref{app:framework}, compatibility conditions in
 order, in the appendices.
 
 \begin{assumption}[Standing hypotheses]\label{ass:standing}
-The triple $(\Q,E,\Psi)$ with $E(\bs q,S)=W(\bs q)-\bs q\cdot\bs\ell(S)$
+The triple $(\Q,E,\Psi)$ with $E(\bs q,S)=F(\bs q)-\bs q\cdot\bs\ell(S)$
 satisfies:
 \begin{enumerate}[label=\textnormal{(A\arabic*)},leftmargin=2.6em,itemsep=2pt]
   \item\label{A:W} \emph{Stored energy.} $\Q\subseteq\R^n$ is closed and
-  $W\colon\Q\to\R$ is continuous and coercive of order $p>1$: there
-  exist $c_1>0$, $c_2\ge0$ with $W(\bs q)\ge c_1\|\bs q\|^p-c_2$.
+  $F\colon\Q\to\R$ is continuous and coercive of order $p>1$: there
+  exist $c_1>0$, $c_2\ge0$ with $F(\bs q)\ge c_1\|\bs q\|^p-c_2$.
   \item\label{A:ell} \emph{Interaction potential.}
   $\bs\ell\colon[0,\infty)\to\R^n$ is Lipschitz and bounded, with
   $C_\ell:=\sup_{S\ge0}\|\bs\ell(S)\|<\infty$ and
@@ -62,8 +62,8 @@ several post-jump states may satisfy~(S)--(E). Uniqueness is recovered
 under convexity of the energetic landscape.
 
 \begin{theorem}[Uniqueness under convexity]\label{thm:uniqueness}
-Assume, in addition to \ref{A:W}--\ref{A:Psi}, that $W\in C^3(\Q)$ is
-uniformly convex ($D^2W\succeq\alpha\Id$, $\alpha>0$) and that
+Assume, in addition to \ref{A:W}--\ref{A:Psi}, that $F\in C^3(\Q)$ is
+uniformly convex ($D^2F\succeq\alpha\Id$, $\alpha>0$) and that
 $\bs\ell\in C^3$, $S\in C^3([0,T])$. Then for every
 $\bs q_0\in\mathcal S(0)$ the energetic solution is unique.
 \end{theorem}

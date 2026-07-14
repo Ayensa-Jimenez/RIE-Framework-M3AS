@@ -217,16 +217,16 @@ Under \ref{A:W}--\ref{A:S}, the following hold.
 
 \begin{proof}
 \emph{\ref{E:compact}.} \textit{Boundedness.} Let
-$\bs q\in\mathcal L_c(S)$, i.e.\ $W(\bs q)-\bs q\cdot\bs\ell(S)\le c$.
+$\bs q\in\mathcal L_c(S)$, i.e.\ $F(\bs q)-\bs q\cdot\bs\ell(S)\le c$.
 By \ref{A:W}, \ref{A:ell} and Cauchy--Schwarz,
 \begin{equation}\label{eq:coercive_sublevel}
-  c_1\|\bs q\|^p-c_2\le W(\bs q)\le c+\bs q\cdot\bs\ell(S)\le c+C_\ell\|\bs q\|,
+  c_1\|\bs q\|^p-c_2\le F(\bs q)\le c+\bs q\cdot\bs\ell(S)\le c+C_\ell\|\bs q\|,
 \end{equation}
 so $c_1\|\bs q\|^p-C_\ell\|\bs q\|\le c+c_2$. Since $p>1$, the
 left-hand side tends to $+\infty$ as $\|\bs q\|\to\infty$; therefore
 $\|\bs q\|$ is bounded uniformly on $\mathcal L_c(S)$. \textit{Closedness.}
 If $\bs q_n\in\mathcal L_c(S)$ and $\bs q_n\to\bs q$ in $\Q$ (closed),
-continuity of $W$ (\ref{A:W}) and of $\bs\ell$ (\ref{A:ell}, Lipschitz)
+continuity of $F$ (\ref{A:W}) and of $\bs\ell$ (\ref{A:ell}, Lipschitz)
 give $E(\bs q,S)=\lim_n E(\bs q_n,S)\le c$, so $\bs q\in\mathcal L_c(S)$.
 A closed, bounded subset of $\R^n$ is compact by Heine--Borel.
 
@@ -235,8 +235,8 @@ Rademacher's theorem, differentiable a.e.\ with $\|\bs\ell'\|\le C_{\ell'}$;
 by \ref{A:S}, $S\in W^{1,1}(0,T)\subset\mathrm{AC}([0,T])$. The
 composition $t\mapsto\bs\ell(S(t))$ is therefore absolutely continuous,
 with $\frac{\dd}{\dd t}\bs\ell(S(t))=\bs\ell'(S(t))\dot S(t)$ a.e.\ by the
-chain rule for Sobolev functions. As $W(\bs q)$ does not depend on $t$,
-$t\mapsto E(\bs q,S(t))=W(\bs q)-\bs q\cdot\bs\ell(S(t))$ is absolutely
+chain rule for Sobolev functions. As $F(\bs q)$ does not depend on $t$,
+$t\mapsto E(\bs q,S(t))=F(\bs q)-\bs q\cdot\bs\ell(S(t))$ is absolutely
 continuous with the stated derivative; its integrability follows from
 $|\bs q\cdot\bs\ell'(S(t))\dot S(t)|\le C_{\ell'}\|\bs q\|\,|\dot S(t)|$
 and $\dot S\in L^1$.
@@ -367,7 +367,7 @@ $\tilde{\bs q}\in\Q$,
   E(\bs q_m,S(t_m))\le E(\tilde{\bs q},S(t_m))+\Dr(\bs q_m,\tilde{\bs q}).
 \end{equation}
 As $m\to\infty$: the left side tends to $E(\bs q,S(t))$ by continuity of
-$W$ and $\bs\ell$ and $S(t_m)\to S(t)$; the first right-hand term tends
+$F$ and $\bs\ell$ and $S(t_m)\to S(t)$; the first right-hand term tends
 to $E(\tilde{\bs q},S(t))$ for the same reason; the second tends to
 $\Dr(\bs q,\tilde{\bs q})$ by continuity of $\Dr$
 (\cref{prop:Dr_linear}). Passing to the limit in~\eqref{eq:stability_m},
@@ -414,16 +414,16 @@ $\bs q:[0,T]\to\Q$ of bounded variation in the sense of
 \end{proof}
 
 \begin{proof}[Proof of \cref{thm:uniqueness}]
-\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:Psi}, if $W\in C^3(\Q)$
-is uniformly convex $(D^2W\succeq\alpha\Id,\ \alpha>0)$ and
+\emph{Statement.} \emph{Under \ref{A:W}--\ref{A:Psi}, if $F\in C^3(\Q)$
+is uniformly convex $(D^2F\succeq\alpha\Id,\ \alpha>0)$ and
 $\bs\ell\in C^3$, $S\in C^3([0,T])$, then for every
 $\bs q_0\in\mathcal S(0)$ the energetic solution is unique.}
 
 \smallskip
-Under uniform convexity of $W$ and the linearity of
+Under uniform convexity of $F$ and the linearity of
 $\bs q\mapsto-\bs q\cdot\bs\ell(S)$, the reduced energy $E(\cdot,S)$ is
 strictly (indeed uniformly) convex, with
-$D^2_{\bs q}E(\bs q,S)=D^2W(\bs q)\succeq\alpha\Id$ for every $S\ge0$.
+$D^2_{\bs q}E(\bs q,S)=D^2F(\bs q)\succeq\alpha\Id$ for every $S\ge0$.
 Strict convexity makes the global stability $\bs q_0\in\mathcal S(0)$
 equivalent to the pointwise first-order inclusion
 $-\partial_{\bs q}E(\bs q_0,S(0))\in\partial\Psi(\bs 0)$, i.e.\ the
@@ -493,7 +493,7 @@ $\|\bs q_\varepsilon\|_{L^\infty}\le M'$ and $\Var(\bs q_\varepsilon)\le C$
 give a subsequence $\varepsilon_j\to0^+$ and a limit
 $\bs q\in\mathrm{BV}([0,T];\Q)$ with $\bs q_{\varepsilon_j}(t)\to\bs q(t)$
 for every $t\in[0,T]$. Local stability (BV-S) passes to the limit by
-lower semicontinuity of $E(\cdot,S)$ (continuity of $W$ and $\bs\ell$)
+lower semicontinuity of $E(\cdot,S)$ (continuity of $F$ and $\bs\ell$)
 and continuity of $\Dr$ (\cref{prop:Dr_linear}). For the work term in
 (BV-E), the integrands
 $\partial_S E(\bs q_{\varepsilon_j}(s),S(s))\dot S(s)=-\bs q_{\varepsilon_j}(s)\cdot\bs\ell'(S(s))\dot S(s)$
@@ -868,9 +868,9 @@ We prove the energetic jump threshold~\eqref{eq:l_jump_energetic} of
 the (increasing) instantaneous load; we use the incremental
 objective~\eqref{eq:Ikstar} with previous state $q_k=-a$,
 \begin{equation}\label{eq:I_bistable}
-  I(q):=E(q,\ell)+\rho\,|q-(-a)|=W(q)-q\ell+\rho\,|q+a|,
+  I(q):=E(q,\ell)+\rho\,|q-(-a)|=F(q)-q\ell+\rho\,|q+a|,
 \end{equation}
-with $W$ the piecewise-quadratic well~\eqref{eq:benchmark2}. Condition
+with $F$ the piecewise-quadratic well~\eqref{eq:benchmark2}. Condition
 (S) at $q=-a$ holds iff $-a$ is a global minimiser of $I$ over $\R$.
 
 \begin{proposition}[Energetic jump threshold]\label{prop:jump_energetic}
@@ -891,7 +891,7 @@ theory~\cite{mielke2002}: the globally stable branch is the one of lower
 incremental energy, and the transition occurs where the two branches
 are energetically balanced.
 
-\emph{Left branch ($q\le0$).} Here $W(q)=\tfrac12k(q+a)^2$ and
+\emph{Left branch ($q\le0$).} Here $F(q)=\tfrac12k(q+a)^2$ and
 $|q+a|=q+a$ for $q \ge -a$ (note that $I(q)$ is strictly decreasing for $q < -a$, so the minimiser in the left branch must satisfy $q \ge -a$), so
 $I(q)=\tfrac12k(q+a)^2-q\ell+\rho(q+a)$ with
 $I'(q)=k(q+a)-\ell+\rho$. At $q=-a$, $I'(-a)=\rho-\ell$, which is
@@ -899,17 +899,17 @@ $\ge0$ precisely when $\ell\le\rho$; since $I$ is convex on this branch,
 $q=-a$ is its minimiser over $\{q\le0\}$ for all $\ell\le\rho$, with
 minimum value
 \begin{equation}\label{eq:I_left}
-  I(-a)=W(-a)+a\ell=a\ell
+  I(-a)=F(-a)+a\ell=a\ell
 \end{equation}
 (the quadratic term vanishes at the well bottom $q=-a$).
 
-\emph{Right branch ($q>0$).} Here $W(q)=\tfrac12k(q-a)^2$ and
+\emph{Right branch ($q>0$).} Here $F(q)=\tfrac12k(q-a)^2$ and
 $|q+a|=q+a$, so $I(q)=\tfrac12k(q-a)^2-q\ell+\rho(q+a)$ with unconstrained
 minimiser $q_R:=a+(\ell-\rho)/k$ (positive once $\ell>\rho-ka$). Using
 $q_R-a=(\ell-\rho)/k$,
 \[
-  W(q_R)=\frac{(\ell-\rho)^2}{2k},\qquad
-  E(q_R,\ell)=W(q_R)-q_R\ell
+  F(q_R)=\frac{(\ell-\rho)^2}{2k},\qquad
+  E(q_R,\ell)=F(q_R)-q_R\ell
   =\frac{(\ell-\rho)^2}{2k}-a\ell-\frac{\ell(\ell-\rho)}{k},
 \]
 and, since $q_R+a=2a+(\ell-\rho)/k$,

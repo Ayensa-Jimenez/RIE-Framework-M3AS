@@ -8,7 +8,7 @@ values: the scalar \emph{linear play operator}
 (\cref{sec:benchmark,sec:regimes,sec:conv_exp}), the minimal RIE model
 of epigenetic memory, whose landscape is convex; a
 \emph{piecewise-quadratic double well} (\cref{sec:benchmark2}), which
-is genuinely bistable and exercises the balanced-viscosity mechanism of
+is genuinely bistable and excites the balanced-viscosity mechanism of
 \cref{sec:bv}; and a \emph{nonlinear convex} problem
 (\cref{sec:benchmark3}) whose transcendental force makes the return map
 require a genuine iterative solve at every dissipative step. All curves
@@ -21,11 +21,11 @@ it reproduces the closed-form values.
 
 Let $\Q=\R$ and
 \begin{equation}\label{eq:benchmark}
-  W(q)=\tfrac12 k\,q^2,\qquad
+  F(q)=\tfrac12 k\,q^2,\qquad
   \ell(S)=\ell_\infty\bigl(1-e^{-\lambda S}\bigr),\qquad
   \Psi(\dot q)=\rho\,|\dot q|,
 \end{equation}
-with $k,\ell_\infty,\lambda,\rho>0$, so that $g(q)=W'(q)=k\,q$ is linear
+with $k,\ell_\infty,\lambda,\rho>0$, so that $g(q)=F'(q)=k\,q$ is linear
 and the driving force is $f(q,S)=\ell(S)-k\,q$. The landscape is convex
 (a single well), the loading is increasing, bounded
 ($C_\ell=\ell_\infty$) and Lipschitz ($C_{\ell'}=\ell_\infty\lambda$),
@@ -221,7 +221,7 @@ breaking that condition: keeping the same convex model, we drive it with
 a loading that carries genuine structure on a short time scale $\tau$,
 \begin{equation}\label{eq:osc_loading}
   \ell(t)=\ell_0+\alpha\,t+\beta\sin(2\pi t/\tau)
-  \qquad(\text{equivalently }S(t)=t),
+  \qquad(\text{by taking }S(t)=t),
 \end{equation}
 with $\ell_0=0$, $\alpha=0.3$, $\beta=0.15>\rho=0.1$ and $\tau=0.05$.
 Because $\beta>\rho$, the oscillation repeatedly crosses the yield
@@ -362,7 +362,7 @@ that distinction.
 
 Let $\Q=\R$ and
 \begin{equation}\label{eq:benchmark2}
-  W(q)=
+  F(q)=
   \begin{cases}
     \tfrac12 k(q+a)^2, & q\le0,\\
     \tfrac12 k(q-a)^2, & q>0,
@@ -373,11 +373,11 @@ Let $\Q=\R$ and
   \Psi(\dot q)=\rho\,|\dot q|,
 \end{equation}
 with $k,a,\rho>0$. This is a genuinely \emph{bistable} landscape: two
-wells at $q=\mp a$ (where $W=0$), separated by a corner at $q=0$ (where
-$W$ is continuous but not differentiable, $W=\tfrac12ka^2$). The
-corner is a caricature of a smooth barrier chosen because $g(q)=W'(q)=k(q+a)$ for $q\le0$ and
+wells at $q=\mp a$ (where $F=0$), separated by a corner at $q=0$ (where
+$F$ is continuous but not differentiable, $F=\tfrac12ka^2$). The
+corner is a caricature of a smooth barrier chosen because $g(q)=F'(q)=k(q+a)$ for $q\le0$ and
 $k(q-a)$ for $q>0$ is \emph{piecewise linear}, so every yield condition
-below inverts elementarily. $W$ is
+below inverts elementarily. $F$ is
 continuous and coercive of order $p=2$ (\ref{A:W}), and $E(\cdot,S)$
 has exactly two local minima for every $S$, so
 \cref{thm:BV_existence,thm:BV_uniqueness} apply: a BV solution exists
@@ -639,7 +639,7 @@ predicted by \cref{thm:global_consistency}.
 \subsubsection{Problem set-up}\label{sec:setup3}
 
 The first two benchmarks share a feature that flatters the return map:
-the force $g=W'$ is linear (\cref{sec:benchmark}) or piecewise linear
+the force $g=F'$ is linear (\cref{sec:benchmark}) or piecewise linear
 (\cref{sec:benchmark2}), so the yield condition $g(q)=\ell\mp\rho$
 inverts in closed form and the corrector is a single explicit formula.
 To probe the method in its general form we now take a genuinely
@@ -648,12 +648,12 @@ that the return map must solve the yield condition by an
 \emph{iterative} (Newton) scheme at every dissipative step. Let
 $\Q=\R$ and
 \begin{equation}\label{eq:benchmark3}
-  W(q)=\tfrac12 q^2+\cosh q-1,\qquad
-  g(q)=W'(q)=q+\sinh q,\qquad
+  F(q)=\tfrac12 q^2+\cosh q-1,\qquad
+  g(q)=F'(q)=q+\sinh q,\qquad
   \Psi(\dot q)=\rho\,|\dot q|,
 \end{equation}
 with $\rho>0$. The energy is smooth and \emph{uniformly convex},
-$W''(q)=1+\cosh q\ge2$, so \ref{A:W}--\ref{A:coerc} hold and, by
+$F''(q)=1+\cosh q\ge2$, so \ref{A:W}--\ref{A:coerc} hold and, by
 \cref{thm:uniqueness}, the energetic solution is unique; the
 transcendental force $g(q)=q+\sinh q$ admits no closed-form inverse.
 
